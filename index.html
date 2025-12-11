@@ -1,1 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title> SYSTEM DESKTOP </title>    
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+     { margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family:'Courier New', monospace; }
 
+        body 
+        {   background-color: #0a0a1a;
+            color: #88aaff;
+            height: 100vh;
+            overflow: hidden;
+            /* Background image from pinterest */
+            background-image: url('https://i.pinimg.com/736x/53/1a/53/531a538c4ef2a86652f70f0a0962306b.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative; }
+
+        /* decorative glitch idk */
+        .glitch-gif 
+        {   position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0.7;
+            mix-blend-mode: screen; }
+
+        /* taskbar */
+        .taskbar 
+        {   position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: rgba(10, 25, 50, 0.85);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(100, 160, 230, 0.3);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); }
+
+        .start-button 
+        {   background: rgba(30, 60, 120, 0.8);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            color: #aaccff;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 20px;
+            transition: all 0.3s; }
+
+        .start-button:hover 
+        {   background: rgba(40, 80, 160, 0.9);
+            box-shadow: 0 0 10px rgba(100, 160, 230, 0.5); }
+
+        .clock 
+        {   margin-left: auto;
+            font-size: 0.9rem;
+            color: #aaccff; }
+
+        /* desktop icons */
+        .desktop 
+        {   padding: 20px;
+            height: calc(100vh - 40px);
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 30px;   }
+
+        .desktop-icon 
+        {   width: 80px;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            padding: 10px 5px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            background: rgba(10, 25, 50, 0.5);
+            border: 1px solid rgba(100, 160, 230, 0.2);  }
+
+        .desktop-icon:hover
+       {    background: rgba(30, 60, 120, 0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);  }
+
+        .desktop-icon.selected 
+        {    background: rgba(40, 80, 160, 0.7);
+            box-shadow: 0 0 20px rgba(100, 160, 230, 0.6);
+            border-color: rgba(140, 190, 255, 0.5);  }
+
+        .icon-image 
+        {   width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #aaccff;   }
+
+        .icon-label 
+         {  font-size: 0.8rem;
+            color: #aaccff;
+            text-shadow: 0 0 4px #000, 0 0 2px #000;
+            word-break: break-word;
+            line-height: 1.2;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 5px;
+            border-radius: 3px; }
+
+        /* start menu */
+        .start-menu 
+        {   position: fixed;
+            bottom: 40px;
+            left: 20px;
+            width: 300px;
+            height: 450px;
+            background: rgba(15, 30, 60, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            overflow: hidden; }
+
+        .start-menu.active
+         {    display: block;
+            animation: menuSlide 0.3s ease; }
+
+        @keyframes menuSlide
+         {  from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }   }
+
+        .menu-header 
+        {   background: rgba(20, 40, 80, 0.9);
+            padding: 15px;
+            border-bottom: 1px solid rgba(100, 160, 230, 0.3);   }
+
+        .menu-header h3 
+        {     color: #aaccff;
+            font-size: 1.1rem;  }
+
+        .menu-items 
+        { padding: 15px;
+            height: calc(100% - 60px);
+            overflow-y: auto;  }
+
+        .menu-item 
+        {  padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;   }
+
+        .menu-item:hover {
+            background: rgba(30, 60, 120, 0.7);
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: #aaccff;
+            width: 20px;
+        }
+
+        /* windows */
+        .window {
+            position: absolute;
+            top: 100px;
+            left: 200px;
+            width: 600px;
+            height: 400px;
+            background: rgba(10, 25, 50, 0.95);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .window.active {
+            display: block;
+        }
+
+        .window-header {
+            background: rgba(20, 40, 80, 0.9);
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(100, 160, 230, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .window-title {
+            color: #aaccff;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .window-controls button {
+            background: transparent;
+            border: none;
+            color: #aaccff;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        .window-content {
+            padding: 20px;
+            height: calc(100% - 40px);
+            overflow-y: auto;
+            color: #aaccff;
+        }
+
+        /* paint window specific */
+        #paintWindow {
+            width: 700px;
+            height: 500px;
+        }
+
+        #paintWindow main {
+            display: flex;
+            height: 100%;
+            padding: 0;
+        }
+
+        #paintWindow .left-block {
+            width: 200px;
+            background: rgba(15, 30, 60, 0.9);
+            padding: 15px;
+            border-right: 1px solid rgba(100, 160, 230, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #paintWindow .colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        #paintWindow .colors button {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            border-radius: 3px;
+            transition: transform 0.2s;
+            /* Color will be set via style attribute */
+        }
+
+        #paintWindow .colors button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            z-index: 10;
+        }
+
+        #paintWindow .brushes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #paintWindow .brushes button {
+            height: 20px;
+            background: #aaccff;
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        #paintWindow .brushes button:hover {
+            background: #88aaff;
+            box-shadow: 0 0 5px rgba(100, 160, 230, 0.5);
+        }
+
+        #paintWindow .brushes button[value="1"] { height: 2px; }
+        #paintWindow .brushes button[value="2"] { height: 4px; }
+        #paintWindow .brushes button[value="3"] { height: 8px; }
+        #paintWindow .brushes button[value="4"] { height: 12px; }
+        #paintWindow .brushes button[value="5"] { height: 16px; }
+
+        #paintWindow .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        #paintWindow .buttons button {
+            flex: 1;
+            padding: 8px;
+            background: rgba(30, 60, 120, 0.8);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            color: #aaccff;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        #paintWindow .buttons button:hover {
+            background: rgba(40, 80, 160, 0.9);
+            box-shadow: 0 0 8px rgba(100, 160, 230, 0.5);
+        }
+
+        #paintWindow .right-block {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        #paint-canvas {
+            background: rgba(5, 10, 25, 0.7);
+            border: 1px solid rgba(100, 160, 230, 0.3);
+            border-radius: 5px;
+            cursor: crosshair;
+        }
+
+        /* pinterest window */
+        #pinterestWindow {
+            width: 400px;
+            height: 600px;
+        }
+
+        .pinterest-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pinterest-iframe-container {
+            flex: 1;
+            overflow: hidden;
+            border-radius: 5px;
+            background: rgba(5, 10, 25, 0.7);
+        }
+
+        .pinterest-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* login animation window */
+        .login-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .login-window.active {
+            display: flex;
+        }
+
+        .login-content {
+            width: 600px;
+            max-width: 90%;
+        }
+
+        .login-line {
+            margin: 5px 0;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .login-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #0f0;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        /* glitch effect for header */
+        .glitch {
+            position: relative;
+            animation: glitch 5s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            1% { transform: translate(-1px, 1px); }
+            2% { transform: translate(1px, -1px); }
+            3% { transform: translate(-1px, 1px); }
+            4% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+
+        /* blinking cursor */
+        .blinking-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #aaccff;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* responsive */
+        @media (max-width: 768px) {
+            .desktop-icon {
+                width: 70px;
+                height: 80px;
+            }
+            
+            .window {
+                width: 90vw;
+                left: 5vw;
+            }
+            
+            .start-menu {
+                width: 250px;
+            }
+            
+            .glitch-gif {
+                width: 100px;
+                height: 100px;
+                bottom: 50px;
+            }
+            
+            #paintWindow {
+                width: 95vw;
+                height: 70vh;
+                left: 2.5vw;
+            }
+            
+            #pinterestWindow {
+                width: 95vw;
+                height: 70vh;
+                left: 2.5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- decorative glitch gif -->
+    <img src="https://i.pinimg.com/originals/91/37/cc/9137cca9bbcaf148a2c405f068c6c80b.gif" class="glitch-gif" alt="Cyberpunk glitch effect">
+
+    <!-- desktop icons -->
+    <div class="desktop" id="desktop">
+      
+        <!-- terminal icon -->
+        <div class="desktop-icon" id="terminal-icon" onclick="openTerminal()" oncontextmenu="selectIcon('terminal')">
+            <div class="icon-image">
+                <i class="fas fa-terminal"></i>
+            </div>
+            <div class="icon-label">TERMINAL</div>
+        </div>
+
+        <!-- paint icon -->
+        <div class="desktop-icon" id="paint-icon" onclick="openPaint()" oncontextmenu="selectIcon('paint')">
+            <div class="icon-image">
+                <i class="fas fa-paint-brush"></i>
+            </div>
+            <div class="icon-label">PAINT</div>
+        </div>
+
+        <!-- pinterest icon -->
+        <div class="desktop-icon" id="pinterest-icon" onclick="openPinterest()" oncontextmenu="selectIcon('pinterest')">
+            <div class="icon-image">
+                <i class="fab fa-pinterest"></i>
+            </div>
+            <div class="icon-label">PINTEREST</div>
+        </div>
+
+        <!-- file explorer icon -->
+        <div class="desktop-icon" onclick="openFiles()" oncontextmenu="selectIcon('files')">
+            <div class="icon-image">
+                <i class="fas fa-folder"></i>
+            </div>
+            <div class="icon-label">FILES</div>
+        </div>
+
+        <!-- about icon -->
+        <div class="desktop-icon" onclick="openAbout()" oncontextmenu="selectIcon('about')">
+            <div class="icon-image">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="icon-label">ABOUT</div>
+        </div>
+
+        <!-- settings icon -->
+        <div class="desktop-icon" onclick="openSettings()" oncontextmenu="selectIcon('settings')">
+            <div class="icon-image">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="icon-label">SETTINGS</div>
+        </div>
+
+        <!-- browser icon -->
+        <div class="desktop-icon" onclick="openBrowser()" oncontextmenu="selectIcon('browser')">
+            <div class="icon-image">
+                <i class="fas fa-compass"></i>
+            </div>
+            <div class="icon-label">BROWSER</div>
+        </div>
+    </div>
+
+    <!-- taskbar -->
+    <div class="taskbar">
+        <button class="start-button" onclick="toggleStartMenu()">
+            <i class="fas fa-play"></i> START
+        </button>
+        
+        <!-- taskbar icons -->
+        <div style="display: flex; gap: 15px;">
+            <div class="taskbar-icon" onclick="launchCybersphere()" title="Cybersphere" style="cursor: pointer; padding: 5px 10px; border-radius: 4px; background: rgba(30, 60, 120, 0.6);">
+                <i class="fas fa-globe-americas" style="color: #aaccff;"></i>
+                <span style="margin-left: 5px; font-size: 0.8rem; color: #aaccff;">CYBERSPHERE</span>
+            </div>
+            <div class="taskbar-icon" onclick="openTerminal()" title="Terminal" style="cursor: pointer; padding: 5px; border-radius: 4px;">
+                <i class="fas fa-terminal" style="color: #aaccff;"></i>
+            </div>
+            <div class="taskbar-icon" onclick="openPaint()" title="Paint" style="cursor: pointer; padding: 5px; border-radius: 4px;">
+                <i class="fas fa-paint-brush" style="color: #aaccff;"></i>
+            </div>
+        </div>
+        
+        <div class="clock" id="clock">00:00:00</div>
+    </div>
+
+    <!-- start menu -->
+    <div class="start-menu" id="startMenu">
+        <div class="menu-header">
+            <h3 class="glitch">SYSTEM MENU <span class="blinking-cursor"></span></h3>
+        </div>
+        <div class="menu-items">
+            <div class="menu-item" onclick="launchCybersphere()">
+                <i class="fas fa-globe-americas"></i>
+                <span>Launch Cybersphere</span>
+            </div>
+            <div class="menu-item" onclick="openTerminal()">
+                <i class="fas fa-terminal"></i>
+                <span>System Terminal</span>
+            </div>
+            <div class="menu-item" onclick="openPaint()">
+                <i class="fas fa-paint-brush"></i>
+                <span>Paint Program</span>
+            </div>
+            <div class="menu-item" onclick="openFiles()">
+                <i class="fas fa-folder"></i>
+                <span>File Explorer</span>
+            </div>
+            <div class="menu-item" onclick="openBrowser()">
+                <i class="fas fa-compass"></i>
+                <span>Network Browser</span>
+            </div>
+            <div class="menu-item" onclick="openSettings()">
+                <i class="fas fa-cog"></i>
+                <span>System Settings</span>
+            </div>
+            <div class="menu-item" onclick="openAbout()">
+                <i class="fas fa-user"></i>
+                <span>About This System</span>
+            </div>
+            <div class="menu-item" style="margin-top: 20px; color: #ff8888;" onclick="shutdown()">
+                <i class="fas fa-power-off"></i>
+                <span>Shutdown System</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- login animation window (for cybersphere) -->
+    <div class="login-window" id="loginWindow">
+        <div class="login-content" id="loginContent">
+            <!-- login sequence will be generated here -->
+        </div>
+    </div>
+
+    <!-- terminal window -->
+    <div class="window" id="terminalWindow">
+        <div class="window-header" id="terminalHeader">
+            <div class="window-title">SYSTEM TERMINAL</div>
+            <div class="window-controls">
+                <button onclick="minimizeWindow('terminal')"><i class="fas fa-window-minimize"></i></button>
+                <button onclick="closeWindow('terminal')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <div id="terminalContent">
+                <p>> SYSTEM TERMINAL v2.3.1</p>
+                <p>> Initializing connection to Wired...</p>
+                <p>> Connection established.</p>
+                <p>> Type 'help' for available commands.</p>
+                <p>> </p>
+                <div id="terminalOutput"></div>
+                <div style="display: flex;">
+                    <span>></span>
+                    <input type="text" id="terminalInput" style="flex: 1; background: transparent; border: none; color: #aaccff; margin-left: 10px; outline: none;" 
+                           onkeydown="handleTerminalInput(event)" autofocus>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- paint window -->
+    <div class="window" id="paintWindow">
+        <div class="window-header">
+            <div class="window-title">PAINT PROGRAM</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('paint')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding: 0; overflow: hidden;">
+            <main>
+                <div class="left-block">
+                    <div class="colors">
+                        <button type="button" value="#0000ff" style="background-color: #0000ff;"></button>
+                        <button type="button" value="#009fff" style="background-color: #009fff;"></button>
+                        <button type="button" value="#0fffff" style="background-color: #0fffff;"></button>
+                        <button type="button" value="#bfffff" style="background-color: #bfffff;"></button>
+                        <button type="button" value="#000000" style="background-color: #000000;"></button>
+                        <button type="button" value="#333333" style="background-color: #333333;"></button>
+                        <button type="button" value="#666666" style="background-color: #666666;"></button>
+                        <button type="button" value="#999999" style="background-color: #999999;"></button>
+                        <button type="button" value="#ffcc66" style="background-color: #ffcc66;"></button>
+                        <button type="button" value="#ffcc00" style="background-color: #ffcc00;"></button>
+                        <button type="button" value="#ffff00" style="background-color: #ffff00;"></button>
+                        <button type="button" value="#ffff99" style="background-color: #ffff99;"></button>
+                        <button type="button" value="#003300" style="background-color: #003300;"></button>
+                        <button type="button" value="#555000" style="background-color: #555000;"></button>
+                        <button type="button" value="#00ff00" style="background-color: #00ff00;"></button>
+                        <button type="button" value="#99ff99" style="background-color: #99ff99;"></button>
+                        <button type="button" value="#f00000" style="background-color: #f00000;"></button>
+                        <button type="button" value="#ff6600" style="background-color: #ff6600;"></button>
+                        <button type="button" value="#ff9933" style="background-color: #ff9933;"></button>
+                        <button type="button" value="#f5deb3" style="background-color: #f5deb3;"></button>
+                        <button type="button" value="#330000" style="background-color: #330000;"></button>
+                        <button type="button" value="#663300" style="background-color: #663300;"></button>
+                        <button type="button" value="#cc6600" style="background-color: #cc6600;"></button>
+                        <button type="button" value="#deb887" style="background-color: #deb887;"></button>
+                        <button type="button" value="#aa0fff" style="background-color: #aa0fff;"></button>
+                        <button type="button" value="#cc66cc" style="background-color: #cc66cc;"></button>
+                        <button type="button" value="#ff66ff" style="background-color: #ff66ff;"></button>
+                        <button type="button" value="#ff99ff" style="background-color: #ff99ff;"></button>
+                        <button type="button" value="#e8c4e8" style="background-color: #e8c4e8;"></button>
+                        <button type="button" value="#ffffff" style="background-color: #ffffff;"></button>
+                    </div>
+                    <div class="brushes">
+                        <button type="button" value="1"></button>
+                        <button type="button" value="2"></button>
+                        <button type="button" value="3"></button>
+                        <button type="button" value="4"></button>
+                        <button type="button" value="5"></button>
+                    </div>
+                    <div class="buttons">
+                        <button id="clear" type="button">Clear</button>
+                        <button id="save" type="button">Save & Share</button>
+                    </div>
+                </div>
+                <div class="right-block">
+                    <canvas id="paint-canvas" width="640" height="400"></canvas>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- pinterest window -->
+    <div class="window" id="pinterestWindow">
+        <div class="window-header">
+            <div class="window-title">PINTEREST WIDGET</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('pinterest')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding: 15px; overflow: hidden;">
+            <div class="pinterest-container">
+                <div class="pinterest-iframe-container">
+                    <iframe src="https://assets.pinterest.com/ext/embed.html?id=1407443629893467" frameborder="0" scrolling="no"></iframe>
+                </div>
+                <p style="margin-top: 10px; text-align: center; font-size: 0.5rem; color: #88aaff;">
+                    > Connected to Pinterest network...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- about window -->
+    <div class="window" id="aboutWindow">
+        <div class="window-header">
+            <div class="window-title">ABOUT THIS SYSTEM</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('about')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>BROOKLYNN'S SYSTEM DESKTOP</h3>
+            <p>> Version: 1.0.0</p>
+            <p>> Theme: Microsoft Otaku</p>
+            <p>> Status: All systems operational</p>
+            <br>
+            <p>Welcome to my personal web interface.</p>
+            <p>This desktop environment serves as a gateway to my various projects and some other fun stuff.</p>
+            <br>
+            <p>Main Applications:</p>
+            <p>• <strong>Cybersphere</strong>: REDACTED </p>
+            <p>• <strong>Terminal</strong>: System command interface</p>
+            <p>• <strong>Paint</strong>: Creative drawing program</p>
+            <p>• <strong>Pinterest</strong>: Visual inspiration widget</p>
+            <br>
+            <p>> System initialized: December 2025</p>
+        </div>
+    </div>
+
+    <!-- files window -->
+    <div class="window" id="filesWindow">
+        <div class="window-header">
+            <div class="window-title">FILE EXPLORER</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('files')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>PROJECT DIRECTORY</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div class="folder-item" onclick="launchCybersphere()">
+                    <i class="fas fa-globe-americas" style="font-size: 2rem;"></i>
+                    <p>Cybersphere</p>
+                </div>
+                <div class="folder-item" onclick="openPaint()">
+                    <i class="fas fa-paint-brush" style="font-size: 2rem;"></i>
+                    <p>Paint</p>
+                </div>
+                <div class="folder-item" onclick="openPinterest()">
+                    <i class="fab fa-pinterest" style="font-size: 2rem;"></i>
+                    <p>Pinterest</p>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-pen-fancy" style="font-size: 2rem;"></i>
+                    <p>Writings</p>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-code" style="font-size: 2rem;"></i>
+                    <p>Projects</p>
+                </div>
+                <div class="folder-item">
+                    <i class="fas fa-camera" style="font-size: 2rem;"></i>
+                    <p>Photography</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // real-time clock
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // start menu toggle
+        let startMenuActive = false;
+        function toggleStartMenu() {
+            const menu = document.getElementById('startMenu');
+            startMenuActive = !startMenuActive;
+            menu.classList.toggle('active', startMenuActive);
+        }
+
+        // close start menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('startMenu');
+            const startBtn = document.querySelector('.start-button');
+            
+            if (startMenuActive && !menu.contains(e.target) && !startBtn.contains(e.target)) {
+                startMenuActive = false;
+                menu.classList.remove('active');
+            }
+        });
+
+        // cybersphere with faux login animation
+        function launchCybersphere() {
+            const loginWindow = document.getElementById('loginWindow');
+            const loginContent = document.getElementById('loginContent');
+            
+            loginWindow.classList.add('active');
+            
+            // clear previous content
+            loginContent.innerHTML = '';
+            
+            // login sequence
+            const messages = [
+                "> INITIALIZING CYBERSPHERE ACCESS PROTOCOL...",
+                "> CONNECTING TO WIRED NETWORK...",
+                "> AUTHENTICATING USER: BROOKLYNN...",
+                "> VERIFYING NEURAL PATTERNS...",
+                "> ACCESS GRANTED: LEVEL 9 CLEARANCE",
+                "> ESTABLISHING SECURE CONNECTION...",
+                "> BYPASSING FIREWALL PROTOCOLS...",
+                "> ENCRYPTION: AES-256 ACTIVE",
+                "> ENTERING CYBERSPHERE IN 3... 2... 1...",
+                "> WELCOME TO THE OTHER SIDE"
+            ];
+            
+            let delay = 0;
+            messages.forEach((msg, index) => {
+                setTimeout(() => {
+                    const line = document.createElement('div');
+                    line.className = 'login-line';
+                    line.innerHTML = msg + (index === messages.length - 1 ? '' : '<span class="login-cursor"></span>');
+                    loginContent.appendChild(line);
+                    loginContent.scrollTop = loginContent.scrollHeight;
+                    
+                    // last message - redirect
+                    if (index === messages.length - 1) {
+                        setTimeout(() => {
+                            window.open('https://notrlyanon.github.io/cybersphere/', '_blank');
+                            loginWindow.classList.remove('active');
+                            loginContent.innerHTML = '';
+                        }, 2000);
+                    }
+                }, delay);
+                delay += 800;
+            });
+            
+            // vlose start menu if open
+            startMenuActive = false;
+            document.getElementById('startMenu').classList.remove('active');
+        }
+
+        // pinterest window
+        function openPinterest() {
+            document.getElementById('pinterestWindow').classList.add('active');
+        }
+
+        // paint program
+        function openPaint() {
+            document.getElementById('paintWindow').classList.add('active');
+            initializePaint();
+        }
+
+        // window management
+        function openTerminal() {
+            document.getElementById('terminalWindow').classList.add('active');
+            document.getElementById('terminalInput').focus();
+        }
+
+        function openAbout() {
+            document.getElementById('aboutWindow').classList.add('active');
+        }
+
+        function openFiles() {
+            document.getElementById('filesWindow').classList.add('active');
+        }
+
+        function openSettings() {
+            alert('System Settings - Coming soon!');
+        }
+
+        function openBrowser() {
+            alert('Network Browser - Coming soon!');
+        }
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId + 'Window').classList.remove('active');
+        }
+
+        function minimizeWindow(windowId) {
+            document.getElementById(windowId + 'Window').classList.remove('active');
+        }
+
+        // icon selection (right-click simulation)
+        function selectIcon(iconId) {
+            event.preventDefault();
+            
+            // clear previous selection
+            document.querySelectorAll('.desktop-icon').forEach(icon => {
+                icon.classList.remove('selected');
+            });
+            
+            // select new icon
+            const iconElement = document.getElementById(iconId + '-icon');
+            if (iconElement) {
+                iconElement.classList.add('selected');
+            }
+        }
+
+        // terminal functionality
+        const terminalCommands = {
+            'help': 'Available commands: help, clear, date, about, cybersphere, paint, pinterest, social, github, ls, pwd, neofetch',
+            'clear': function() { 
+                document.getElementById('terminalOutput').innerHTML = '';
+                return 'Terminal cleared.';
+            },
+            'date': function() { return new Date().toString(); },
+            'about': 'Brooklynn\'s System Desktop v1.0 - 2000s Microsoft themed interface',
+            'cybersphere': 'Launching Cybersphere with secure login protocol...',
+            'paint': 'Opening paint program...',
+            'pinterest': 'Opening Pinterest widget...',
+            'social': 'Social links: TikTok/Instagram @brooklynnfancy',
+            'github': 'GitHub: https://github.com/notrlyanon',
+            'ls': 'cybersphere/ paint/ pinterest/ writings/ art/ photos/',
+            'pwd': '/home/brooklynn/system-desktop',
+            'login': 'Initiating cybersphere access protocol...',
+            'neofetch': 'BrooklynnOS v1.0\nTheme: 2000s Microsoft Otaku\nShell: WebTerminal 2.3\nResolution: Unknown\nDE: Custom WebDE'
+        };
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('terminalInput');
+                const command = input.value.toLowerCase().trim();
+                const output = document.getElementById('terminalOutput');
+                
+                // add command to history
+                output.innerHTML += `<div>> ${command}</div>`;
+                
+                // process command
+                if (command === 'cybersphere' || command === 'login') {
+                    output.innerHTML += `<div>Launching Cybersphere with secure login protocol...</div>`;
+                    setTimeout(() => launchCybersphere(), 500);
+                } else if (command === 'paint') {
+                    output.innerHTML += `<div>Opening paint program...</div>`;
+                    setTimeout(() => openPaint(), 500);
+                } else if (command === 'pinterest') {
+                    output.innerHTML += `<div>Opening Pinterest widget...</div>`;
+                    setTimeout(() => openPinterest(), 500);
+                } else if (terminalCommands[command]) {
+                    if (typeof terminalCommands[command] === 'function') {
+                        output.innerHTML += `<div>${terminalCommands[command]()}</div>`;
+                    } else {
+                        output.innerHTML += `<div>${terminalCommands[command]}</div>`;
+                    }
+                } else if (command) {
+                    output.innerHTML += `<div>Command not found: ${command}. Type 'help' for available commands.</div>`;
+                }
+                
+                // clear input
+                input.value = '';
+                
+                // scroll to bottom
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        // paint program functionality
+        function initializePaint() {
+            const canvas = document.getElementById('paint-canvas');
+            const ctx = canvas.getContext('2d');
+            let painting = false;
+            let brushColor = '#0000ff';
+            let brushSize = 2;
+
+            // set initial canvas background
+            ctx.fillStyle = 'rgba(5, 10, 25, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // start painting
+            function startPosition(e) {
+                painting = true;
+                draw(e);
+            }
+
+            // end painting
+            function endPosition() {
+                painting = false;
+                ctx.beginPath();
+            }
+
+            // draw function
+            function draw(e) {
+                if (!painting) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = brushColor;
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+
+            // event listeners for painting
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousemove', draw);
+
+            // color selection
+            document.querySelectorAll('.colors button').forEach(button => {
+                // set initial button colors from value attributes
+                button.style.backgroundColor = button.value;
+                
+                button.addEventListener('click', () => {
+                    brushColor = button.value;
+                    
+                    // add highlight to selected color
+                    document.querySelectorAll('.colors button').forEach(b => {
+                        b.style.boxShadow = '';
+                        b.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+                    });
+                    
+                    button.style.boxShadow = '0 0 8px #fff, 0 0 12px ' + brushColor;
+                    button.style.border = '2px solid rgba(255, 255, 255, 0.8)';
+                });
+            });
+
+            // brush size selection
+            document.querySelectorAll('.brushes button').forEach(button => {
+                button.addEventListener('click', () => {
+                    brushSize = parseInt(button.value);
+                    
+                    // add highlight to selected brush
+                    document.querySelectorAll('.brushes button').forEach(b => {
+                        b.style.boxShadow = '';
+                    });
+                    
+                    button.style.boxShadow = '0 0 8px rgba(100, 160, 230, 0.8)';
+                });
+            });
+
+            // clear button
+            document.getElementById('clear').addEventListener('click', () => {
+                ctx.fillStyle = 'rgba(5, 10, 25, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            });
+
+            // save button
+            document.getElementById('save').addEventListener('click', () => {
+                const dataURL = canvas.toDataURL('image/png');
+                
+                if (confirm(`🎨 ART SAVED!\n\nWould you like to share your creation with me?\n\nI'd love to see it and might even put it on my fridge!`)) {
+                    // in a real implementation, this would send to a server
+                    // for now, we show a message
+                    alert("Thank you! Once I set up my email, you'll be able to send your art directly to me!\n\nFor now, you can download it and share it with me on social media @brooklynnfancy!");
+                    
+                    // show success message in terminal
+                    const terminalOutput = document.getElementById('terminalOutput');
+                    if (terminalOutput) {
+                        terminalOutput.innerHTML += `<div>> Paint creation saved successfully!</div>`;
+                        terminalOutput.innerHTML += `<div>> Thank you for sharing your art!</div>`;
+                        terminalOutput.innerHTML += `<div>> Share with @brooklynnfancy on social media!</div>`;
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
+                } else {
+                    // download the image
+                    const link = document.createElement('a');
+                    link.download = 'brooklynn-desktop-art.png';
+                    link.href = dataURL;
+                    link.click();
+                }
+            });
+
+            // set initial color and brush highlights
+            document.querySelector('.colors button').style.boxShadow = '0 0 8px #fff, 0 0 12px #0000ff';
+            document.querySelector('.colors button').style.border = '2px solid rgba(255, 255, 255, 0.8)';
+            document.querySelector('.brushes button').style.boxShadow = '0 0 8px rgba(100, 160, 230, 0.8)';
+        }
+
+        // make windows draggable
+        function makeDraggable(element, header) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            
+            header.onmousedown = dragMouseDown;
+            
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+            
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+            
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        // initialize draggable windows
+        document.querySelectorAll('.window').forEach(window => {
+            const header = window.querySelector('.window-header');
+            if (header) makeDraggable(window, header);
+        });
+
+        // shutdown function
+        function shutdown() {
+            if (confirm('Shut down system? You can always refresh to restart.')) {
+                document.body.innerHTML = `
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #000; color: #0f0; font-family: 'Courier New', monospace;">
+                        <div style="text-align: center;">
+                            <h1 style="margin-bottom: 20px;">SYSTEM SHUTDOWN</h1>
+                            <p>> Terminating all processes...</p>
+                            <p>> Disconnecting from Wired...</p>
+                            <p>> Connection to cybersphere lost.</p>
+                            <p style="margin-top: 30px; color: #88aaff;">Refresh page to restart system.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // initialize with terminal icon selected
+        setTimeout(() => {
+            selectIcon('terminal');
+        }, 100);
+    </script>
+</body>
+</html>
