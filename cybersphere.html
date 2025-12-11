@@ -1,1 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBERSPHERE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #0a0a1a;
+            color: #88aaff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.08;
+            background: linear-gradient(to bottom, #0a0a1a 0%, #0d1a2b 100%);
+        }
+
+        /* overlapping code effect */
+        .code-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.12;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(80, 130, 200, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(100, 160, 230, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px;
+        }
+
+        /* terminal header */
+        .terminal-header {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .terminal-header h1 {
+            font-size: 1.8rem;
+            color: #88aaff;
+            text-shadow: 0 0 8px #88aaff, 0 0 4px #6699ff;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .terminal-header p {
+            font-size: 0.9rem;
+            color: #88aaff;
+            opacity: 0.8;
+        }
+
+        /* 3d sphere Container */
+        .sphere-container {
+            position: relative;
+            width: 1100px;
+            height: 600px;
+            perspective: 1000px;
+            margin-top: 40px;
+        }
+
+        /* the 3d sphere - NO ROTATION HERE */
+        .sphere {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            transform-origin: center;
+            /* the sphere itself won't rotate anymore */
+        }
+
+        /* menu items arranged in a sphere - ALL. FACING. FORWARD. ALWAYS. */
+        .menu-item {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            top: 50%;
+            left: 50%;
+            margin: -80px 0 0 -80px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #aaccff;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px #aaccff;
+            cursor: pointer;
+            transition: all 0.4s, transform 0.4s;
+            background: rgba(20, 40, 80, 0.7);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            box-shadow: 0 0 15px rgba(100, 160, 230, 0.4);
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            transform-style: preserve-3d;
+            /* always face forward - NO ROTATION APPLIED TO ITEMS */
+            transform-origin: center center -400px;
+            pointer-events: auto;
+            backface-visibility: visible;
+        }
+
+        .menu-item:hover {
+            background: rgba(30, 60, 120, 0.9);
+            box-shadow: 0 0 25px rgba(120, 180, 255, 0.7);
+            transform: scale(1.1) translateZ(20px) !important;
+            color: #cce5ff;
+            border-color: rgba(140, 190, 255, 0.7);
+            z-index: 100 !important;
+        }
+
+        .menu-item.active {
+            background: rgba(40, 80, 160, 0.9);
+            box-shadow: 0 0 30px rgba(140, 190, 255, 0.9);
+            color: #cce5ff;
+            border-color: rgba(160, 200, 255, 0.8);
+            transform: scale(1.05) translateZ(10px) !important;
+        }
+
+        .menu-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #aaccff;
+        }
+
+        /* special item styles */
+        .password-protected {
+            border-color: #a88cff;
+            box-shadow: 0 0 15px rgba(168, 140, 255, 0.6);
+        }
+
+        .password-protected i {
+            color: #a88cff;
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            border-style: dashed;
+            border-color: rgba(150, 180, 220, 0.4);
+        }
+
+        .error-mode {
+            animation: errorGlitch 0.8s infinite;
+            border-color: #ff8888;
+        }
+
+        @keyframes errorGlitch {
+            0% { opacity: 1; filter: hue-rotate(0deg); }
+            50% { opacity: 0.7; filter: hue-rotate(20deg); }
+            100% { opacity: 1; filter: hue-rotate(0deg); }
+        }
+
+        /* content display */
+        .content-display {
+            position: absolute;
+            bottom: 30px;
+            width: 80%;
+            max-width: 800px;
+            height: 120px;
+            background: rgba(10, 25, 50, 0.85);
+            border: 1px solid rgba(100, 160, 230, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            box-shadow: 0 0 20px rgba(80, 140, 220, 0.3);
+            color: #aaccff;
+        }
+
+        .content-display h3 {
+            color: #aaccff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* popup modal */
+        .popup-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 20, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: rgba(15, 30, 60, 0.95);
+            border: 2px solid #88aaff;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+            color: #aaccff;
+            box-shadow: 0 0 30px rgba(100, 160, 230, 0.6);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #88aaff;
+            padding-bottom: 10px;
+        }
+
+        .popup-header h2 {
+            color: #aaccff;
+        }
+
+        .close-popup {
+            background: transparent;
+            border: none;
+            color: #aaccff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .folder {
+            background: rgba(30, 60, 120, 0.7);
+            border: 1px solid #88aaff;
+            border-radius: 8px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .folder:hover {
+            background: rgba(40, 80, 160, 0.9);
+            box-shadow: 0 0 10px #88aaff;
+        }
+
+        .folder i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .glitch-text {
+            animation: textGlitch 3s infinite;
+        }
+
+        @keyframes textGlitch {
+            0% { opacity: 1; }
+            1% { opacity: 0.8; color: #a88cff; }
+            2% { opacity: 1; }
+            3% { opacity: 0.7; }
+            4% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            background: rgba(30, 60, 120, 0.7);
+            border: 1px solid #88aaff;
+            border-radius: 8px;
+            padding: 8px 15px;
+            color: #aaccff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: rgba(40, 80, 160, 0.9);
+            box-shadow: 0 0 10px #88aaff;
+        }
+
+        /* writing sample popup */
+        .writing-sample {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(10, 20, 40, 0.7);
+            border: 1px solid #a88cff;
+            border-radius: 8px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .writing-sample h4 {
+            color: #aaccff;
+            margin-bottom: 10px;
+        }
+
+        /* scroll instructions */
+        .instructions {
+            position: absolute;
+            bottom: 170px;
+            color: #88aaff;
+            font-size: 0.9rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .instructions i {
+            margin: 0 10px;
+            color: #aaccff;
+        }
+
+        /* terminal-style blinking cursor */
+        .blinking-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #aaccff;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* mobile controls */
+        .mobile-controls {
+            display: none;
+            position: absolute;
+            bottom: 160px;
+            width: 200px;
+            justify-content: space-between;
+        }
+
+        .mobile-controls button {
+            background: rgba(30, 60, 120, 0.7);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            color: #aaccff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+        }
+
+        /* glitch effect */
+        .glitch {
+            position: relative;
+            animation: glitch 5s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            1% { transform: translate(-1px, 1px); }
+            2% { transform: translate(1px, -1px); }
+            3% { transform: translate(-1px, 1px); }
+            4% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+
+        /* password prompt */
+        .password-prompt {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 20, 0.9);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .password-box {
+            background: rgba(15, 30, 60, 0.95);
+            border: 2px solid #a88cff;
+            border-radius: 10px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            background: rgba(10, 20, 40, 0.8);
+            border: 1px solid #88aaff;
+            color: #aaccff;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+        }
+
+        .password-box button {
+            background: rgba(30, 60, 120, 0.8);
+            border: 1px solid #88aaff;
+            color: #aaccff;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        /* responsive adjustments */
+        @media (max-width: 1150px) {
+            .sphere-container {
+                width: 95vw;
+                height: 500px;
+            }
+            
+            .menu-item {
+                width: 140px;
+                height: 140px;
+                margin: -70px 0 0 -70px;
+                font-size: 0.9rem;
+            }
+            
+            .menu-item i {
+                font-size: 1.8rem;
+            }
+            
+            .mobile-controls {
+                display: flex;
+            }
+            
+            .instructions {
+                bottom: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sphere-container {
+                height: 450px;
+            }
+            
+            .menu-item {
+                width: 120px;
+                height: 120px;
+                margin: -60px 0 0 -60px;
+                font-size: 0.8rem;
+            }
+            
+            .menu-item i {
+                font-size: 1.5rem;
+            }
+            
+            .content-display {
+                height: 100px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- background -->
+    <div id="matrix-bg"></div>
+    
+    <!-- overlapping code effect -->
+    <div class="code-overlay"></div>
+    
+    <!-- terminal header -->
+    <div class="terminal-header">
+        <h1 class="glitch">CYBERSPHERE <span class="blinking-cursor"></span></h1>
+        <p>ACCESS : CONNECTION ESTABLISHED</p>
+    </div>
+    
+    <!-- 3d sphere container -->
+    <div class="sphere-container" id="sphereContainer">
+        <div class="sphere" id="sphere">
+            <!-- menu items generated by java -->
+        </div>
+    </div>
+    
+    <!-- instructions -->
+    <div class="instructions">
+        <i class="fas fa-arrow-left"></i> 
+        SCROLL HORIZONTALLY OR USE ARROW KEYS TO NAVIGATE THE SPHERE 
+        <i class="fas fa-arrow-right"></i>
+    </div>
+    
+    <!-- mobile controls -->
+    <div class="mobile-controls">
+        <button id="prevBtn"><i class="fas fa-chevron-left"></i> PREV</button>
+        <button id="nextBtn">NEXT <i class="fas fa-chevron-right"></i></button>
+    </div>
+    
+    <!-- content display -->
+    <div class="content-display" id="contentDisplay">
+        <h3>SYSTEM READY</h3>
+        <p>> Initializing Cybersphere navigation interface...<br>
+           > Connection to Wired established...<br>
+           > Select a module to begin.</p>
+    </div>
+    
+    <!-- popup modal -->
+    <div class="popup-modal" id="popupModal">
+        <div class="popup-content" id="popupContent">
+            <!-- Popup content will be injected here -->
+        </div>
+    </div>
+    
+    <!-- password prompt -->
+    <div class="password-prompt" id="passwordPrompt">
+        <div class="password-box">
+            <h3>ACCESS RESTRICTED</h3>
+            <p>ENTER PASSWORD TO CONTINUE</p>
+            <input type="password" id="passwordInput" placeholder="PASSWORD">
+            <div>
+                <button id="submitPassword">SUBMIT</button>
+                <button id="cancelPassword">CANCEL</button>
+            </div>
+            <p id="passwordError" style="color:#ff8888; margin-top:10px; display:none;">ACCESS DENIED</p>
+        </div>
+    </div>
+    
+    <script>
+      
+      //* might take away most of this and add to desktop/index instead *//
+      
+        // menu items data 
+        const menuItems = [
+            { 
+                id: 1, 
+                name: "MEMORIES", 
+                icon: "fa-sd-card", 
+                content: "> Memory archive.<br>> Personal logs and encrypted data.<br>> Access requires authentification.",
+                type: "password",
+                specialClass: "password-protected",
+                password: "lain"
+            },
+            { 
+                id: 2, 
+                name: "TUTORIALS", 
+                icon: "fa-graduation-cap", 
+                content: "> Educational resources coming soon.<br>> Web development guides and how-to's.<br>> Check back for updates.",
+                type: "coming-soon",
+                specialClass: "coming-soon"
+            },
+            { 
+                id: 3, 
+                name: "RESOURCES", 
+                icon: "fa-toolbox", 
+                content: "> Tools and fun resources coming soon.<br>> Useful links and downloads.<br>> Under construction.",
+                type: "coming-soon",
+                specialClass: "coming-soon"
+            },
+            { 
+                id: 4, 
+                name: "ABOUT PAGE", 
+                icon: "fa-code", 
+                content: "> Inspired by Serial Experiments Lain.<br>> Also inspired by Wired Collective Neocities.<br>> Tried to be mobile-friendly, I hope it worked.",
+                type: "info"
+            },
+            { 
+                id: 5, 
+                name: "ABOUT ME", 
+                icon: "fa-user", 
+                content: "> INFJ personality type.<br>> Creative developer and artist.<br>> More details coming soon.",
+                type: "info"
+            },
+            { 
+                id: 6, 
+                name: "UPDATES", 
+                icon: "fa-calendar-alt", 
+                content: "> Site updates and micro-blog.<br>> Yearly archive folders available.<br>> System Unstable.",
+                type: "updates"
+            },
+            { 
+                id: 7, 
+                name: "PHOTO BLOGS", 
+                icon: "fa-camera", 
+                content: "> ERROR: Connection unstable.<br>> Visual galleries and photo blogs.<br>> System recovering...",
+                type: "error",
+                specialClass: "error-mode"
+            },
+            { 
+                id: 8, 
+                name: "BLOGS", 
+                icon: "fa-blog", 
+                content: "> Password protected blog collection.<br>> Personal writings and thoughts.<br>> Access restricted.",
+                type: "password-blogs",
+                specialClass: "password-protected"
+            },
+            { 
+                id: 9, 
+                name: "WRITING", 
+                icon: "fa-pen-fancy", 
+                content: "> Creative writing portfolio.<br>> Fiction and personal works.<br>> Sneak peek available.",
+                type: "writing"
+            },
+            { 
+                id: 10, 
+                name: "SOCIAL MEDIA", 
+                icon: "fa-share-alt", 
+                content: "> All social media profiles.<br>> TikTok, Instagram, Threads, X, Bluesky, etc.<br>> Connect with me online.",
+                type: "social"
+            },
+            { 
+                id: 11, 
+                name: "ACTING", 
+                icon: "fa-theater-masks", 
+                content: "> Actors profiles coming soon.<br>> Performance portfolio.<br>> Check back later.",
+                type: "coming-soon",
+                specialClass: "coming-soon"
+            },
+            { 
+                id: 12, 
+                name: "CHARACTERS", 
+                icon: "fa-user-secret", 
+                content: "> Alternate personas and websites.<br>> Glitching folder system.<br>> Access other identities.",
+                type: "characters"
+            },
+            { 
+                id: 13, 
+                name: "PORTFOLIO", 
+                icon: "fa-briefcase", 
+                content: "> Website portfolio coming soon.<br>> Previous projects and designs.<br>> Under construction.",
+                type: "coming-soon",
+                specialClass: "coming-soon"
+            },
+            { 
+                id: 14, 
+                name: "PARTY ART", 
+                icon: "fa-paint-brush", 
+                content: "> Face paint and party art sevices.<br>> Instagram: @brookiespartyart<br>> Facebook: brookiespartyart",
+                type: "business"
+            },
+            { 
+                id: 15, 
+                name: "FREEBIES", 
+                icon: "fa-gift", 
+                content: "> Free codes and layouts coming soon.<br>> Resources to share with community.<br>> Check back for updates.",
+                type: "coming-soon",
+                specialClass: "coming-soon"
+            },
+            { 
+                id: 16, 
+                name: "TIPS", 
+                icon: "fa-coffee", 
+                content: "> Support my work on Ko-fi.<br>> Appreciate your contributions.<br>> Link to Ko-fi profile.",
+                type: "tips"
+            },
+            { 
+                id: 17, 
+                name: "NEIGHBORHOOD", 
+                icon: "fa-city", 
+                content: "> Virtual neighborhood of developers.<br>> Cool artists and websites I've found.<br>> Community links.",
+                type: "neighborhood"
+            },
+            { 
+                id: 18, 
+                name: "FUN SITES", 
+                icon: "fa-gamepad", 
+                content: "> Fun websites I've found online.<br>> Interesting discoveries and curiosities.<br>> Enjoy exploring.",
+                type: "fun"
+            }
+        ];
+
+        // social media links
+        const socialLinks = [
+            { name: "TikTok", url: "https://www.tiktok.com/@brooklynnfancy", icon: "fa-tiktok" },
+            { name: "Instagram", url: "https://www.instagram.com/brooklynnfancy/", icon: "fa-instagram" },
+            { name: "Threads", url: "https://www.threads.com/@brooklynnfancy", icon: "fa-threads" },
+            { name: "X (Twitter)", url: "https://x.com/brooklynnfancy", icon: "fa-twitter" },
+            { name: "Bluesky", url: "https://bsky.app/profile/brooklynnfancy.bsky.social", icon: "fa-cloud" },
+            { name: "Mastodon", url: "https://mastodon.social/@brooklynnfancy", icon: "fa-mastodon" },
+            { name: "LinkedIn", url: "https://www.linkedin.com/in/brooklynn-p-a01a09a6/", icon: "fa-linkedin" },
+            { name: "SpaceHey", url: "https://spacehey.com/home", icon: "fa-user-astronaut" },
+            { name: "Pi.fyi", url: "https://www.pi.fyi/u/brooklynn", icon: "fa-pi" }
+        ];
+
+        // blog links
+        const blogLinks = [
+            { name: "Pillowfort", url: "https://www.pillowfort.social/brooklynnfancy", icon: "fa-bed" },
+            { name: "Tumblr", url: "https://www.tumblr.com/brooklynnblogs", icon: "fa-tumblr" },
+            { name: "LiveJournal", url: "https://brooklynnfancy.livejournal.com", icon: "fa-book" },
+            { name: "Substack", url: "https://substack.com/@brooklynnfancy/notes", icon: "fa-newspaper" },
+            { name: "Blogger", url: "https://www.blogger.com/profile/07037005622033288236", icon: "fa-blogger" }
+        ];
+
+        // photo blog links
+        const photoBlogLinks = [
+            { name: "Pinterest", url: "https://www.pinterest.com/brooklynnfancy/", icon: "fa-pinterest" },
+            { name: "VSCO", url: "https://vsco.co/brooklynnfancy/gallery", icon: "fa-camera" }
+        ];
+
+        // writing platforms
+        const writingLinks = [
+            { name: "Wattpad", url: "https://www.wattpad.com/user/brooklynnfancy", icon: "fa-book-open" }
+        ];
+
+        // reading platforms
+        const readingLinks = [
+            { name: "StoryGraph", url: "https://app.thestorygraph.com/profile/brooklynnfancy", icon: "fa-chart-line" },
+            { name: "Goodreads", url: "https://www.goodreads.com/review/list/196083199?ref=nav_mybooks", icon: "fa-book" },
+            { name: "BookBub", url: "https://www.bookbub.com/profile/1716244382", icon: "fa-bookmark" }
+        ];
+
+        // writing sample
+        const writingSample = `"On certain days when the light catches just right, your dark eyes light up in just the right way allowing a warm homely light to emanate from your eyes. On days like that for just a few moments their seems to be more than all of the problems in the world. As foolish as it seems, and as sad as the world is, it makes everything all the better to know that for just a moment the silence in your eyes is unmasked to reveal a collective of raucous forest animals racing through the underbrush of a nightmare casting light on all the shadows. To make all of the shadows come up into the dusk you'd stare at the sun. All day. For hours you would sit and stare watching the ball of light for just that one moment of clarity so that things fall into place despite the broken remnants of our sunken lives..."
+
+> Original post: https://www.wattpad.com/story/1618138-to-save-a-life [jul. 2012]
+<span class="glitch-text">DATE GLITCH: 07.2012 | ACCESSING... | ERROR: TIMESTAMP CORRUPTED</span>`;
+
+        // sphere configuration
+        const sphere = document.getElementById('sphere');
+        const contentDisplay = document.getElementById('contentDisplay');
+        const sphereContainer = document.getElementById('sphereContainer');
+        const popupModal = document.getElementById('popupModal');
+        const popupContent = document.getElementById('popupContent');
+        const passwordPrompt = document.getElementById('passwordPrompt');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitPassword = document.getElementById('submitPassword');
+        const cancelPassword = document.getElementById('cancelPassword');
+        const passwordError = document.getElementById('passwordError');
+        
+        let currentRotation = 0;
+        const totalItems = menuItems.length;
+        const angleIncrement = 360 / totalItems;
+        const radius = 400; // Radius of the sphere
+        const depth = 400; // How far back the sphere goes
+        let activeItem = 0;
+        let currentPasswordItem = null;
+        let menuItemElements = [];
+        
+        // initialize the sphere with menu items - ALL FACING FORWARD
+        function initSphere() {
+            sphere.innerHTML = '';
+            menuItemElements = [];
+            
+            menuItems.forEach((item, index) => {
+                const menuItem = document.createElement('div');
+                menuItem.className = `menu-item ${item.specialClass || ''}`;
+                menuItem.id = `item-${item.id}`;
+                menuItem.innerHTML = `<i class="fas ${item.icon}"></i> ${item.name}`;
+                
+                // calculate position on sphere (circular layout)
+                const angle = angleIncrement * index;
+                
+                // convert to radians
+                const radian = angle * Math.PI / 180;
+                
+                // calculate position in 3D space (circular path)
+                const x = Math.sin(radian) * radius;
+                const z = Math.cos(radian) * radius - depth; // Move back in 3D space
+                const y = -Math.cos(radian) * 100; // Slight vertical offset for sphere effect
+                
+                // store position data
+                menuItem.dataset.angle = angle;
+                menuItem.dataset.x = x;
+                menuItem.dataset.y = y;
+                menuItem.dataset.z = z;
+                menuItem.dataset.index = index;
+                
+                // apply initial position - ALL BOXES FACE FORWARD (no rotation applied)
+                // use translate3d for better performance
+                menuItem.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
+                
+                // set z-index based on position (front items should be on top)
+                const zIndex = Math.round(100 + (z + depth) * 0.1);
+                menuItem.style.zIndex = zIndex;
+                
+                // add click event
+                menuItem.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleMenuItemClick(index);
+                });
+                
+                sphere.appendChild(menuItem);
+                menuItemElements.push(menuItem);
+            });
+            
+            // select first item by default
+            selectMenuItem(0);
+            
+            // initialize sphere rotation
+            updateSphereRotation();
+        }
+        
+        // handle menu item click
+        function handleMenuItemClick(index) {
+            const item = menuItems[index];
+            
+            // handle password protected items
+            if (item.type === 'password' || item.type === 'password-blogs') {
+                currentPasswordItem = index;
+                passwordPrompt.style.display = 'flex';
+                passwordInput.value = '';
+                passwordError.style.display = 'none';
+                passwordInput.focus();
+                return;
+            }
+            
+            // handle other item types
+            selectMenuItem(index);
+            
+            switch(item.type) {
+                case 'updates':
+                    showUpdatesPopup();
+                    break;
+                case 'writing':
+                    showWritingPopup();
+                    break;
+                case 'social':
+                    showSocialPopup();
+                    break;
+                case 'characters':
+                    showCharactersPopup();
+                    break;
+                case 'business':
+                    showBusinessPopup();
+                    break;
+                case 'tips':
+                    showTipsPopup();
+                    break;
+                case 'neighborhood':
+                    showNeighborhoodPopup();
+                    break;
+                case 'fun':
+                    showFunSitesPopup();
+                    break;
+                case 'error':
+                    // error mode, just show content
+                    break;
+                case 'coming-soon':
+                    // coming soon items, redirect to not_found
+                    setTimeout(() => {
+                        window.open('not_found.html', '_blank');
+                    }, 1000);
+                    break;
+                default:
+                    // regular info items, just show content
+                    break;
+            }
+        }
+        
+        // rotate the sphere - update each item's position individually
+        function rotateSphere(direction) {
+            currentRotation += direction * angleIncrement;
+            updateSphereRotation();
+            
+            // update active item based on rotation (item closest to front center)
+            let newActive = Math.round((360 - currentRotation % 360) / angleIncrement) % totalItems;
+            if (newActive < 0) newActive += totalItems;
+            
+            if (newActive !== activeItem) {
+                selectMenuItem(newActive);
+            }
+        }
+        
+        // update sphere rotation transform 
+        function updateSphereRotation() {
+            // not rotating the sphere container anymore
+            // instead, we update each item position individually to create the rotation effect
+            
+            menuItemElements.forEach((item, index) => {
+                // get the original angle for this item
+                const originalAngle = parseFloat(item.dataset.angle);
+                
+                // calculate new angle with rotation
+                const newAngle = originalAngle + currentRotation;
+                const radian = newAngle * Math.PI / 180;
+                
+                // calculate new position in space (circular path)
+                const x = Math.sin(radian) * radius;
+                const z = Math.cos(radian) * radius - depth;
+                const y = -Math.cos(radian) * 100;
+                
+                // update the item's position - STILL FACING FORWARD
+                item.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
+                
+                // update z-index based on z-position (items closer to front have higher z-index)
+                const zIndex = Math.round(100 + (z + depth) * 0.1);
+                item.style.zIndex = zIndex;
+                
+                // adjust opacity based on position (items in back are slightly transparent)
+                const opacity = 0.7 + (z + depth) / (2 * depth) * 0.3;
+                item.style.opacity = opacity;
+                
+                // scale items based on depth (items farther away are smaller)
+                const scale = 0.8 + (z + depth) / (2 * depth) * 0.2;
+                item.style.transform += ` scale(${scale})`;
+            });
+        }
+        
+        // select a menu item
+        function selectMenuItem(index) {
+            activeItem = index;
+            const item = menuItems[index];
+            
+            // update active class
+            menuItemElements.forEach((el, i) => {
+                if (i === index) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            
+            // update content display
+            contentDisplay.innerHTML = `<h3>${item.name} MODULE</h3><p>${item.content}</p>`;
+            
+            // add glitch effect to content
+            contentDisplay.classList.add('glitch');
+            setTimeout(() => {
+                contentDisplay.classList.remove('glitch');
+            }, 300);
+        }
+        
+        // show updates popup
+        function showUpdatesPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>UPDATES / MICRO-BLOG</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Site updates and development log.</p>
+                <div class="folder-grid">
+                    <div class="folder">
+                        <i class="fas fa-folder"></i>
+                        <div>2025</div>
+                    </div>
+                    <div class="folder coming-soon">
+                        <i class="fas fa-folder"></i>
+                        <div>2026</div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h3>DECEMBER 2025</h3>
+                    <p>> Cybersphere interface launched.<br>
+                       > Navigation system activated.<br>
+                       > All modules initialized.</p>
+                </div>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show writing popup
+        function showWritingPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>WRITING PORTFOLIO</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Creative writing and personal works.</p>
+                <div class="social-links">
+                    ${writingLinks.map(link => 
+                        `<a href="${link.url}" target="_blank" class="social-link">
+                            <i class="fab ${link.icon}"></i> ${link.name}
+                        </a>`
+                    ).join('')}
+                </div>
+                <div style="margin-top: 20px;">
+                    <h3>SNEAK PEEK AVAILABLE</h3>
+                    <p>Would you like to see a writing sample?</p>
+                    <button id="showWritingSample" style="margin: 10px 0; padding: 10px 20px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff; cursor: pointer; border-radius: 5px;">VIEW SAMPLE</button>
+                </div>
+                <div id="writingSampleContainer" style="display: none;"></div>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+            
+            // add event listener for showing writing sample
+            document.getElementById('showWritingSample').addEventListener('click', function() {
+                document.getElementById('writingSampleContainer').style.display = 'block';
+                document.getElementById('writingSampleContainer').innerHTML = `
+                    <div class="writing-sample">
+                        <h4>TO SAVE A LIFE - PROLOGUE</h4>
+                        <p>${writingSample}</p>
+                    </div>
+                `;
+                this.style.display = 'none';
+            });
+        }
+        
+        // show social media popup
+        function showSocialPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>SOCIAL MEDIA PROFILES</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Connect with me across platforms.</p>
+                <div class="social-links">
+                    ${socialLinks.map(link => 
+                        `<a href="${link.url}" target="_blank" class="social-link">
+                            <i class="fab ${link.icon}"></i> ${link.name}
+                        </a>`
+                    ).join('')}
+      </div>
+                
+                <div style="margin-top: 20px;">
+                    <h3>READING PROFILES</h3>
+                    <div class="social-links">
+                        ${readingLinks.map(link => 
+                            `<a href="${link.url}" target="_blank" class="social-link">
+                                <i class="fab ${link.icon}"></i> ${link.name}
+                            </a>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show characters popup
+        function showCharactersPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>ALTERNATE PERSONAS</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Access alternate identities and websites.</p>
+                <div class="folder-grid">
+                    <div class="folder glitch-text">
+                        <i class="fas fa-user-secret"></i>
+                        <div>PERSONA_01</div>
+                    </div>
+                    <div class="folder glitch-text">
+                        <i class="fas fa-user-ninja"></i>
+                        <div>PERSONA_02</div>
+                    </div>
+                    <div class="folder glitch-text">
+                        <i class="fas fa-robot"></i>
+                        <div>PERSONA_03</div>
+                    </div>
+                    <div class="folder glitch-text">
+                        <i class="fas fa-ghost"></i>
+                        <div>PERSONA_04</div>
+                    </div>
+                    <div class="folder coming-soon">
+                        <i class="fas fa-user-circle"></i>
+                        <div>PERSONA_05</div>
+                    </div>
+                    <div class="folder coming-soon">
+                        <i class="fas fa-user-circle"></i>
+                        <div>PERSONA_06</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; color: #a88cff;" class="glitch-text">> SYSTEM MESSAGE: Alternate personas coming soon. Identity fragmentation in progress.</p>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show business popup
+        function showBusinessPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>PARTY ART</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Face paint and party art services.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/brookiespartyart" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i> @brookiespartyart
+                    </a>
+                    <a href="https://facebook.com/brookiespartyart" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i> brookiespartyart
+                    </a>
+                </div>
+                <div style="margin-top: 20px;">
+                    <h3>SERVICES</h3>
+                    <p>> Face painting for events<br>
+                       > Balloon art/twisting<br>
+                       > Custom designs<br>
+                       > More coming soon</p>
+                </div>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show tips popup
+        function showTipsPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>SUPPORT MY WORK</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> If you enjoy my content, consider supporting me.</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://ko-fi.com/brooklynnfancy" target="_blank" style="display: inline-block; padding: 15px 30px; background: rgba(30,60,120,0.9); border: 2px solid #a88cff; border-radius: 10px; color: #aaccff; text-decoration: none; font-size: 1.2rem;">
+                        <i class="fas fa-coffee"></i> BUY ME A COFFEE ON KO-FI
+                    </a>
+                </div>
+                <p>> Your support helps me buy more coffee.</p>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show neighborhood popup
+        function showNeighborhoodPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>VIRTUAL NEIGHBORHOOD</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Cool developers, artists, and websites I've found online.</p>
+                <div class="folder-grid">
+                    <div class="folder">
+                        <i class="fas fa-laptop-code"></i>
+                        <div>WEB_DEV</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-palette"></i>
+                        <div>ARTISTS</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-music"></i>
+                        <div>MUSICIANS</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-gamepad"></i>
+                        <div>GAME_DEV</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-book"></i>
+                        <div>WRITERS</div>
+                    </div>
+                   <div class="folder">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <div>MISC</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px;">> Coming soon: List of interesting creators and websites.</p>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show fun sites popup
+        function showFunSitesPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>FUN WEBSITES</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Interesting and fun websites I've discovered.</p>
+                <div class="folder-grid">
+                    <div class="folder">
+                        <i class="fas fa-gamepad"></i>
+                        <div>GAMES</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-eye"></i>
+                        <div>VISUAL</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-paint-brush"></i>
+                        <div>CREATIVE</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-film"></i>
+                        <div>FILM/TV</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-music"></i>
+                        <div>MUSIC</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <div>MISC.</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px;">> Coming soon: everything not here already.</p>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show blogs after password
+        function showBlogsPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>BLOG COLLECTION</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Personal blogs and writings across platforms.</p>
+                <div class="social-links">
+                    ${blogLinks.map(link => 
+                        `<a href="${link.url}" target="_blank" class="social-link">
+                            <i class="fab ${link.icon}"></i> ${link.name}
+                        </a>`
+                    ).join('')}
+                </div>
+                <p style="margin-top: 20px; color: #a88cff;">> ACCESS GRANTED: Personal thoughts and writings unlocked.</p>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // show memories after password
+        function showMemoriesPopup() {
+            popupContent.innerHTML = `
+                <div class="popup-header">
+                    <h2>MEMORY ARCHIVE</h2>
+                    <button class="close-popup" id="closePopup">&times;</button>
+                </div>
+                <p>> Encrypted memory files and personal logs.</p>
+                <div class="folder-grid">
+                    <div class="folder">
+                        <i class="fas fa-memory"></i>
+                        <div>LOG_2024</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-memory"></i>
+                        <div>LOG_2023</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-memory"></i>
+                        <div>LOG_2022</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-memory"></i>
+                        <div>PHOTOS</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-memory"></i>
+                        <div>AUDIO</div>
+                    </div>
+                    <div class="folder">
+                        <i class="fas fa-memory"></i>
+                        <div>VIDEO</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; color: #aaccff;">> ACCESS GRANTED: Memory card unlocked. Handle with care. </p>
+            `;
+            popupModal.style.display = 'flex';
+            attachPopupClose();
+        }
+        
+        // attach close button to popup
+        function attachPopupClose() {
+            document.getElementById('closePopup').addEventListener('click', function() {
+                popupModal.style.display = 'none';
+            });
+            
+            // close when clicking outside the popup content
+            popupModal.addEventListener('click', function(e) {
+                if (e.target === popupModal) {
+                    popupModal.style.display = 'none';
+                }
+            });
+        }
+        
+        // handle mouse wheel for horizontal scrolling
+        let isScrolling = false;
+        sphereContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            if (isScrolling) return;
+            isScrolling = true;
+            
+            // use deltaY for vertical scroll wheels, deltaX for horizontal
+            const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            
+            if (delta > 0) {
+                rotateSphere(1); // Scroll right/down
+            } else {
+                rotateSphere(-1); // Scroll left/up
+            }
+            
+            setTimeout(() => {
+                isScrolling = false;
+            }, 150);
+        });
+        
+        // handle keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                rotateSphere(1);
+            } else if (e.key === 'ArrowLeft') {
+                rotateSphere(-1);
+            } else if (e.key >= '1' && e.key <= '8') {
+                const index = parseInt(e.key) - 1;
+                if (index < totalItems) {
+                    handleMenuItemClick(index);
+                    
+                    // rotate sphere to center the selected item
+                    const targetRotation = -(index * angleIncrement);
+                    currentRotation = targetRotation;
+                    updateSphereRotation();
+                }
+            } else if (e.key === 'Escape') {
+                popupModal.style.display = 'none';
+                passwordPrompt.style.display = 'none';
+            }
+        });
+        
+        // handle mobile controls
+        document.getElementById('prevBtn').addEventListener('click', () => rotateSphere(-1));
+        document.getElementById('nextBtn').addEventListener('click', () => rotateSphere(1));
+        
+        // handle touch for mobile drag
+        let touchStartX = 0;
+        sphereContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        
+        sphereContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            const diff = touchStartX - touchX;
+            
+            if (Math.abs(diff) > 30) {
+                rotateSphere(diff > 0 ? -1 : 1);
+                touchStartX = touchX;
+            }
+        });
+        
+        // handle password submission
+        submitPassword.addEventListener('click', function() {
+            const password = passwordInput.value;
+            const item = menuItems[currentPasswordItem];
+            
+            if ((item.type === 'password' && password === 'lain') || 
+                (item.type === 'password-blogs' && password === 'brooklynn')) {
+                
+                passwordPrompt.style.display = 'none';
+                selectMenuItem(currentPasswordItem);
+                
+                if (item.type === 'password') {
+                    showMemoriesPopup();
+                } else if (item.type === 'password-blogs') {
+                    showBlogsPopup();
+                }
+                
+                passwordError.style.display = 'none';
+            } else {
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+        
+        cancelPassword.addEventListener('click', function() {
+            passwordPrompt.style.display = 'none';
+            currentPasswordItem = null;
+        });
+        
+        // allow enter key in password field
+        passwordInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                submitPassword.click();
+            }
+        });
+        
+        // add background effect
+        function createMatrixBackground() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const container = document.getElementById('matrix-bg');
+            
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            container.appendChild(canvas);
+            
+            // japanese characters - looks cooler
+            const chars = "01あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん";
+            const charArray = chars.split("");
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            // initialize drops
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+            }
+            
+            // draw function
+            function draw() {
+                // Semi-transparent black rectangle for trail effect
+                ctx.fillStyle = "rgba(10, 10, 26, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = "#6688cc";
+                ctx.font = `${fontSize}px monospace`;
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    // Reset drop when it reaches bottom
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i]++;
+                }
+            }
+            
+            // animation loop
+            setInterval(draw, 50);
+            
+            // handle resize
+            window.addEventListener('resize', () => {
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+            });
+        }
+        
+        // initialize everything when page loads
+        window.addEventListener('load', () => {
+            initSphere();
+            createMatrixBackground();
+            
+            // add click handler to sphere container to prevent accidental clicks
+            sphereContainer.addEventListener('click', (e) => {
+                // Only handle clicks if they're not on a menu item
+                if (e.target === sphereContainer || e.target === sphere) {
+                    // Find the closest front item and select it
+                    let frontIndex = Math.round((360 - currentRotation % 360) / angleIncrement) % totalItems;
+                    if (frontIndex < 0) frontIndex += totalItems;
+                    handleMenuItemClick(frontIndex);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
 
