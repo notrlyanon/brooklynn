@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title> SYSTEM DESKTOP </title>    
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/f936906ae0.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BROOKLYNN'S DESKTOP | WIP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-     { margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family:'Courier New', monospace; }
+        /* using https://htmlcolorcodes.com for specific colors */ 
+        
+        * { 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace; 
+        }
 
-        body 
-        {   background-color: #0a0a1a;
+        body {   
+            background-color: #0a0a1a;
             color: #88aaff;
             height: 100vh;
             overflow: hidden;
-            /* Background image from pinterest */
             background-image: url('https://i.pinimg.com/736x/53/1a/53/531a538c4ef2a86652f70f0a0962306b.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            position: relative; }
+            position: relative; 
+        }
 
-        /* decorative glitch idk */
-        .glitch-gif 
-        {   position: fixed;
+        /* decorative glitch */
+        .glitch-gif {   
+            position: fixed;
             bottom: 20px;
             right: 20px;
             width: 150px;
@@ -33,11 +38,12 @@
             z-index: 50;
             pointer-events: none;
             opacity: 0.7;
-            mix-blend-mode: screen; }
+            mix-blend-mode: screen; 
+        }
 
         /* taskbar */
-        .taskbar 
-        {   position: fixed;
+        .taskbar {   
+            position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -49,10 +55,11 @@
             align-items: center;
             padding: 0 20px;
             z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); }
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); 
+        }
 
-        .start-button 
-        {   background: rgba(30, 60, 120, 0.8);
+        .start-button {   
+            background: rgba(30, 60, 120, 0.8);
             border: 1px solid rgba(100, 160, 230, 0.5);
             color: #aaccff;
             padding: 5px 15px;
@@ -60,28 +67,32 @@
             cursor: pointer;
             font-size: 0.9rem;
             margin-right: 20px;
-            transition: all 0.3s; }
+            transition: all 0.3s; 
+        }
 
-        .start-button:hover 
-        {   background: rgba(40, 80, 160, 0.9);
-            box-shadow: 0 0 10px rgba(100, 160, 230, 0.5); }
+        .start-button:hover {   
+            background: rgba(40, 80, 160, 0.9);
+            box-shadow: 0 0 10px rgba(100, 160, 230, 0.5); 
+        }
 
-        .clock 
-        {   margin-left: auto;
+        .clock {   
+            margin-left: auto;
             font-size: 0.9rem;
-            color: #aaccff; }
+            color: #aaccff; 
+        }
 
         /* desktop icons */
-        .desktop 
-        {   padding: 20px;
+        .desktop {   
+            padding: 20px;
             height: calc(100vh - 40px);
             display: flex;
             flex-wrap: wrap;
             align-content: flex-start;
-            gap: 30px;   }
+            gap: 30px;   
+        }
 
-        .desktop-icon 
-        {   width: 80px;
+        .desktop-icon {   
+            width: 80px;
             height: 90px;
             display: flex;
             flex-direction: column;
@@ -94,41 +105,46 @@
             border-radius: 8px;
             backdrop-filter: blur(5px);
             background: rgba(10, 25, 50, 0.5);
-            border: 1px solid rgba(100, 160, 230, 0.2);  }
+            border: 1px solid rgba(100, 160, 230, 0.2);  
+        }
 
-        .desktop-icon:hover
-       {    background: rgba(30, 60, 120, 0.7);
+        .desktop-icon:hover {   
+            background: rgba(30, 60, 120, 0.7);
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);  }
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);  
+        }
 
-        .desktop-icon.selected 
-        {    background: rgba(40, 80, 160, 0.7);
+        .desktop-icon.selected {   
+            background: rgba(40, 80, 160, 0.7);
             box-shadow: 0 0 20px rgba(100, 160, 230, 0.6);
-            border-color: rgba(140, 190, 255, 0.5);  }
+            border-color: rgba(140, 190, 255, 0.5);  
+        }
 
-        .icon-image 
-        {   width: 48px;
+        .icon-image {   
+            width: 48px;
             height: 48px;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #aaccff;   }
+            color: #aaccff;   
+        }
 
-        .icon-label 
-         {  font-size: 0.8rem;
+        .icon-label {   
+            font-size: 0.8rem;
             color: #aaccff;
             text-shadow: 0 0 4px #000, 0 0 2px #000;
             word-break: break-word;
             line-height: 1.2;
             background: rgba(0, 0, 0, 0.5);
             padding: 2px 5px;
-            border-radius: 3px; }
+            border-radius: 3px; 
+        }
 
         /* start menu */
-        .start-menu 
-        {   position: fixed;
+        .start-menu {   
+            position: fixed;
             bottom: 40px;
             left: 20px;
             width: 300px;
@@ -140,38 +156,45 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             z-index: 999;
             display: none;
-            overflow: hidden; }
+            overflow: hidden; 
+        }
 
-        .start-menu.active
-         {    display: block;
-            animation: menuSlide 0.3s ease; }
+        .start-menu.active {   
+            display: block;
+            animation: menuSlide 0.3s ease; 
+        }
 
-        @keyframes menuSlide
-         {  from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }   }
+        @keyframes menuSlide {   
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }   
+        }
 
-        .menu-header 
-        {   background: rgba(20, 40, 80, 0.9);
+        .menu-header {   
+            background: rgba(20, 40, 80, 0.9);
             padding: 15px;
-            border-bottom: 1px solid rgba(100, 160, 230, 0.3);   }
+            border-bottom: 1px solid rgba(100, 160, 230, 0.3);   
+        }
 
-        .menu-header h3 
-        {     color: #aaccff;
-            font-size: 1.1rem;  }
+        .menu-header h3 {     
+            color: #aaccff;
+            font-size: 1.1rem;  
+        }
 
-        .menu-items 
-        { padding: 15px;
+        .menu-items {   
+            padding: 15px;
             height: calc(100% - 60px);
-            overflow-y: auto;  }
+            overflow-y: auto;  
+        }
 
-        .menu-item 
-        {  padding: 10px 15px;
+        .menu-item {   
+            padding: 10px 15px;
             margin: 5px 0;
             border-radius: 5px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            transition: all 0.2s;   }
+            transition: all 0.2s;   
+        }
 
         .menu-item:hover {
             background: rgba(30, 60, 120, 0.7);
@@ -237,7 +260,7 @@
             color: #aaccff;
         }
 
-        /* paint window specific */
+        /* the paint window */
         #paintWindow {
             width: 700px;
             height: 500px;
@@ -273,7 +296,6 @@
             cursor: pointer;
             border-radius: 3px;
             transition: transform 0.2s;
-            /* Color will be set via style attribute */
         }
 
         #paintWindow .colors button:hover {
@@ -444,6 +466,228 @@
             51%, 100% { opacity: 0; }
         }
 
+        /* Lain-style login screen - blue */
+        .lain-login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(3px);
+            z-index: 2001;
+            font-family: 'Courier New', monospace;
+            color: #45BCED;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lain-login-screen.active {
+            display: flex;
+        }
+
+        .lain-login-container {
+            width: 450px;
+            background: rgba(0, 10, 30, 0.85);
+            border: 1px solid #45BCED;
+            padding: 25px;
+            box-shadow: 0 0 25px #45BCED;
+            backdrop-filter: blur(5px);
+        }
+
+        .lain-login-header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px #45BCED;
+            animation: lain-glitch 5s infinite;
+        }
+
+        @keyframes lain-glitch {
+            0%, 100% { text-shadow: 0 0 10px #45BCED; }
+            1% { text-shadow: -2px 2px 10px #45BCED; }
+            2% { text-shadow: 2px -2px 10px #45BCED; }
+            3% { text-shadow: -2px 2px 10px #45BCED; }
+        }
+
+        .lain-input-group {
+            margin-bottom: 15px;
+        }
+
+        .lain-input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            color: #88CCFF;
+        }
+
+        .lain-input-group input {
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 30, 60, 0.7);
+            border: 1px solid #45BCED;
+            color: #45BCED;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .lain-input-group input:focus {
+            box-shadow: 0 0 10px #45BCED;
+            border-color: #45BCED;
+        }
+
+        .lain-login-button {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 40, 80, 0.8);
+            border: 1px solid #45BCED;
+            color: #45BCED;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+
+        .lain-login-button:hover {
+            background: rgba(0, 60, 120, 0.9);
+            box-shadow: 0 0 15px #45BCED;
+        }
+
+        .lain-terminal-line {
+            margin: 5px 0;
+            line-height: 1.3;
+            color: #45BCED;
+        }
+
+        .lain-prompt {
+            color: #45BCED;
+        }
+
+        .lain-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: #45BCED;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        /* music player styles / source code for music player by adiline https://codepen.io/jinsouls/pen/WNYRogj */
+        #musicPlayer {
+            position: absolute;
+            width: 300px;
+            height: 180px;
+            background: rgba(10, 25, 50, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 160, 230, 0.5);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+        }
+
+        #musicPlayer.active {
+            display: block;
+        }
+
+        #musicPlayer .songtitle {
+            padding: 10px;
+            color: #aaccff;
+            font-size: 0.8rem;
+            text-align: center;
+            background: rgba(15, 30, 60, 0.7);
+            border-bottom: 1px solid rgba(100, 160, 230, 0.3);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        #musicPlayer .controls {
+            background-color: rgba(20, 40, 80, 0.7);
+            text-align: center;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        #musicPlayer .controls td {
+            padding: 0 15px;
+        }
+
+        #musicPlayer .seeking {
+            background-color: rgba(20, 40, 80, 0.7);
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px;
+            align-items: center;
+        }
+
+        #musicPlayer .current-time,
+        #musicPlayer .total-duration {
+            color: #aaccff;
+            font-size: 0.7rem;
+            min-width: 35px;
+        }
+
+        #musicPlayer i.fas {
+            color: #aaccff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #musicPlayer i.fas:hover {
+            color: #88aaff;
+            text-shadow: 0 0 5px rgba(100, 160, 230, 0.5);
+        }
+
+        /* custom slider styles to match theme */
+        #musicPlayer input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        #musicPlayer input[type=range]:focus {
+            outline: none;
+        }
+
+        #musicPlayer input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #88aaff;
+        }
+
+        #musicPlayer input[type=range]::-webkit-slider-thumb {
+            height: 8px;
+            width: 8px;
+            border-radius: 0px;
+            background: #aaccff;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -3px;
+        }
+
+        #musicPlayer input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #88aaff;
+        }
+
+        #musicPlayer input[type=range]::-moz-range-thumb {
+            height: 8px;
+            width: 8px;
+            border-radius: 0px;
+            background: #aaccff;
+            cursor: pointer;
+            border: none;
+        }
+        
+        
         /* responsive */
         @media (max-width: 768px) {
             .desktop-icon {
@@ -477,6 +721,11 @@
                 height: 70vh;
                 left: 2.5vw;
             }
+            
+            #musicPlayer {
+                width: 90vw;
+                left: 5vw;
+            }
         }
     </style>
 </head>
@@ -486,9 +735,8 @@
 
     <!-- desktop icons -->
     <div class="desktop" id="desktop">
-      
         <!-- terminal icon -->
-        <div class="desktop-icon" id="terminal-icon" onclick="openTerminal()" oncontextmenu="selectIcon('terminal')">
+        <div class="desktop-icon" id="terminal-icon" onclick="openTerminal()" oncontextmenu="selectIcon(event, 'terminal')">
             <div class="icon-image">
                 <i class="fas fa-terminal"></i>
             </div>
@@ -496,7 +744,7 @@
         </div>
 
         <!-- paint icon -->
-        <div class="desktop-icon" id="paint-icon" onclick="openPaint()" oncontextmenu="selectIcon('paint')">
+        <div class="desktop-icon" id="paint-icon" onclick="openPaint()" oncontextmenu="selectIcon(event, 'paint')">
             <div class="icon-image">
                 <i class="fas fa-paint-brush"></i>
             </div>
@@ -504,7 +752,7 @@
         </div>
 
         <!-- pinterest icon -->
-        <div class="desktop-icon" id="pinterest-icon" onclick="openPinterest()" oncontextmenu="selectIcon('pinterest')">
+        <div class="desktop-icon" id="pinterest-icon" onclick="openPinterest()" oncontextmenu="selectIcon(event, 'pinterest')">
             <div class="icon-image">
                 <i class="fab fa-pinterest"></i>
             </div>
@@ -512,7 +760,7 @@
         </div>
 
         <!-- file explorer icon -->
-        <div class="desktop-icon" onclick="openFiles()" oncontextmenu="selectIcon('files')">
+        <div class="desktop-icon" onclick="openFiles()" oncontextmenu="selectIcon(event, 'files')">
             <div class="icon-image">
                 <i class="fas fa-folder"></i>
             </div>
@@ -520,7 +768,7 @@
         </div>
 
         <!-- about icon -->
-        <div class="desktop-icon" onclick="openAbout()" oncontextmenu="selectIcon('about')">
+        <div class="desktop-icon" onclick="openAbout()" oncontextmenu="selectIcon(event, 'about')">
             <div class="icon-image">
                 <i class="fas fa-user"></i>
             </div>
@@ -528,7 +776,7 @@
         </div>
 
         <!-- settings icon -->
-        <div class="desktop-icon" onclick="openSettings()" oncontextmenu="selectIcon('settings')">
+        <div class="desktop-icon" onclick="openSettings()" oncontextmenu="selectIcon(event, 'settings')">
             <div class="icon-image">
                 <i class="fas fa-cog"></i>
             </div>
@@ -536,11 +784,59 @@
         </div>
 
         <!-- browser icon -->
-        <div class="desktop-icon" onclick="openBrowser()" oncontextmenu="selectIcon('browser')">
+        <div class="desktop-icon" onclick="openBrowser()" oncontextmenu="selectIcon(event, 'browser')">
             <div class="icon-image">
                 <i class="fas fa-compass"></i>
             </div>
             <div class="icon-label">BROWSER</div>
+        </div>
+
+        <!-- acting icon -->
+        <div class="desktop-icon" onclick="openActing()" oncontextmenu="selectIcon(event, 'acting')">
+            <div class="icon-image">
+                <i class="fas fa-theater-masks"></i>
+            </div>
+            <div class="icon-label">ACTING</div>
+        </div>
+
+        <!-- party art icon -->
+        <div class="desktop-icon" onclick="openPartyArt()" oncontextmenu="selectIcon(event, 'partyart')">
+            <div class="icon-image">
+                <i class="fas fa-magic"></i>
+            </div>
+            <div class="icon-label">PARTY ART</div>
+        </div>
+
+        <!-- photo blogs icon -->
+        <div class="desktop-icon" onclick="openPhotoBlogs()" oncontextmenu="selectIcon(event, 'photoblogs')">
+            <div class="icon-image">
+                <i class="fas fa-camera"></i>
+            </div>
+            <div class="icon-label glitch">PHOTO BLOGS</div>
+        </div>
+
+        <!-- blogs icon -->
+        <div class="desktop-icon" onclick="openBlogs()" oncontextmenu="selectIcon(event, 'blogs')">
+            <div class="icon-image">
+                <i class="fas fa-blog"></i>
+            </div>
+            <div class="icon-label" style="color: #aaccff;">BLOGS</div>
+        </div>
+
+        <!-- resources icon -->
+        <div class="desktop-icon" onclick="openResources()" oncontextmenu="selectIcon(event, 'resources')">
+            <div class="icon-image">
+                <i class="fas fa-toolbox"></i>
+            </div>
+            <div class="icon-label">RESOURCES</div>
+        </div>
+
+        <!-- music player icon -->
+        <div class="desktop-icon" onclick="openMusicPlayer()" oncontextmenu="selectIcon(event, 'music')">
+            <div class="icon-image">
+                <i class="fas fa-music"></i>
+            </div>
+            <div class="icon-label">MUSIC</div>
         </div>
     </div>
 
@@ -552,15 +848,18 @@
         
         <!-- taskbar icons -->
         <div style="display: flex; gap: 15px;">
-            <div class="taskbar-icon" onclick="launchCybersphere()" title="Cybersphere" style="cursor: pointer; padding: 5px 10px; border-radius: 4px; background: rgba(30, 60, 120, 0.6);">
-                <i class="fas fa-globe-americas" style="color: #aaccff;"></i>
-                <span style="margin-left: 5px; font-size: 0.8rem; color: #aaccff;">CYBERSPHERE</span>
+           <div class="taskbar-icon" onclick="launchTheWired()" title="the Wired" style="cursor: pointer; padding: 5px 10px; border-radius: 4px; background: rgba(30, 60, 120, 0.6);">
+                <i class="fas fa-network-wired" style="color: #aaccff;"></i>
+                <span style="margin-left: 5px; font-size: 0.8rem; color: #aaccff;">the Wired</span>
             </div>
             <div class="taskbar-icon" onclick="openTerminal()" title="Terminal" style="cursor: pointer; padding: 5px; border-radius: 4px;">
                 <i class="fas fa-terminal" style="color: #aaccff;"></i>
             </div>
             <div class="taskbar-icon" onclick="openPaint()" title="Paint" style="cursor: pointer; padding: 5px; border-radius: 4px;">
                 <i class="fas fa-paint-brush" style="color: #aaccff;"></i>
+            </div>
+            <div class="taskbar-icon" onclick="openMusicPlayer()" title="Music Player" style="cursor: pointer; padding: 5px; border-radius: 4px;">
+                <i class="fas fa-music" style="color: #aaccff;"></i>
             </div>
         </div>
         
@@ -573,9 +872,9 @@
             <h3 class="glitch">SYSTEM MENU <span class="blinking-cursor"></span></h3>
         </div>
         <div class="menu-items">
-            <div class="menu-item" onclick="launchCybersphere()">
-                <i class="fas fa-globe-americas"></i>
-                <span>Launch Cybersphere</span>
+            <div class="menu-item" onclick="launchTheWired()">
+                <i class="fas fa-network-wired"></i>
+                <span>Enter the Wired</span>
             </div>
             <div class="menu-item" onclick="openTerminal()">
                 <i class="fas fa-terminal"></i>
@@ -584,6 +883,10 @@
             <div class="menu-item" onclick="openPaint()">
                 <i class="fas fa-paint-brush"></i>
                 <span>Paint Program</span>
+            </div>
+            <div class="menu-item" onclick="openMusicPlayer()">
+                <i class="fas fa-music"></i>
+                <span>Music Player</span>
             </div>
             <div class="menu-item" onclick="openFiles()">
                 <i class="fas fa-folder"></i>
@@ -608,13 +911,6 @@
         </div>
     </div>
 
-    <!-- login animation window (for cybersphere) -->
-    <div class="login-window" id="loginWindow">
-        <div class="login-content" id="loginContent">
-            <!-- login sequence will be generated here -->
-        </div>
-    </div>
-
     <!-- terminal window -->
     <div class="window" id="terminalWindow">
         <div class="window-header" id="terminalHeader">
@@ -627,7 +923,7 @@
         <div class="window-content">
             <div id="terminalContent">
                 <p>> SYSTEM TERMINAL v2.3.1</p>
-                <p>> Initializing connection to Wired...</p>
+                <p>> Initializing connection to the Wired...</p>
                 <p>> Connection established.</p>
                 <p>> Type 'help' for available commands.</p>
                 <p>> </p>
@@ -738,14 +1034,19 @@
             <p>> Status: All systems operational</p>
             <br>
             <p>Welcome to my personal web interface.</p>
-            <p>This desktop environment serves as a gateway to my various projects and some other fun stuff.</p>
+            <p>This desktop serves as a gateway to various projects and some other fun stuff.</p>
             <br>
             <p>Main Applications:</p>
-            <p>• <strong>Cybersphere</strong>: REDACTED </p>
+            <p>• <strong>the Wired</strong>: [REDACTED] </p>
             <p>• <strong>Terminal</strong>: System command interface</p>
             <p>• <strong>Paint</strong>: Creative drawing program</p>
-            <p>• <strong>Pinterest</strong>: Visual inspiration widget</p>
+            <p>• <strong>Music Player</strong>: Audio playback</p>
             <br>
+            <p>Update 12.14.2025 - fixed bugs with closing windows / added music player / introduced the Wired. need to fix minor errors and rearrange things on the desktop. </p>
+            <br>
+            <p>Update 12.12.2025 - Uploaded onto github with painting program. need to add folders for external links / projects.  </p>
+            <br>
+            <p>• <strong>Contact</strong>: <a href="mailto:brooklynn@atomicmail.io" style="color: #aaccff; text-decoration: none;">brooklynn@atomicmail.io</a></p>
             <p>> System initialized: December 2025</p>
         </div>
     </div>
@@ -761,19 +1062,23 @@
         <div class="window-content">
             <h3>PROJECT DIRECTORY</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 20px;">
-                <div class="folder-item" onclick="launchCybersphere()">
-                    <i class="fas fa-globe-americas" style="font-size: 2rem;"></i>
-                    <p>Cybersphere</p>
+                <div class="folder-item" onclick="launchTheWired()">
+                    <i class="fas fa-network-wired" style="font-size: 2rem;"></i>
+                    <p>the Wired</p>
                 </div>
                 <div class="folder-item" onclick="openPaint()">
                     <i class="fas fa-paint-brush" style="font-size: 2rem;"></i>
                     <p>Paint</p>
                 </div>
+                <div class="folder-item" onclick="openMusicPlayer()">
+                    <i class="fas fa-music" style="font-size: 2rem;"></i>
+                    <p>Music Player</p>
+                </div>
                 <div class="folder-item" onclick="openPinterest()">
                     <i class="fab fa-pinterest" style="font-size: 2rem;"></i>
                     <p>Pinterest</p>
                 </div>
-                <div class="folder-item">
+                <div class="folder-item" onclick="openWriting()" id="writing-folder">
                     <i class="fas fa-pen-fancy" style="font-size: 2rem;"></i>
                     <p>Writings</p>
                 </div>
@@ -789,7 +1094,271 @@
         </div>
     </div>
 
+    <!-- writing window -->
+    <div class="window" id="writingWindow">
+        <div class="window-header">
+            <div class="window-title">WRITING PORTFOLIO</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('writing')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content" id="writingContent">
+            <!-- content will be loaded by JavaScript -->
+        </div>
+    </div>
+
+    <!-- acting window -->
+    <div class="window" id="actingWindow">
+        <div class="window-header">
+            <div class="window-title">ACTING PORTFOLIO</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('acting')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>ACTING PROFILES</h3>
+            <p>> Actors profiles coming soon.</p>
+            <p>> Performance portfolio.</p>
+            <p>> Check back later.</p>
+            <div style="margin-top: 20px; padding: 15px; background: rgba(30, 60, 120, 0.3); border-radius: 5px;">
+                <h4>COMING SOON</h4>
+                <p>This section is under construction. Check back for updates!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- party art window -->
+    <div class="window" id="partyArtWindow">
+        <div class="window-header">
+            <div class="window-title">PARTY ART SERVICES</div>
+            <div class="window-controls">
+               <button onclick="closeWindow('partyArt')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>BROOKIE'S PARTY ART</h3>
+            <p>> Face paint and party art services.</p>
+            <div style="margin: 20px 0;">
+                <h4>SOCIAL MEDIA:</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                    <a href="https://www.instagram.com/brookiespartyart" target="_blank" 
+                       style="display: inline-block; padding: 10px 15px; background: rgba(30,60,120,0.8); 
+                              border: 1px solid #88aaff; border-radius: 5px; color: #aaccff; text-decoration: none;">
+                        <i class="fab fa-instagram"></i> @brookiespartyart
+                    </a>
+                    <a href="https://facebook.com/brookiespartyart" target="_blank" 
+                       style="display: inline-block; padding: 10px 15px; background: rgba(30,60,120,0.8); 
+                              border: 1px solid #88aaff; border-radius: 5px; color: #aaccff; text-decoration: none;">
+                        <i class="fab fa-facebook"></i> brookiespartyart
+                    </a>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(100, 160, 230, 0.3);">
+                <h4>SERVICES:</h4>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Face painting for events</li>
+                    <li>Balloon art/twisting</li>
+                    <li>Custom designs</li>
+                    <li>More coming soon</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- photo blogs window (password protected)-->
+    <div class="window" id="photoBlogsWindow">
+        <div class="window-header">
+            <div class="window-title">PHOTO BLOGS</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('photoBlogs')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3 class="glitch">PHOTO BLOGS</h3>
+            <p>> Visual galleries and photo blogs.</p>
+            <p>> [REDACTED] </p>
+            
+            <div style="margin: 20px 0; padding: 15px; background: rgba(30, 60, 120, 0.3); border-radius: 5px;">
+                <h4>PHOTO BLOG LINKS:</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;" id="photoBlogsContent">
+                    <!-- password prompt will be shown first -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- blogs window (password protected) -->
+    <div class="window" id="blogsWindow">
+        <div class="window-header">
+            <div class="window-title">BLOG COLLECTION</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('blogs')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content" id="blogsContent">
+            <!-- password prompt will be shown first -->
+        </div>
+    </div>
+
+    <!-- resources window -->
+    <div class="window" id="resourcesWindow">
+        <div class="window-header">
+            <div class="window-title">TOOLS & RESOURCES</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('resources')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>RESOURCES</h3>
+            <p>> Tools and fun resources coming soon.</p>
+            <p>> Useful links and downloads.</p>
+            <p>> Under construction.</p>
+            <div style="margin-top: 20px; padding: 15px; background: rgba(30, 60, 120, 0.3); border-radius: 5px;">
+                <h4>UNDER CONSTRUCTION</h4>
+                <p>This section is being built. Check back later for useful tools and resources!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- browser window -->
+    <div class="window" id="browserWindow" style="width: 800px; height: 600px;">
+        <div class="window-header">
+            <div class="window-title">NETWORK BROWSER</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('browser')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content" style="padding: 0;" id="browserContent">
+            <!-- content will be loaded by JavaScript -->
+        </div>
+    </div>
+
+    <!-- settings window -->
+    <div class="window" id="settingsWindow" style="width: 500px; height: 500px;">
+        <div class="window-header">
+            <div class="window-title">SYSTEM SETTINGS</div>
+            <div class="window-controls">
+                <button onclick="closeWindow('settings')"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>SYSTEM SETTINGS</h3>
+            
+            <div style="margin: 20px 0;">
+                <h4>THEME COLOR</h4>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                    <button onclick="changeTheme('#88aaff', '#0a0a1a')" style="padding: 10px; background: #88aaff; border: 2px solid #aaccff; border-radius: 5px;">Blue</button>
+                    <button onclick="changeTheme('#ff88aa', '#1a0a0a')" style="padding: 10px; background: #ff88aa; border: 2px solid #ffaacc; border-radius: 5px;">Pink</button>
+                    <button onclick="changeTheme('#aaff88', '#0a1a0a')" style="padding: 10px; background: #aaff88; border: 2px solid #ccffaa; border-radius: 5px;">Green</button>
+                    <button onclick="changeTheme('#ffff88', '#1a1a0a')" style="padding: 10px; background: #ffff88; border: 2px solid #ffffaa; border-radius: 5px;">Yellow</button>
+                    <button onclick="changeTheme('#ffaa88', '#1a0a0a')" style="padding: 10px; background: #ffaa88; border: 2px solid #ffccaa; border-radius: 5px;">Orange</button>
+                    <button onclick="changeTheme('#aa88ff', '#0a0a1a')" style="padding: 10px; background: #aa88ff; border: 2px solid #ccaaff; border-radius: 5px;">Purple</button>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.8rem;">Click to change the theme color</p>
+            </div>
+            
+            <div style="margin: 20px 0; padding-top: 20px; border-top: 1px solid rgba(100, 160, 230, 0.3);">
+                <h4>CLOCK FORMAT</h4>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button onclick="changeClockFormat('12hr')" style="padding: 10px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff; border-radius: 5px;">12-Hour</button>
+                    <button onclick="changeClockFormat('24hr')" style="padding: 10px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff; border-radius: 5px;">24-Hour</button>
+                </div>
+            </div>
+            
+            <div style="margin: 20px 0; padding-top: 20px; border-top: 1px solid rgba(100, 160, 230, 0.3);">
+                <h4>WINDOW TRANSPARENCY</h4>
+                <input type="range" min="50" max="100" value="95" id="transparencySlider" style="width: 100%; margin: 10px 0;" onchange="changeTransparency(this.value)">
+                <p style="font-size: 0.8rem;">Adjust window opacity: <span id="transparencyValue">95%</span></p>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 15px; background: rgba(30, 60, 120, 0.3); border-radius: 5px;">
+                <h4>SYSTEM INFO</h4>
+                <p>Version: 1.0.0</p>
+                <p>Theme: Customizable</p>
+                <p>Last updated: Today</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- music player window -->
+    <div class="window" id="musicPlayer">
+        <div class="window-header">
+            <div class="window-title">MUSIC PLAYER</div>
+            <div class="window-controls">
+        <button onclick="closeMusicPlayer()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div>
+            <marquee scrollamount="8" class="songtitle"></marquee>
+        </div>
+
+        <table class="controls">
+            <tr>
+                <td>
+                    <div class="prev-track" onclick="prevTrack()"><i class="fas fa-backward"></i></div>
+                </td>
+                <td>
+                    <div class="playpause-track" onclick="playpauseTrack()"><i class="fas fa-play"></i></div>
+                </td>
+                <td>
+                    <div class="next-track" onclick="nextTrack()"><i class="fas fa-forward"></i></div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="seeking">
+            <div class="current-time">00:00</div>
+            <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+            <div class="total-duration">0:00</div>
+        </div>
+
+        <audio id="music" src=""></audio> 
+    </div>
+
+    <!-- lain-inspired login screen -->
+    <div class="lain-login-screen" id="lainLoginScreen">
+        <div class="lain-login-container" id="lainLoginContainer">
+            <!-- content will be added by JavaScript -->
+        </div>
+    </div>
+
     <script>
+        // data arrays
+        const socialLinks = [
+            { name: "TikTok", url: "https://www.tiktok.com/@brooklynnfancy", icon: "fa-tiktok" },
+            { name: "Instagram", url: "https://www.instagram.com/brooklynnfancy/", icon: "fa-instagram" },
+            { name: "Threads", url: "https://www.threads.com/@brooklynnfancy", icon: "fa-threads" },
+            { name: "X (Twitter)", url: "https://x.com/brooklynnfancy", icon: "fa-twitter" },
+            { name: "Bluesky", url: "https://bsky.app/profile/brooklynnfancy.bsky.social", icon: "fa-cloud" },
+            { name: "Mastodon", url: "https://mastodon.social/@brooklynnfancy", icon: "fa-mastodon" },
+            { name: "LinkedIn", url: "https://www.linkedin.com/in/brooklynn-p-a01a09a6/", icon: "fa-linkedin" },
+            { name: "SpaceHey", url: "https://spacehey.com/home", icon: "fa-user-astronaut" },
+            { name: "Pi.fyi", url: "https://www.pi.fyi/u/brooklynn", icon: "fa-pi" }
+        ];
+
+        const blogLinks = [
+            { name: "Pillowfort", url: "https://www.pillowfort.social/brooklynnfancy", icon: "fa-bed" },
+            { name: "Tumblr", url: "https://www.tumblr.com/brooklynnblogs", icon: "fa-tumblr" },
+            { name: "LiveJournal", url: "https://brooklynnfancy.livejournal.com", icon: "fa-book" },
+            { name: "Substack", url: "https://substack.com/@brooklynnfancy/notes", icon: "fa-newspaper" },
+            { name: "Blogger", url: "https://www.blogger.com/profile/07037005622033288236", icon: "fa-blogger" }
+        ];
+
+        const photoBlogLinks = [
+            { name: "Pinterest", url: "https://www.pinterest.com/brooklynnfancy/", icon: "fa-pinterest" },
+            { name: "VSCO", url: "https://vsco.co/brooklynnfancy/gallery", icon: "fa-camera" }
+        ];
+
+        const readingLinks = [
+            { name: "StoryGraph", url: "https://app.thestorygraph.com/profile/brooklynnfancy", icon: "fa-chart-line" },
+            { name: "Goodreads", url: "https://www.goodreads.com/review/list/196083199?ref=nav_mybooks", icon: "fa-book" },
+            { name: "BookBub", url: "https://www.bookbub.com/profile/1716244382", icon: "fa-bookmark" }
+        ];
+
+        const writingLinks = [
+            { name: "Wattpad", url: "https://www.wattpad.com/user/brooklynnfancy", icon: "fa-book-open" }
+        ];
+
         // real-time clock
         function updateClock() {
             const now = new Date();
@@ -817,69 +1386,470 @@
                 menu.classList.remove('active');
             }
         });
-
-        // cybersphere with faux login animation
-        function launchCybersphere() {
-            const loginWindow = document.getElementById('loginWindow');
-            const loginContent = document.getElementById('loginContent');
-            
-            loginWindow.classList.add('active');
-            
-            // clear previous content
-            loginContent.innerHTML = '';
-            
-            // login sequence
-            const messages = [
-                "> INITIALIZING CYBERSPHERE ACCESS PROTOCOL...",
-                "> CONNECTING TO WIRED NETWORK...",
-                "> AUTHENTICATING USER: BROOKLYNN...",
-                "> VERIFYING NEURAL PATTERNS...",
-                "> ACCESS GRANTED: LEVEL 9 CLEARANCE",
-                "> ESTABLISHING SECURE CONNECTION...",
-                "> BYPASSING FIREWALL PROTOCOLS...",
-                "> ENCRYPTION: AES-256 ACTIVE",
-                "> ENTERING CYBERSPHERE IN 3... 2... 1...",
-                "> WELCOME TO THE OTHER SIDE"
-            ];
-            
-            let delay = 0;
-            messages.forEach((msg, index) => {
-                setTimeout(() => {
-                    const line = document.createElement('div');
-                    line.className = 'login-line';
-                    line.innerHTML = msg + (index === messages.length - 1 ? '' : '<span class="login-cursor"></span>');
-                    loginContent.appendChild(line);
-                    loginContent.scrollTop = loginContent.scrollHeight;
-                    
-                    // last message - redirect
-                    if (index === messages.length - 1) {
-                        setTimeout(() => {
-                            window.open('https://notrlyanon.github.io/cybersphere/', '_blank');
-                            loginWindow.classList.remove('active');
-                            loginContent.innerHTML = '';
-                        }, 2000);
-                    }
-                }, delay);
-                delay += 800;
-            });
-            
-            // vlose start menu if open
-            startMenuActive = false;
-            document.getElementById('startMenu').classList.remove('active');
+        
+        // settings functions
+        function openSettings() {
+            document.getElementById('settingsWindow').classList.add('active');
         }
 
-        // pinterest window
+        function changeTheme(color, bgColor) {
+            // change CSS variables
+            document.documentElement.style.setProperty('--primary-color', color);
+            document.documentElement.style.setProperty('--background-color', bgColor);
+            
+            // change specific elements
+            document.querySelectorAll('.window-header').forEach(header => {
+                header.style.background = bgColor.replace('0a', '20');
+            });
+            
+            localStorage.setItem('themeColor', color);
+            localStorage.setItem('themeBgColor', bgColor);
+        }
+
+        function changeClockFormat(format) {
+            localStorage.setItem('clockFormat', format);
+            updateClock();
+        }
+
+        function changeTransparency(value) {
+            document.getElementById('transparencyValue').textContent = value + '%';
+            document.querySelectorAll('.window').forEach(window => {
+                window.style.background = `rgba(10, 25, 50, ${value/100})`;
+            });
+            localStorage.setItem('windowTransparency', value);
+        }
+
+        // load saved settings on startup
+        window.addEventListener('load', function() {
+            const savedColor = localStorage.getItem('themeColor');
+            const savedBgColor = localStorage.getItem('themeBgColor');
+            const savedTransparency = localStorage.getItem('windowTransparency');
+            
+            if (savedColor && savedBgColor) {
+                changeTheme(savedColor, savedBgColor);
+            }
+            
+            if (savedTransparency) {
+                document.getElementById('transparencySlider').value = savedTransparency;
+                changeTransparency(savedTransparency);
+            }
+        });
+
+  
+  
+        function launchTheWired() {
+    // close any open windows
+    document.querySelectorAll('.window.active').forEach(window => {
+        window.classList.remove('active');
+    });
+    
+    // create the Lain-style login screen
+    const lainScreen = document.createElement('div');
+    lainScreen.id = 'lainLoginScreen';
+    lainScreen.className = 'lain-login-screen active';
+    lainScreen.style.position = 'fixed';
+    lainScreen.style.top = '0';
+    lainScreen.style.left = '0';
+    lainScreen.style.width = '100%';
+    lainScreen.style.height = '100%';
+    lainScreen.style.background = 'rgba(0, 0, 0, 0.95)';
+    lainScreen.style.zIndex = '2001';
+    lainScreen.style.display = 'flex';
+    lainScreen.style.justifyContent = 'center';
+    lainScreen.style.alignItems = 'center';
+    lainScreen.style.fontFamily = "'Courier New', monospace";
+    
+    const lainContainer = document.createElement('div');
+    lainContainer.className = 'lain-login-container';
+    lainContainer.style.width = '450px';
+    lainContainer.style.background = 'rgba(0, 10, 30, 0.85)';
+    lainContainer.style.border = '1px solid #45BCED';
+    lainContainer.style.padding = '25px';
+    lainContainer.style.boxShadow = '0 0 25px #45BCED';
+    lainContainer.style.backdropFilter = 'blur(5px)';
+    
+    // add header with glitch effect
+    const header = document.createElement('div');
+    header.className = 'lain-login-header glitch';
+    header.textContent = 'WIRED ACCESS TERMINAL v2.3.1';
+    header.style.textAlign = 'center';
+    header.style.marginBottom = '20px';
+    header.style.fontSize = '1.3rem';
+    header.style.color = '#45BCED';
+    header.style.textShadow = '0 0 10px #45BCED';
+    header.style.animation = 'glitch 5s infinite';
+    
+    lainContainer.appendChild(header);
+    
+    // add terminal content
+    const terminalDiv = document.createElement('div');
+    terminalDiv.id = 'lainTerminalContent';
+    terminalDiv.style.fontFamily = "'Courier New', monospace";
+    terminalDiv.style.color = '#45BCED';
+    terminalDiv.style.fontSize = '0.9rem';
+    terminalDiv.style.lineHeight = '1.3';
+    terminalDiv.style.minHeight = '200px';
+    terminalDiv.style.marginBottom = '20px';
+    terminalDiv.style.textShadow = '0 0 3px #000';
+    
+    lainContainer.appendChild(terminalDiv);
+    
+    lainScreen.appendChild(lainContainer);
+    document.body.appendChild(lainScreen);
+    
+    // terminal messages
+    const messages = [
+        "Copland OS Enterprise",
+        "Product By Tachibana Lab",
+        " ",
+        "> CONNECTING TO WIRED NETWORK...",
+        "> ESTABLISHING SECURE LINK...",
+        "> WELCOME TO the Wired",
+        "> USER AUTHENTICATION REQUIRED",
+        " ",
+        "> PRESS ENTER TO CONTINUE"
+    ];
+    
+    let currentIndex = 0;
+    
+    function showNextMessage() {
+        if (currentIndex < messages.length) {
+            const line = document.createElement('div');
+            line.className = 'lain-terminal-line';
+            line.style.textShadow = '0 0 3px #000';
+            
+            if (currentIndex === messages.length - 1) {
+                line.innerHTML = messages[currentIndex] + '<span class="lain-cursor"></span>';
+                terminalDiv.appendChild(line);
+                
+                // add Enter key listener
+                lainScreen.onkeypress = function(e) {
+                    if (e.key === 'Enter') {
+                        showInitialOptions();
+                        lainScreen.onkeypress = null;
+                    }
+                };
+                
+                // also allow clicking
+                lainScreen.onclick = function() {
+                    showInitialOptions();
+                    lainScreen.onclick = null;
+                };
+                
+            } else {
+                line.textContent = messages[currentIndex];
+                terminalDiv.appendChild(line);
+                currentIndex++;
+                setTimeout(showNextMessage, 700);
+            }
+        }
+    }
+    
+    function showInitialOptions() {
+        terminalDiv.innerHTML = '';
+        
+        const optionsHTML = `
+            <div style="width: 100%; position: relative;">
+                <div class="lain-login-header" style="font-size: 1.1rem; margin-bottom: 10px;">
+                    WIRED ACCESS PORTAL
+                </div>
+                
+                <div style="position: absolute; top: 10px; left: 10px; font-size: 0.7rem; color: #45BCED; text-shadow: 0 0 3px #000;">
+                    Copland OS Enterprise<br>Product By Tachibana Lab
+                </div>
+                
+                <div style="margin: 40px 0 20px; color: #88CCFF; font-size: 0.9rem; text-align: center; text-shadow: 0 0 5px #000;">
+                    > Select Authentication Method
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                    <button id="authorizeUserBtn" class="lain-login-button" style="width: 100%;">
+                        AUTHORIZE USER
+                    </button>
+                    <button class="lain-login-button" disabled style="width: 100%; background: #333; color: #666; cursor: not-allowed;">
+                        LOAD DATA
+                    </button>
+                </div>
+                
+                <div style="margin-top: 15px; font-size: 0.7rem; color: #45BCED; text-align: center; text-shadow: 0 0 3px #000;">
+                    > System: NAVI | Protocol: TCP/IP
+                </div>
+            </div>
+        `;
+        
+        terminalDiv.innerHTML = optionsHTML;
+        
+        // add event listener for the authorize button
+        document.getElementById('authorizeUserBtn').onclick = showAuthorizeUserForm;
+    }
+    
+    function showAuthorizeUserForm() {
+        terminalDiv.innerHTML = '';
+        
+        const loginForm = document.createElement('div');
+        loginForm.innerHTML = `
+            <div style="margin-bottom: 20px;">
+                <div style="color: #88CCFF; margin-bottom: 5px; text-shadow: 0 0 3px #000;">ENTER USERNAME:</div>
+                <input type="text" id="wiredUsername" 
+                       style="width: 100%; padding: 8px; background: rgba(0, 30, 60, 0.7); 
+                              border: 1px solid #45BCED; color: #45BCED; font-family: 'Courier New', monospace;
+                              outline: none;" 
+                       placeholder="Type your name...">
+            </div>
+            <button id="wiredLoginBtn" 
+                    style="width: 100%; padding: 10px; background: rgba(0, 40, 80, 0.8); 
+                           border: 1px solid #45BCED; color: #45BCED; cursor: pointer;
+                           font-family: 'Courier New', monospace; transition: all 0.3s;">
+                ENTER THE WIRED
+            </button>
+            <div id="wiredError" style="color: #ff6666; margin-top: 10px; display: none; text-shadow: 0 0 3px #000;">
+                Please enter a username to continue.
+            </div>
+        `;
+        
+        terminalDiv.appendChild(loginForm);
+        
+        const loginBtn = document.getElementById('wiredLoginBtn');
+        const usernameInput = document.getElementById('wiredUsername');
+        
+        loginBtn.onmouseover = function() {
+            this.style.background = 'rgba(0, 60, 120, 0.9)';
+            this.style.boxShadow = '0 0 15px #45BCED';
+        };
+        
+        loginBtn.onmouseout = function() {
+            this.style.background = 'rgba(0, 40, 80, 0.8)';
+            this.style.boxShadow = 'none';
+        };
+        
+        loginBtn.onclick = function() {
+            // accept any non-empty username
+            if (usernameInput.value.trim()) {
+                // show the glitching loading effect with the username
+                showWiredLoading(usernameInput.value.trim());
+            } else {
+                document.getElementById('wiredError').style.display = 'block';
+            }
+        };
+        
+        // also allow Enter key to submit
+        usernameInput.onkeypress = function(e) {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        };
+        
+        usernameInput.focus();
+    }
+        
+    
+    // escape key to close
+    lainScreen.onkeydown = function(e) {
+        if (e.key === 'Escape') {
+            document.body.removeChild(lainScreen);
+        }
+    };
+    
+    lainScreen.tabIndex = 0;
+    lainScreen.focus();
+    
+    // start showing messages
+    showNextMessage();
+    
+    // close start menu if open
+    startMenuActive = false;
+    document.getElementById('startMenu').classList.remove('active');
+}
+
+// your showWiredLoading function (keep this exactly as you have it)
+function showWiredLoading(username) {
+    // remove the login screen
+    const loginScreen = document.getElementById('lainLoginScreen');
+    if (loginScreen) {
+        document.body.removeChild(loginScreen);
+    }
+    
+    // create full-screen loading overlay - YOUR ORIGINAL GLITCHING CODE
+    const loadingContainer = document.createElement('div');
+    loadingContainer.style.position = 'fixed';
+    loadingContainer.style.top = '0';
+    loadingContainer.style.left = '0';
+    loadingContainer.style.width = '100%';
+    loadingContainer.style.height = '100%';
+    loadingContainer.style.background = 'rgba(0, 0, 0, 0.95)';
+    loadingContainer.style.color = '#0f0';
+    loadingContainer.style.fontFamily = "'Courier New', monospace";
+    loadingContainer.style.overflow = 'hidden';
+    loadingContainer.style.zIndex = '2001';
+    
+    loadingContainer.innerHTML = `
+        <div style="position: absolute; top: 10px; left: 10px; font-size: 0.8rem; color: #45BCED;">
+            Copland OS Enterprise<br>Product By Tachibana Lab
+        </div>
+        <div id="matrixLoading" style="padding: 20px; font-size: 1.2rem; line-height: 1.5; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 600px;">
+            <div id="loadingHeader" style="margin-bottom: 20px; color: #45BCED; font-size: 1.1rem;">
+                > AUTHENTICATING USER: ${username.toUpperCase()}<br>
+                > ACCESSING the Wired...
+            </div>
+            <div id="matrixText" style="font-family: monospace; font-size: 1rem; color: #0f0; text-align: left; max-height: 300px; overflow: hidden; background: rgba(0, 20, 0, 0.3); padding: 10px; border: 1px solid #0f0;"></div>
+        </div>
+    `;
+    
+    document.body.appendChild(loadingContainer);
+    
+    const matrixText = document.getElementById('matrixText');
+    const loadingHeader = document.getElementById('loadingHeader');
+    
+    // typewriter effect for "please wait" with glitches
+    const phrases = [
+        "please wait",
+        "initializing connection",
+        "authenticating user credentials",
+        "accessing neural network",
+        "establishing secure link",
+        "synchronizing data streams",
+        "connecting to the Wired"
+    ];
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let currentPhrase = "";
+    let lines = [];
+    let lineCount = 0;
+    
+    // matrix inspired characters for glitch effect
+    const matrixChars = "01█░▒▓▄▀▌▐■□▲►▼◄";
+    
+    function typeNextChar() {
+        if (phraseIndex < phrases.length) {
+            if (charIndex < phrases[phraseIndex].length) {
+                // typewriter effect with occasional glitches
+                if (Math.random() > 0.1) {
+                    currentPhrase += phrases[phraseIndex].charAt(charIndex);
+                } else {
+                    // glitch character
+                    currentPhrase += matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                }
+                charIndex++;
+                
+                // display with cursor
+                loadingHeader.innerHTML = `> ${currentPhrase}<span style="animation: blink 1s infinite">█</span>`;
+                
+                // random color glitch
+                if (Math.random() > 0.7) {
+                    loadingHeader.style.color = ["#0f0", "#0ff", "#f0f", "#ff0"][Math.floor(Math.random() * 4)];
+                } else {
+                    loadingHeader.style.color = "#45BCED";
+                }
+                
+                // Add matrix-style falling text in background
+                if (Math.random() > 0.5 && lineCount < 15) {
+                    let matrixLine = "";
+                    for (let i = 0; i < 50; i++) {
+                        matrixLine += matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                    }
+                    lines.unshift(matrixLine);
+                    lineCount++;
+                    
+                    // display matrix text
+                    matrixText.innerHTML = lines.map(line => 
+                        `<div style="color: ${Math.random() > 0.7 ? '#0f0' : '#0a0'}; ${Math.random() > 0.8 ? 'font-weight: bold;' : ''}">${line}</div>`
+                    ).join('');
+                    
+                    // scroll to show new lines
+                    matrixText.scrollTop = matrixText.scrollHeight;
+                }
+                
+                setTimeout(typeNextChar, Math.random() * 50 + 30); // Random typing speed
+            } else {
+                // finish current phrase
+                lines.unshift(`[${new Date().toLocaleTimeString()}] ${phrases[phraseIndex]}`);
+                matrixText.innerHTML = lines.map(line => 
+                    `<div style="color: #0f0;">${line}</div>`
+                ).join('');
+                
+                // move to next phrase
+                phraseIndex++;
+                charIndex = 0;
+                currentPhrase = "";
+                
+                // brief pause between phrases
+                setTimeout(typeNextChar, 300);
+            }
+        } else {
+            // all phrases done, show final message
+                       const finalMessages = [
+                "> CONNECTION ESTABLISHED",
+                `> WELCOME TO THE WIRED, ${username.toUpperCase()}`,
+                "> REDIRECTING..."
+            ];
+            
+            let finalIndex = 0;
+            
+            function showFinalMessage() {
+                if (finalIndex < finalMessages.length) {
+                    loadingHeader.innerHTML = `${finalMessages[finalIndex]}<span style="animation: blink 1s infinite">█</span>`;
+                    finalIndex++;
+                    
+                    // add glitch effect
+                    if (Math.random() > 0.5) {
+                        loadingHeader.style.textShadow = `0 0 ${Math.random() * 15}px #0f0`;
+                    }
+                    
+                    setTimeout(showFinalMessage, 800);
+                } else {
+                    // redirect to the Wired page
+                    window.location.href = 'https://notrlyanon.github.io/brooklynn/cybersphere';
+                }
+            }
+            
+            // start showing final messages
+            setTimeout(showFinalMessage, 500);
+        }
+    }
+    
+    // start the typing animation
+    setTimeout(typeNextChar, 500);
+    
+    // add continuous glitch effect to the background
+    const glitchInterval = setInterval(() => {
+        if (Math.random() > 0.7) {
+            loadingContainer.style.background = `rgba(${Math.floor(Math.random() * 30)}, ${Math.floor(Math.random() * 50)}, ${Math.floor(Math.random() * 30)}, 0.95)`;
+        }
+        
+        // add random glitch text to matrix
+        if (Math.random() > 0.8 && lines.length > 0) {
+            const randomLine = Math.floor(Math.random() * Math.min(5, lines.length));
+            if (lines[randomLine]) {
+                const glitched = lines[randomLine].split('').map(char => 
+                    Math.random() > 0.8 ? matrixChars.charAt(Math.floor(Math.random() * matrixChars.length)) : char
+                ).join('');
+                lines[randomLine] = glitched;
+                
+                // update display
+                matrixText.innerHTML = lines.map((line, idx) => 
+                    `<div style="color: ${idx === randomLine ? '#f0f' : '#0f0'}; ${Math.random() > 0.7 ? 'text-shadow: 0 0 5px #0f0;' : ''}">${line}</div>`
+                ).join('');
+            }
+        }
+    }, 200);
+    
+    // clear when leaving (redirect will happen)
+    setTimeout(() => {
+        clearInterval(glitchInterval);
+    }, 4500);
+}
+        
+        // window functions
         function openPinterest() {
             document.getElementById('pinterestWindow').classList.add('active');
         }
 
-        // paint program
         function openPaint() {
             document.getElementById('paintWindow').classList.add('active');
             initializePaint();
         }
 
-        // window management
         function openTerminal() {
             document.getElementById('terminalWindow').classList.add('active');
             document.getElementById('terminalInput').focus();
@@ -893,12 +1863,109 @@
             document.getElementById('filesWindow').classList.add('active');
         }
 
-        function openSettings() {
-            alert('System Settings - Coming soon!');
-        }
-
-        function openBrowser() {
-            alert('Network Browser - Coming soon!');
+        function openBrowser() { 
+            const browserWindow = document.getElementById('browserWindow');
+            const browserContent = document.getElementById('browserContent');
+            
+            browserContent.innerHTML = `
+                <div style="padding: 15px; background: rgba(20, 40, 80, 0.9); border-bottom: 1px solid rgba(100, 160, 230, 0.3);">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <button style="padding: 5px 10px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff;">←</button>
+                        <button style="padding: 5px 10px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff;">→</button>
+                        <button style="padding: 5px 10px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff;">↻</button>
+                        <input type="text" id="browserAddress" 
+                               style="flex: 1; padding: 5px 10px; background: rgba(10, 25, 50, 0.8); 
+                                      border: 1px solid #88aaff; color: #aaccff;" 
+                               value="https://brooklynn-desktop/social" placeholder="Enter address...">
+                        <button style="padding: 5px 10px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff;">GO</button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; height: calc(100% - 70px);">
+                    <!-- Bookmarks sidebar -->
+                    <div style="width: 200px; background: rgba(15, 30, 60, 0.9); border-right: 1px solid rgba(100, 160, 230, 0.3); padding: 15px;">
+                        <h4>BOOKMARKS</h4>
+                        <div style="margin-top: 15px;">
+                            <div class="bookmark-folder" onclick="toggleBookmark('social')">
+                                <i class="fas fa-users"></i> Social Media
+                            </div>
+                            <div id="socialBookmarks" style="margin-left: 20px; display: block;">
+                                ${socialLinks.map(link => 
+                                    `<a href="${link.url}" target="_blank" 
+                                      style="display: block; padding: 5px 10px; margin: 2px 0; color: #aaccff; text-decoration: none;">
+                                        <i class="fab ${link.icon}"></i> ${link.name}
+                                    </a>`
+                                ).join('')}
+                            </div>
+                            
+                            <div class="bookmark-folder" onclick="toggleBookmark('blogs')" style="margin-top: 10px;">
+                                <i class="fas fa-blog"></i> Blogs
+                            </div>
+                            <div id="blogBookmarks" style="margin-left: 20px; display: none;">
+                                ${blogLinks.map(link => 
+                                    `<a href="${link.url}" target="_blank" 
+                                      style="display: block; padding: 5px 10px; margin: 2px 0; color: #aaccff; text-decoration: none;">
+                                        <i class="fab ${link.icon}"></i> ${link.name}
+                                    </a>`
+                                ).join('')}
+                            </div>
+                            
+                            <div class="bookmark-folder" onclick="toggleBookmark('neighborhood')" style="margin-top: 10px;">
+                                <i class="fas fa-city"></i> Neighborhood
+                            </div>
+                            <div id="neighborhoodBookmarks" style="margin-left: 20px; display: none;">
+                                <a href="#" onclick="loadNeighborhood(); return false;" style="display: block; padding: 5px 10px; margin: 2px 0; color: #aaccff; text-decoration: none; cursor: pointer;">
+                                    <i class="fas fa-city"></i> Virtual Neighborhood
+                                </a>
+                            </div>
+                            
+                            <div class="bookmark-folder" onclick="toggleBookmark('funsites')" style="margin-top: 10px;">
+                                <i class="fas fa-gamepad"></i> Fun Sites
+                            </div>
+                            <div id="funSitesBookmarks" style="margin-left: 20px; display: none;">
+                                <a href="#" onclick="loadFunSites(); return false;" style="display: block; padding: 5px 10px; margin: 2px 0; color: #aaccff; text-decoration: none; cursor: pointer;">
+                                    <i class="fas fa-gamepad"></i> Fun Websites
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- main content -->
+                    <div style="flex: 1; padding: 20px; overflow-y: auto;" id="browserMainContent">
+                        <h3>SOCIAL MEDIA PROFILES</h3>
+                        <p>> Connect with me across platforms.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
+                            ${socialLinks.map(link => 
+                                `<a href="${link.url}" target="_blank" 
+                                  style="display: flex; flex-direction: column; align-items: center; padding: 15px; 
+                                         background: rgba(30,60,120,0.8); border: 1px solid #88aaff; 
+                                         border-radius: 8px; color: #aaccff; text-decoration: none; text-align: center;">
+                                    <i class="fab ${link.icon}" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                    <span>${link.name}</span>
+                                </a>`
+                            ).join('')}
+                        </div>
+                        
+                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(100, 160, 230, 0.3);">
+                            <h3>READING PROFILES</h3>
+                            <div style="display: flex; gap: 15px; margin-top: 15px;">
+                                ${readingLinks.map(link => 
+                                    `<a href="${link.url}" target="_blank" 
+                                      style="display: flex; align-items: center; gap: 10px; padding: 10px 15px; 
+                                             background: rgba(30,60,120,0.8); border: 1px solid #88aaff; 
+                                             border-radius: 5px; color: #aaccff; text-decoration: none;">
+                                        <i class="fab ${link.icon}"></i>
+                                        <span>${link.name}</span>
+                                    </a>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            browserWindow.classList.add('active');
         }
 
         function closeWindow(windowId) {
@@ -908,17 +1975,22 @@
         function minimizeWindow(windowId) {
             document.getElementById(windowId + 'Window').classList.remove('active');
         }
+        
+        function closeMusicPlayer() {
+            document.getElementById('musicPlayer').classList.remove('active');
+            pauseTrack(); // also pause the music when closing
+        }
 
         // icon selection (right-click simulation)
-        function selectIcon(iconId) {
-            event.preventDefault();
+        function selectIcon(event, iconId) {
+            if (event) {
+                event.preventDefault();
+            }
             
-            // clear previous selection
             document.querySelectorAll('.desktop-icon').forEach(icon => {
                 icon.classList.remove('selected');
             });
             
-            // select new icon
             const iconElement = document.getElementById(iconId + '-icon');
             if (iconElement) {
                 iconElement.classList.add('selected');
@@ -927,21 +1999,26 @@
 
         // terminal functionality
         const terminalCommands = {
-            'help': 'Available commands: help, clear, date, about, cybersphere, paint, pinterest, social, github, ls, pwd, neofetch',
+            'help': 'Available commands: help, clear, date, about, wired, writings, paint, pinterest, social, github, ls, pwd, neofetch, music, player',
             'clear': function() { 
                 document.getElementById('terminalOutput').innerHTML = '';
                 return 'Terminal cleared.';
             },
             'date': function() { return new Date().toString(); },
             'about': 'Brooklynn\'s System Desktop v1.0 - 2000s Microsoft themed interface',
-            'cybersphere': 'Launching Cybersphere with secure login protocol...',
+            'wired': 'Launching the Wired with secure login protocol...',
             'paint': 'Opening paint program...',
             'pinterest': 'Opening Pinterest widget...',
             'social': 'Social links: TikTok/Instagram @brooklynnfancy',
             'github': 'GitHub: https://github.com/notrlyanon',
-            'ls': 'cybersphere/ paint/ pinterest/ writings/ art/ photos/',
+            'ls': 'the_wired/ paint/ pinterest/ writings/ art/ photos/ music/',
             'pwd': '/home/brooklynn/system-desktop',
-            'login': 'Initiating cybersphere access protocol...',
+            'login': 'Initiating the Wired access protocol...',
+            'lain': 'No matter where you are, everyone is always connected.',
+            'hi': 'hello friend.',
+            'writings': 'Opening writing portfolio...',
+            'music': 'Opening music player...',
+            'player': 'Launching music player...',
             'neofetch': 'BrooklynnOS v1.0\nTheme: 2000s Microsoft Otaku\nShell: WebTerminal 2.3\nResolution: Unknown\nDE: Custom WebDE'
         };
 
@@ -951,33 +2028,34 @@
                 const command = input.value.toLowerCase().trim();
                 const output = document.getElementById('terminalOutput');
                 
-                // add command to history
                 output.innerHTML += `<div>> ${command}</div>`;
                 
-                // process command
-                if (command === 'cybersphere' || command === 'login') {
-                    output.innerHTML += `<div>Launching Cybersphere with secure login protocol...</div>`;
-                    setTimeout(() => launchCybersphere(), 500);
+                if (command === 'wired' || command === 'login') {
+                    output.innerHTML += `<div>Launching the Wired with secure login protocol...</div>`;
+                    setTimeout(() => launchTheWired(), 500);
                 } else if (command === 'paint') {
                     output.innerHTML += `<div>Opening paint program...</div>`;
                     setTimeout(() => openPaint(), 500);
                 } else if (command === 'pinterest') {
                     output.innerHTML += `<div>Opening Pinterest widget...</div>`;
                     setTimeout(() => openPinterest(), 500);
+                } else if (command === 'music' || command === 'player') {
+                    output.innerHTML += `<div>Opening music player...</div>`;
+                    setTimeout(() => openMusicPlayer(), 500);
                 } else if (terminalCommands[command]) {
                     if (typeof terminalCommands[command] === 'function') {
                         output.innerHTML += `<div>${terminalCommands[command]()}</div>`;
                     } else {
                         output.innerHTML += `<div>${terminalCommands[command]}</div>`;
                     }
+                } else if (command === 'writings') {
+                    output.innerHTML += `<div>Opening writing portfolio...</div>`;
+                    setTimeout(() => openWriting(), 500);
                 } else if (command) {
                     output.innerHTML += `<div>Command not found: ${command}. Type 'help' for available commands.</div>`;
                 }
                 
-                // clear input
                 input.value = '';
-                
-                // scroll to bottom
                 output.scrollTop = output.scrollHeight;
             }
         }
@@ -990,23 +2068,19 @@
             let brushColor = '#0000ff';
             let brushSize = 2;
 
-            // set initial canvas background
             ctx.fillStyle = 'rgba(5, 10, 25, 0.7)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // start painting
             function startPosition(e) {
                 painting = true;
                 draw(e);
             }
 
-            // end painting
             function endPosition() {
                 painting = false;
                 ctx.beginPath();
             }
 
-            // draw function
             function draw(e) {
                 if (!painting) return;
 
@@ -1024,20 +2098,16 @@
                 ctx.moveTo(x, y);
             }
 
-            // event listeners for painting
             canvas.addEventListener('mousedown', startPosition);
             canvas.addEventListener('mouseup', endPosition);
             canvas.addEventListener('mousemove', draw);
 
-            // color selection
             document.querySelectorAll('.colors button').forEach(button => {
-                // set initial button colors from value attributes
                 button.style.backgroundColor = button.value;
                 
                 button.addEventListener('click', () => {
                     brushColor = button.value;
                     
-                    // add highlight to selected color
                     document.querySelectorAll('.colors button').forEach(b => {
                         b.style.boxShadow = '';
                         b.style.border = '1px solid rgba(255, 255, 255, 0.3)';
@@ -1048,12 +2118,10 @@
                 });
             });
 
-            // brush size selection
             document.querySelectorAll('.brushes button').forEach(button => {
                 button.addEventListener('click', () => {
                     brushSize = parseInt(button.value);
                     
-                    // add highlight to selected brush
                     document.querySelectorAll('.brushes button').forEach(b => {
                         b.style.boxShadow = '';
                     });
@@ -1062,31 +2130,25 @@
                 });
             });
 
-            // clear button
             document.getElementById('clear').addEventListener('click', () => {
                 ctx.fillStyle = 'rgba(5, 10, 25, 0.7)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             });
 
-            // save button
             document.getElementById('save').addEventListener('click', () => {
                 const dataURL = canvas.toDataURL('image/png');
                 
-                if (confirm(`🎨 ART SAVED!\n\nWould you like to share your creation with me?\n\nI'd love to see it and might even put it on my fridge!`)) {
-                    // in a real implementation, this would send to a server
-                    // for now, we show a message
-                    alert("Thank you! Once I set up my email, you'll be able to send your art directly to me!\n\nFor now, you can download it and share it with me on social media @brooklynnfancy!");
+                if (confirm(`🎨 ART SAVED!\n\nWould you like to share your creation with me?\n\n`)) {
+                    alert("Thank you! You can download it and share it with me on social media @brooklynnfancy or email it to me at brooklynn@atomicmail.io!");
                     
-                    // show success message in terminal
                     const terminalOutput = document.getElementById('terminalOutput');
                     if (terminalOutput) {
                         terminalOutput.innerHTML += `<div>> Paint creation saved successfully!</div>`;
                         terminalOutput.innerHTML += `<div>> Thank you for sharing your art!</div>`;
-                        terminalOutput.innerHTML += `<div>> Share with @brooklynnfancy on social media!</div>`;
+                        terminalOutput.innerHTML += `<div>> Share with @brooklynnfancy on social media or email @brooklynn@atomicmail.io!</div>`;
                         terminalOutput.scrollTop = terminalOutput.scrollHeight;
                     }
                 } else {
-                    // download the image
                     const link = document.createElement('a');
                     link.download = 'brooklynn-desktop-art.png';
                     link.href = dataURL;
@@ -1094,12 +2156,11 @@
                 }
             });
 
-            // set initial color and brush highlights
             document.querySelector('.colors button').style.boxShadow = '0 0 8px #fff, 0 0 12px #0000ff';
             document.querySelector('.colors button').style.border = '2px solid rgba(255, 255, 255, 0.8)';
             document.querySelector('.brushes button').style.boxShadow = '0 0 8px rgba(100, 160, 230, 0.8)';
         }
-
+        
         // make windows draggable
         function makeDraggable(element, header) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -1146,8 +2207,8 @@
                         <div style="text-align: center;">
                             <h1 style="margin-bottom: 20px;">SYSTEM SHUTDOWN</h1>
                             <p>> Terminating all processes...</p>
-                            <p>> Disconnecting from Wired...</p>
-                            <p>> Connection to cybersphere lost.</p>
+                            <p>> Disconnecting from the Wired...</p>
+                            <p>> Connection to the Wired lost.</p>
                             <p style="margin-top: 30px; color: #88aaff;">Refresh page to restart system.</p>
                         </div>
                     </div>
@@ -1157,8 +2218,434 @@
 
         // initialize with terminal icon selected
         setTimeout(() => {
-            selectIcon('terminal');
+            selectIcon(null, 'terminal');
         }, 100);
+
+        const writingSample = `"On certain days when the light catches just right, your dark eyes light up in just the right way allowing a warm homely light to emanate from your eyes. On days like that for just a few moments their seems to be more than all of the problems in the world. As foolish as it seems, and as sad as the world is, it makes everything all the better to know that for just a moment the silence in your eyes is unmasked to reveal a collective of raucous forest animals racing through the underbrush of a nightmare casting light on all the shadows. To make all of the shadows come up into the dusk you'd stare at the sun. All day. For hours you would sit and stare watching the ball of light for just that one moment of clarity so that things fall into place despite the broken remnants of our sunken lives..."
+
+> Original post: https://www.wattpad.com/story/1618138-to-save-a-life [jul. 2012]
+<span style="color: #ff66ff; font-family: 'Courier New', monospace; animation: glitch 1s infinite;">DATE RETRIEVAL: 07.2012 | ACCESSING... | ERROR: YOUTH TIMESTAMP CORRUPTED</span>`;
+
+        // opening functions for new windows
+        function openActing() {
+            document.getElementById('actingWindow').classList.add('active');
+        }
+
+        function openPartyArt() {
+            document.getElementById('partyArtWindow').classList.add('active');
+        }
+
+        function openPhotoBlogs() {
+            const photoBlogsWindow = document.getElementById('photoBlogsWindow');
+            const photoBlogsContent = document.getElementById('photoBlogsContent');
+            
+            photoBlogsContent.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px;">
+                    <h3 style="color: #ff6666;">ACCESS RESTRICTED</h3>
+                    <p>> Password protected photo collection.</p>
+                    <p>> Personal photos and visual blogs.</p>
+                    <p>> Access restricted.</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <input type="password" id="photoBlogPassword" 
+                               placeholder="ENTER PASSWORD" 
+                               style="padding: 10px; width: 80%; max-width: 300px;
+                                      background: rgba(10, 25, 50, 0.8); border: 1px solid #ff6666;
+                                      color: #aaccff; text-align: center;">
+                        <div id="photoPasswordError" style="color: #ff8888; margin-top: 10px; display: none;">
+                            ACCESS DENIED
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <button onclick="checkPhotoBlogPassword()" 
+                                style="padding: 10px 20px; background: rgba(30,60,120,0.8); 
+                                       border: 1px solid #88aaff; color: #aaccff; cursor: pointer;">
+                            SUBMIT
+                        </button>
+                        <button onclick="closeWindow('photoBlogs')" 
+                                style="padding: 10px 20px; background: rgba(60, 20, 20, 0.8); 
+                                       border: 1px solid #ff6666; color: #ffaaaa; cursor: pointer;">
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            photoBlogsWindow.classList.add('active');
+            setTimeout(() => document.getElementById('photoBlogPassword').focus(), 100);
+        }
+
+        function openBlogs() {
+            const blogsWindow = document.getElementById('blogsWindow');
+            const blogsContent = document.getElementById('blogsContent');
+            
+            blogsContent.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px;">
+                    <h3 style="color: #ff6666;">ACCESS RESTRICTED</h3>
+                    <p>> Password protected blog collection.</p>
+                    <p>> Personal writings and thoughts.</p>
+                    <p>> Access restricted.</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <input type="password" id="blogPassword" 
+                               placeholder="ENTER PASSWORD" 
+                               style="padding: 10px; width: 80%; max-width: 300px;
+                                      background: rgba(10, 25, 50, 0.8); border: 1px solid #ff6666;
+                                      color: #aaccff; text-align: center;">
+                        <div id="passwordError" style="color: #ff8888; margin-top: 10px; display: none;">
+                            ACCESS DENIED
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <button onclick="checkBlogPassword()" 
+                                style="padding: 10px 20px; background: rgba(30,60,120,0.8); 
+                                       border: 1px solid #88aaff; color: #aaccff; cursor: pointer;">
+                            SUBMIT
+                        </button>
+                        <button onclick="closeWindow('blogs')" 
+                                style="padding: 10px 20px; background: rgba(60, 20, 20, 0.8); 
+                                       border: 1px solid #ff6666; color: #ffaaaa; cursor: pointer;">
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            blogsWindow.classList.add('active');
+            setTimeout(() => document.getElementById('blogPassword').focus(), 100);
+        }
+
+        function openResources() {
+            document.getElementById('resourcesWindow').classList.add('active');
+        }
+
+        // blog password check
+        function checkBlogPassword() {
+            const password = document.getElementById('blogPassword').value;
+            const blogsContent = document.getElementById('blogsContent');
+            const errorDiv = document.getElementById('passwordError');
+            
+            if (password === 'blogs') {
+                blogsContent.innerHTML = `
+                    <h3>BLOG COLLECTION</h3>
+                    <p>> Personal blogs and writings across platforms.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                        ${blogLinks.map(link => 
+                            `<a href="${link.url}" target="_blank" 
+                              style="display: flex; flex-direction: column; align-items: center; padding: 15px; 
+                                     background: rgba(30,60,120,0.8); border: 1px solid #88aaff; 
+                                     border-radius: 8px; color: #aaccff; text-decoration: none; text-align: center;">
+                                <i class="fab ${link.icon}" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                <span>${link.name}</span>
+                            </a>`
+                        ).join('')}
+                    </div>
+                    <p style="margin-top: 20px; color: #a88cff;">> ACCESS GRANTED: Personal thoughts and writings unlocked.</p>
+                `;
+            } else {
+                errorDiv.style.display = 'block';
+                document.getElementById('blogPassword').value = '';
+                document.getElementById('blogPassword').focus();
+            }
+        }
+
+        function checkPhotoBlogPassword() {
+            const password = document.getElementById('photoBlogPassword').value;
+            const photoBlogsContent = document.getElementById('photoBlogsContent');
+            const errorDiv = document.getElementById('photoPasswordError');
+            
+            if (password === 'photos') {
+                photoBlogsContent.innerHTML = `
+                    <h3 class="glitch">PHOTO BLOGS</h3>
+                    <p>> Visual galleries and photo blogs.</p>
+                    <p>> [REDACTED] </p>
+                    
+                    <div style="margin: 20px 0; padding: 15px; background: rgba(30, 60, 120, 0.3); border-radius: 5px;">
+                        <h4>PHOTO BLOG LINKS:</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;" id="photoBlogsLinks">
+                            ${photoBlogLinks.map(link => 
+                                `<a href="${link.url}" target="_blank" 
+                                  style="display: inline-block; padding: 10px 15px; background: rgba(30,60,120,0.8); 
+                                         border: 1px solid #88aaff; border-radius: 5px; color: #aaccff; text-decoration: none;">
+                                    <i class="fab ${link.icon}"></i> ${link.name}
+                                </a>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                errorDiv.style.display = 'block';
+                document.getElementById('photoBlogPassword').value = '';
+                document.getElementById('photoBlogPassword').focus();
+            }
+        }
+        
+        // toggle bookmark folders
+        function toggleBookmark(folder) {
+            const bookmarks = document.getElementById(folder + 'Bookmarks');
+            if (bookmarks) {
+                bookmarks.style.display = bookmarks.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function loadNeighborhood() {
+            const mainContent = document.getElementById('browserMainContent');
+            mainContent.innerHTML = `
+                <h3>VIRTUAL NEIGHBORHOOD</h3>
+                <p>> Virtual neighborhood of developers.</p>
+                <p>> Cool artists and websites I've found.</p>
+                <p>> Community links.</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
+                    <div class="folder-item" onclick="alert('Coming soon: Web Dev folder')">
+                        <i class="fas fa-laptop-code"></i>
+                        <p>WEB_DEV</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Artists folder')">
+                        <i class="fas fa-palette"></i>
+                        <p>ARTISTS</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Musicians folder')">
+                        <i class="fas fa-music"></i>
+                        <p>MUSICIANS</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Game Dev folder')">
+                        <i class="fas fa-gamepad"></i>
+                        <p>GAME_DEV</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Writers folder')">
+                        <i class="fas fa-book"></i>
+                        <p>WRITERS</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Misc folder')">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <p>MISC</p>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; color: #88aaff;">> Coming soon: List of interesting creators and websites.</p>
+            `;
+        }
+
+        function loadFunSites() {
+            const mainContent = document.getElementById('browserMainContent');
+            mainContent.innerHTML = `
+                <h3>FUN WEBSITES</h3>
+                <p>> Fun websites I've found online.</p>
+                <p>> Interesting discoveries and curiosities.</p>
+                <p>> Enjoy exploring.</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
+                    <div class="folder-item" onclick="alert('Coming soon: Games folder')">
+                        <i class="fas fa-gamepad"></i>
+                        <p>GAMES</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Visual folder')">
+                        <i class="fas fa-eye"></i>
+                        <p>VISUAL</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Creative folder')">
+                        <i class="fas fa-paint-brush"></i>
+                        <p>CREATIVE</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Film/TV folder')">
+                        <i class="fas fa-film"></i>
+                        <p>FILM/TV</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Music folder')">
+                        <i class="fas fa-music"></i>
+                        <p>MUSIC</p>
+                    </div>
+                    <div class="folder-item" onclick="alert('Coming soon: Misc folder')">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <p>MISC.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; color: #88aaff;">> Coming soon: everything not here already.</p>
+            `;
+        }
+
+        // open writing window function
+        function openWriting() {
+            const writingWindow = document.getElementById('writingWindow');
+            const writingContent = document.getElementById('writingContent');
+            
+            writingContent.innerHTML = `
+                <h3>WRITING PORTFOLIO</h3>
+                <p>> Creative writing and personal works.</p>
+                <div class="social-links" style="margin: 15px 0;">
+                    ${writingLinks.length > 0 ? writingLinks.map(link => 
+                        `<a href="${link.url}" target="_blank" class="social-link" style="display: inline-block; margin: 5px; padding: 8px 15px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; border-radius: 4px; color: #aaccff; text-decoration: none;">
+                            <i class="fab ${link.icon}"></i> ${link.name}
+                        </a>`
+                    ).join('') : '<p>> No social links configured.</p>'}
+                </div>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(100, 160, 230, 0.3);">
+                    <h3>SNEAK PEEK AVAILABLE</h3>
+                    <p>Would you like to see a writing sample?</p>
+                    <button id="showWritingSample" style="margin: 10px 0; padding: 10px 20px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff; cursor: pointer; border-radius: 5px; font-family: 'Courier New', monospace;">VIEW SAMPLE</button>
+                </div>
+                <div id="writingSampleContainer" style="display: none; margin-top: 20px; padding: 15px; background: rgba(0, 10, 30, 0.5); border: 1px solid rgba(100, 160, 230, 0.3); border-radius: 5px; font-style: italic; line-height: 1.6;">
+                    ${writingSample}
+                </div>
+            `;
+            
+            writingWindow.classList.add('active');
+            
+            setTimeout(() => {
+                const sampleButton = document.getElementById('showWritingSample');
+                const sampleContainer = document.getElementById('writingSampleContainer');
+                
+                if (sampleButton) {
+                    sampleButton.addEventListener('click', () => {
+                        sampleContainer.style.display = 'block';
+                        sampleButton.style.display = 'none';
+                        sampleContainer.innerHTML = writingSample;
+                    });
+                }
+            }, 100);
+        }
+
+        // music player functions
+        let track_name = document.querySelector(".songtitle");
+        let playpause_btn = document.querySelector(".playpause-track");
+        let next_btn = document.querySelector(".next-track");
+        let prev_btn = document.querySelector(".prev-track");
+        let seek_slider = document.querySelector(".seek_slider");
+        let curr_time = document.querySelector(".current-time");
+        let total_duration = document.querySelector(".total-duration");
+
+        let track_index = 0;
+        let isPlaying = false;
+        let updateTimer;
+
+        // create new audio element
+        let curr_track = document.getElementById("music");
+
+        // define songs here
+        let track_list = [
+            {
+                name: "let me be with you",
+                path: "https://files.catbox.moe/sv0v22.mp3"
+            },
+        ];
+     // add more eventually 
+
+        function loadTrack(track_index) {
+            clearInterval(updateTimer);
+            resetValues();
+
+            // load a new track
+            curr_track.src = track_list[track_index].path;
+            curr_track.load();
+            
+            // update details of the track
+            track_name.textContent = "playing " + (track_index + 1) + " of " + track_list.length + ": " + track_list[track_index].name;
+
+            // set an interval of 1000 milliseconds for updating the seek slider
+            updateTimer = setInterval(seekUpdate, 1000);
+            
+            // move to the next track if the current one finishes playing 
+            curr_track.addEventListener("ended", nextTrack);
+        }
+
+        // reset values
+        function resetValues() {
+            curr_time.textContent = "0:00";
+            total_duration.textContent = "0:00";
+            seek_slider.value = 0;
+        }
+
+        // checks if song is playing
+        function playpauseTrack() {
+            if (!isPlaying) playTrack();
+            else pauseTrack();
+        }
+
+        // plays track when play button is pressed
+        function playTrack() {
+            curr_track.play();
+            isPlaying = true;
+            
+            // replace icon with the pause icon
+            playpause_btn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+
+        // pauses track when pause button is pressed
+        function pauseTrack() {
+            curr_track.pause();
+            isPlaying = false;
+            
+            // replace icon with the play icon
+            playpause_btn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+
+        // moves to the next track
+        function nextTrack() {
+            if (track_index < track_list.length - 1)
+                track_index += 1;
+            else track_index = 0;
+            loadTrack(track_index);
+            playTrack();
+        }
+
+        // moves to the previous track
+        function prevTrack() {
+            if (track_index > 0)
+                track_index -= 1;
+            else track_index = track_list.length;
+            loadTrack(track_index);
+            playTrack();
+        }
+
+        // seeker slider
+        function seekTo() {
+            seekto = curr_track.duration * (seek_slider.value / 100);
+            curr_track.currentTime = seekto;
+        }
+
+        function seekUpdate() {
+            let seekPosition = 0;
+            
+            // check if the current track duration is a legible number
+            if (!isNaN(curr_track.duration)) {
+                seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+                seek_slider.value = seekPosition;
+                
+                // calculate the time left and the total duration
+                let currentMinutes = Math.floor(curr_track.currentTime / 60);
+                let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+                let durationMinutes = Math.floor(curr_track.duration / 60);
+                let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+                    
+                // adding a zero to the single digit time values
+                if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
+                if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
+                if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
+                if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
+
+                curr_time.textContent = currentMinutes + ":" + currentSeconds;
+                total_duration.textContent = durationMinutes + ":" + durationSeconds;
+            }
+        }
+
+        // function to open music player
+        function openMusicPlayer() {
+            document.getElementById('musicPlayer').classList.add('active');
+            
+            // initialize the music player if not already done
+            if (curr_track.src === "") {
+                loadTrack(track_index);
+            }
+        }
+
+        // initialize the music player on page load
+        window.addEventListener('load', function() {
+            // Load the first track but don't play automatically
+            if (curr_track) {
+                loadTrack(track_index);
+            }
+        });
+        
     </script>
 </body>
 </html>
