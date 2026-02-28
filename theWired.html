@@ -15,7 +15,7 @@
         body {
             font-family: 'Courier New', monospace;
             background-color: #0a0a1a;
-            color: #88aaff;
+            color: #45BCED;
             overflow: hidden;
             height: 100vh;
             display: flex;
@@ -45,11 +45,34 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.12;
+            opacity: 0.1;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(80, 130, 200, 0.1) 1px, transparent 1px),
-                radial-gradient(circle at 80% 70%, rgba(100, 160, 230, 0.1) 1px, transparent 1px);
+                radial-gradient(circle at 20% 30%, rgba(69, 188, 237, 0.15) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(69, 188, 237, 0.15) 1px, transparent 1px);
             background-size: 50px 50px, 30px 30px;
+            font-family: 'MS Gothic', 'Courier New', monospace;
+            color: rgba(69, 188, 237, 0.3);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* japanese text overlay */
+        .japanese-text-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            font-family: 'MS Gothic', 'Courier New', monospace;
+            font-size: 14px;
+            color: #45BCED;
+            line-height: 1.5;
+            padding: 20px;
+            white-space: pre-wrap;
+            pointer-events: none;
+            overflow: hidden;
         }
 
         /* terminal header */
@@ -63,19 +86,184 @@
 
         .terminal-header h1 {
             font-size: 1.8rem;
-            color: #88aaff;
-            text-shadow: 0 0 8px #88aaff, 0 0 4px #6699ff;
+            color: #45BCED;
+            text-shadow: 0 0 8px #45BCED, 0 0 4px #45BCED;
             letter-spacing: 3px;
             margin-bottom: 10px;
         }
 
         .terminal-header p {
             font-size: 0.9rem;
-            color: #88aaff;
+            color: #45BCED;
             opacity: 0.8;
         }
 
-        /* 3d sphere Container */
+        /* music player controls */
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 30, 60, 0.8);
+            border: 1px solid #45BCED;
+            border-radius: 25px;
+            padding: 10px 15px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(69, 188, 237, 0.3);
+        }
+
+        .music-icon {
+            color: #88CCFF;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .music-icon:hover {
+            color: #45BCED;
+            transform: scale(1.1);
+        }
+
+        .music-player {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 300px;
+            background: rgba(0, 40, 80, 0.95);
+            border: 1px solid #45BCED;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 100;
+            display: none;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(69, 188, 237, 0.4);
+        }
+
+        .music-player.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .music-player h3 {
+            color: #88CCFF;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .playlist {
+            list-style: none;
+            margin-bottom: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .playlist li {
+            padding: 8px 10px;
+            margin: 5px 0;
+            background: rgba(0, 60, 120, 0.5);
+            border: 1px solid rgba(69, 188, 237, 0.3);
+            border-radius: 5px;
+            color: #88CCFF;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .playlist li:hover {
+            background: rgba(0, 80, 160, 0.7);
+            border-color: #45BCED;
+        }
+
+        .playlist li.active {
+            background: rgba(0, 80, 160, 0.9);
+            border-color: #45BCED;
+            box-shadow: 0 0 10px rgba(69, 188, 237, 0.5);
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .player-controls button {
+            background: rgba(0, 60, 120, 0.8);
+            border: 1px solid #45BCED;
+            color: #88CCFF;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .player-controls button:hover {
+            background: rgba(0, 80, 160, 0.9);
+            box-shadow: 0 0 10px #45BCED;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .volume-control i {
+            color: #88CCFF;
+            font-size: 0.9rem;
+        }
+
+        .volume-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            background: rgba(69, 188, 237, 0.3);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #45BCED;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .current-song {
+            margin-top: 10px;
+            padding: 8px;
+            background: rgba(0, 20, 40, 0.7);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            color: #88CCFF;
+            text-align: center;
+            border: 1px solid rgba(69, 188, 237, 0.2);
+        }
+
+        /* 3d sphere container */
         .sphere-container {
             position: relative;
             width: 1100px;
@@ -84,7 +272,36 @@
             margin-top: 40px;
         }
 
-        /* the 3d sphere - NO ROTATION HERE */
+        /* center image */
+        .center-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 600px; /* taller for full body */
+            transform: translate(-50%, -50%);
+            z-index: 2; /* behind front items but above back items */
+            border-radius: 0;
+            overflow: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* don't interfere with clicks */
+        }
+
+        .center-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* show full img without cropping */
+            filter: brightness(1.1) contrast(1.1); /* Simplified filter */
+            transition: filter 0.3s ease;
+            /* remove any borders or shadows */
+            border: none;
+            box-shadow: none;
+        }
+
+
+        /* the 3d sphere */
         .sphere {
             position: absolute;
             width: 100%;
@@ -92,10 +309,10 @@
             transform-style: preserve-3d;
             transition: transform 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
             transform-origin: center;
-            /* the sphere itself won't rotate anymore */
+            z-index: 3; /* higher than image */
         }
 
-        /* menu items arranged in a sphere - ALL. FACING. FORWARD. ALWAYS. */
+        /* menu items */
         .menu-item {
             position: absolute;
             width: 160px;
@@ -108,64 +325,65 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #aaccff;
+            color: #88CCFF;
             font-size: 1rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 0 4px #aaccff;
+            text-shadow: 0 0 4px #88CCFF;
             cursor: pointer;
             transition: all 0.4s, transform 0.4s;
-            background: rgba(20, 40, 80, 0.7);
-            border: 1px solid rgba(100, 160, 230, 0.5);
-            box-shadow: 0 0 15px rgba(100, 160, 230, 0.4);
+            background: rgba(0, 40, 80, 0.7);
+            border: 1px solid rgba(69, 188, 237, 0.5);
+            box-shadow: 0 0 15px rgba(69, 188, 237, 0.4);
             overflow: hidden;
             text-align: center;
             padding: 10px;
             transform-style: preserve-3d;
-            /* always face forward - NO ROTATION APPLIED TO ITEMS */
             transform-origin: center center -400px;
             pointer-events: auto;
             backface-visibility: visible;
+            z-index: 3; /* base z-index */
         }
 
         .menu-item:hover {
-            background: rgba(30, 60, 120, 0.9);
-            box-shadow: 0 0 25px rgba(120, 180, 255, 0.7);
+            background: rgba(0, 60, 120, 0.9);
+            box-shadow: 0 0 25px rgba(69, 188, 237, 0.7);
             transform: scale(1.1) translateZ(20px) !important;
-            color: #cce5ff;
-            border-color: rgba(140, 190, 255, 0.7);
+            color: #CCF5FF;
+            border-color: rgba(69, 188, 237, 0.7);
             z-index: 100 !important;
         }
 
         .menu-item.active {
-            background: rgba(40, 80, 160, 0.9);
-            box-shadow: 0 0 30px rgba(140, 190, 255, 0.9);
-            color: #cce5ff;
-            border-color: rgba(160, 200, 255, 0.8);
+            background: rgba(0, 80, 160, 0.9);
+            box-shadow: 0 0 30px rgba(69, 188, 237, 0.9);
+            color: #CCF5FF;
+            border-color: rgba(69, 188, 237, 0.8);
             transform: scale(1.05) translateZ(10px) !important;
+            z-index: 100 !important; /* active item always on top */
         }
 
         .menu-item i {
             font-size: 2rem;
             margin-bottom: 10px;
-            color: #aaccff;
+            color: #88CCFF;
         }
 
         /* special item styles */
         .password-protected {
-            border-color: #a88cff;
-            box-shadow: 0 0 15px rgba(168, 140, 255, 0.6);
+            border-color: #45BCED;
+            box-shadow: 0 0 15px rgba(69, 188, 237, 0.6);
         }
 
         .password-protected i {
-            color: #a88cff;
+            color: #45BCED;
         }
 
         .coming-soon {
             opacity: 0.7;
             border-style: dashed;
-            border-color: rgba(150, 180, 220, 0.4);
+            border-color: rgba(69, 188, 237, 0.4);
         }
 
         .error-mode {
@@ -179,28 +397,9 @@
             100% { opacity: 1; filter: hue-rotate(0deg); }
         }
 
-        /* content display */
+        /* content display - HIDDEN */
         .content-display {
-            position: absolute;
-            bottom: 30px;
-            width: 80%;
-            max-width: 800px;
-            height: 120px;
-            background: rgba(10, 25, 50, 0.85);
-            border: 1px solid rgba(100, 160, 230, 0.3);
-            border-radius: 8px;
-            padding: 15px;
-            overflow-y: auto;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            box-shadow: 0 0 20px rgba(80, 140, 220, 0.3);
-            color: #aaccff;
-        }
-
-        .content-display h3 {
-            color: #aaccff;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+            display: none; /* hides the content display box */
         }
 
         /* popup modal */
@@ -211,23 +410,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 10, 20, 0.9);
+            background: rgba(0, 10, 20, 0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
 
         .popup-content {
-            background: rgba(15, 30, 60, 0.95);
-            border: 2px solid #88aaff;
+            background: rgba(0, 30, 60, 0.95);
+            border: 2px solid #45BCED;
             border-radius: 10px;
             width: 80%;
             max-width: 700px;
             max-height: 80vh;
             overflow-y: auto;
             padding: 20px;
-            color: #aaccff;
-            box-shadow: 0 0 30px rgba(100, 160, 230, 0.6);
+            color: #88CCFF;
+            box-shadow: 0 0 30px rgba(69, 188, 237, 0.6);
         }
 
         .popup-header {
@@ -235,18 +434,18 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            border-bottom: 1px solid #88aaff;
+            border-bottom: 1px solid #45BCED;
             padding-bottom: 10px;
         }
 
         .popup-header h2 {
-            color: #aaccff;
+            color: #88CCFF;
         }
 
         .close-popup {
             background: transparent;
             border: none;
-            color: #aaccff;
+            color: #88CCFF;
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -259,8 +458,8 @@
         }
 
         .folder {
-            background: rgba(30, 60, 120, 0.7);
-            border: 1px solid #88aaff;
+            background: rgba(0, 60, 120, 0.7);
+            border: 1px solid #45BCED;
             border-radius: 8px;
             padding: 15px 10px;
             text-align: center;
@@ -269,8 +468,8 @@
         }
 
         .folder:hover {
-            background: rgba(40, 80, 160, 0.9);
-            box-shadow: 0 0 10px #88aaff;
+            background: rgba(0, 80, 160, 0.9);
+            box-shadow: 0 0 10px #45BCED;
         }
 
         .folder i {
@@ -285,7 +484,7 @@
 
         @keyframes textGlitch {
             0% { opacity: 1; }
-            1% { opacity: 0.8; color: #a88cff; }
+            1% { opacity: 0.8; color: #45BCED; }
             2% { opacity: 1; }
             3% { opacity: 0.7; }
             4% { opacity: 1; }
@@ -300,43 +499,25 @@
         }
 
         .social-link {
-            background: rgba(30, 60, 120, 0.7);
-            border: 1px solid #88aaff;
+            background: rgba(0, 60, 120, 0.7);
+            border: 1px solid #45BCED;
             border-radius: 8px;
             padding: 8px 15px;
-            color: #aaccff;
+            color: #88CCFF;
             text-decoration: none;
             transition: all 0.3s;
         }
 
         .social-link:hover {
-            background: rgba(40, 80, 160, 0.9);
-            box-shadow: 0 0 10px #88aaff;
-        }
-
-        /* writing sample popup */
-        .writing-sample {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(10, 20, 40, 0.7);
-            border: 1px solid #a88cff;
-            border-radius: 8px;
-            font-style: italic;
-            line-height: 1.6;
-        }
-
-        .writing-sample h4 {
-            color: #aaccff;
-            margin-bottom: 10px;
+            background: rgba(0, 80, 160, 0.9);
+            box-shadow: 0 0 10px #45BCED;
         }
 
         /* scroll instructions */
         .instructions {
             position: absolute;
             bottom: 170px;
-            color: #88aaff;
+            color: #45BCED;
             font-size: 0.9rem;
             text-align: center;
             width: 100%;
@@ -344,7 +525,7 @@
 
         .instructions i {
             margin: 0 10px;
-            color: #aaccff;
+            color: #88CCFF;
         }
 
         /* terminal-style blinking cursor */
@@ -352,7 +533,7 @@
             display: inline-block;
             width: 8px;
             height: 16px;
-            background-color: #aaccff;
+            background-color: #45BCED;
             margin-left: 5px;
             animation: blink 1s infinite;
             vertical-align: middle;
@@ -373,9 +554,9 @@
         }
 
         .mobile-controls button {
-            background: rgba(30, 60, 120, 0.7);
-            border: 1px solid rgba(100, 160, 230, 0.5);
-            color: #aaccff;
+            background: rgba(0, 60, 120, 0.7);
+            border: 1px solid rgba(69, 188, 237, 0.5);
+            color: #88CCFF;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
@@ -406,15 +587,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 10, 20, 0.9);
+            background: rgba(0, 10, 20, 0.9);
             z-index: 1001;
             justify-content: center;
             align-items: center;
         }
 
         .password-box {
-            background: rgba(15, 30, 60, 0.95);
-            border: 2px solid #a88cff;
+            background: rgba(0, 30, 60, 0.95);
+            border: 2px solid #45BCED;
             border-radius: 10px;
             padding: 30px;
             width: 300px;
@@ -425,17 +606,17 @@
             width: 100%;
             padding: 10px;
             margin: 15px 0;
-            background: rgba(10, 20, 40, 0.8);
-            border: 1px solid #88aaff;
-            color: #aaccff;
+            background: rgba(0, 20, 40, 0.8);
+            border: 1px solid #45BCED;
+            color: #88CCFF;
             font-family: 'Courier New', monospace;
             border-radius: 5px;
         }
 
         .password-box button {
-            background: rgba(30, 60, 120, 0.8);
-            border: 1px solid #88aaff;
-            color: #aaccff;
+            background: rgba(0, 60, 120, 0.8);
+            border: 1px solid #45BCED;
+            color: #88CCFF;
             padding: 10px 20px;
             cursor: pointer;
             font-family: 'Courier New', monospace;
@@ -447,6 +628,11 @@
         @media (max-width: 1150px) {
             .sphere-container {
                 width: 95vw;
+                height: 500px;
+            }
+            
+            .center-image {
+                width: 400px;
                 height: 500px;
             }
             
@@ -468,11 +654,21 @@
             .instructions {
                 bottom: 200px;
             }
+            
+            .music-player {
+                width: 250px;
+                right: 10px;
+            }
         }
 
         @media (max-width: 768px) {
             .sphere-container {
                 height: 450px;
+            }
+            
+            .center-image {
+                width: 320px;
+                height: 400px;
             }
             
             .menu-item {
@@ -490,6 +686,18 @@
                 height: 100px;
                 font-size: 0.85rem;
             }
+            
+            .music-controls {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+            }
+            
+            .music-player {
+                width: 90vw;
+                right: 5vw;
+                left: 5vw;
+            }
         }
     </style>
 </head>
@@ -497,19 +705,56 @@
     <!-- background -->
     <div id="matrix-bg"></div>
     
+    <!-- japanese text overlay -->
+    <div class="japanese-text-overlay" id="japaneseTextOverlay"></div>
+    
     <!-- overlapping code effect -->
     <div class="code-overlay"></div>
     
+    <!-- music controls -->
+    <div class="music-controls" id="musicControls">
+        <i class="fas fa-music music-icon" id="musicToggle"></i>
+        <span style="color: #88CCFF; font-size: 0.8rem;">PORTAL MUSIC</span>
+    </div>
+    
+    <!-- music player -->
+    <div class="music-player" id="musicPlayer">
+        <h3>PORTAL SOUNDTRACK</h3>
+        <ul class="playlist" id="playlist">
+            <li data-src="https://files.catbox.moe/9d3906.mp3">bôa - duvet</li>
+            <li data-src="https://files.catbox.moe/ku4es8.mp3">imogen heap - headlock</li>
+            <li data-src="https://files.catbox.moe/70jvt6.mp3">imogen heap - you know where to find me</li>
+            <li data-src="https://files.catbox.moe/xlibeq.mp3">mitski - nobody</li>
+        </ul>
+        <div class="current-song" id="currentSong">
+            Now playing: bôa - duvet
+        </div>
+        <div class="player-controls">
+            <button id="prevBtn"><i class="fas fa-step-backward"></i></button>
+            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+            <button id="nextBtn"><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
+        </div>
+    </div>
+    
     <!-- terminal header -->
     <div class="terminal-header">
-        <h1 class="glitch">BROOKLYNN'S PORTAL <span class="blinking-cursor"></span></h1>
+        <h1 class="glitch">EXPERIMENT: BROOKLYNN <span class="blinking-cursor"></span></h1>
         <p>ACCESS : CONNECTION ESTABLISHED</p>
     </div>
     
     <!-- 3d sphere container -->
     <div class="sphere-container" id="sphereContainer">
+        <!-- center image -->
+        <div class="center-image">
+            <img src="https://files.catbox.moe/k9jh12.png" alt="Portal Image" id="centerImage">
+        </div>
+        
         <div class="sphere" id="sphere">
-            <!-- menu items generated by java -->
+            <!-- menu items generated by javascript -->
         </div>
     </div>
     
@@ -522,11 +767,11 @@
     
     <!-- mobile controls -->
     <div class="mobile-controls">
-        <button id="prevBtn"><i class="fas fa-chevron-left"></i> PREV</button>
-        <button id="nextBtn">NEXT <i class="fas fa-chevron-right"></i></button>
+        <button id="prevBtnMobile"><i class="fas fa-chevron-left"></i> PREV</button>
+        <button id="nextBtnMobile">NEXT <i class="fas fa-chevron-right"></i></button>
     </div>
     
-    <!-- content display -->
+    <!-- content display - HIDDEN -->
     <div class="content-display" id="contentDisplay">
         <h3>SYSTEM READY</h3>
         <p>> Initializing Cybersphere navigation interface...<br>
@@ -537,7 +782,7 @@
     <!-- popup modal -->
     <div class="popup-modal" id="popupModal">
         <div class="popup-content" id="popupContent">
-            <!-- Popup content will be injected here -->
+            <!-- popup content will be injected here -->
         </div>
     </div>
     
@@ -555,196 +800,78 @@
         </div>
     </div>
     
+    <!-- hidden audio element for music -->
+    <audio id="backgroundMusic" loop></audio>
+    
     <script>
-      
-      //* might take away most of this and add to desktop/index instead *//
-      
-        // menu items data 
-        const menuItems = [
-            { 
-                id: 1, 
-                name: "MEMORIES", 
-                icon: "fa-sd-card", 
-                content: "> Memory archive.<br>> Personal logs and encrypted data.<br>> Access requires authentification.",
-                type: "password",
-                specialClass: "password-protected",
-                password: "lain"
-            },
-            { 
-                id: 2, 
-                name: "TUTORIALS", 
-                icon: "fa-graduation-cap", 
-                content: "> Educational resources coming soon.<br>> Web development guides and how-to's.<br>> Check back for updates.",
-                type: "coming-soon",
-                specialClass: "coming-soon"
-            },
-            { 
-                id: 3, 
-                name: "RESOURCES", 
-                icon: "fa-toolbox", 
-                content: "> Tools and fun resources coming soon.<br>> Useful links and downloads.<br>> Under construction.",
-                type: "coming-soon",
-                specialClass: "coming-soon"
-            },
-            { 
-                id: 4, 
-                name: "ABOUT PAGE", 
-                icon: "fa-code", 
-                content: "> Inspired by Serial Experiments Lain.<br>> Also inspired by Wired Collective Neocities.<br>> Tried to be mobile-friendly, I hope it worked.",
-                type: "info"
-            },
-            { 
-                id: 5, 
-                name: "ABOUT ME", 
-                icon: "fa-user", 
-                content: "> INFJ personality type.<br>> Creative developer and artist.<br>> More details coming soon.",
-                type: "info"
-            },
-            { 
-                id: 6, 
-                name: "UPDATES", 
-                icon: "fa-calendar-alt", 
-                content: "> Site updates and micro-blog.<br>> Yearly archive folders available.<br>> System Unstable.",
-                type: "updates"
-            },
-            { 
-                id: 7, 
-                name: "PHOTO BLOGS", 
-                icon: "fa-camera", 
-                content: "> ERROR: Connection unstable.<br>> Visual galleries and photo blogs.<br>> System recovering...",
-                type: "error",
-                specialClass: "error-mode"
-            },
-            { 
-                id: 8, 
-                name: "BLOGS", 
-                icon: "fa-blog", 
-                content: "> Password protected blog collection.<br>> Personal writings and thoughts.<br>> Access restricted.",
-                type: "password-blogs",
-                specialClass: "password-protected"
-            },
-            { 
-                id: 9, 
-                name: "WRITING", 
-                icon: "fa-pen-fancy", 
-                content: "> Creative writing portfolio.<br>> Fiction and personal works.<br>> Sneak peek available.",
-                type: "writing"
-            },
-            { 
-                id: 10, 
-                name: "SOCIAL MEDIA", 
-                icon: "fa-share-alt", 
-                content: "> All social media profiles.<br>> TikTok, Instagram, Threads, X, Bluesky, etc.<br>> Connect with me online.",
-                type: "social"
-            },
-            { 
-                id: 11, 
-                name: "ACTING", 
-                icon: "fa-theater-masks", 
-                content: "> Actors profiles coming soon.<br>> Performance portfolio.<br>> Check back later.",
-                type: "coming-soon",
-                specialClass: "coming-soon"
-            },
-            { 
-                id: 12, 
-                name: "CHARACTERS", 
-                icon: "fa-user-secret", 
-                content: "> Alternate personas and websites.<br>> Glitching folder system.<br>> Access other identities.",
-                type: "characters"
-            },
-            { 
-                id: 13, 
-                name: "PORTFOLIO", 
-                icon: "fa-briefcase", 
-                content: "> Website portfolio coming soon.<br>> Previous projects and designs.<br>> Under construction.",
-                type: "coming-soon",
-                specialClass: "coming-soon"
-            },
-            { 
-                id: 14, 
-                name: "PARTY ART", 
-                icon: "fa-paint-brush", 
-                content: "> Face paint and party art sevices.<br>> Instagram: @brookiespartyart<br>> Facebook: brookiespartyart",
-                type: "business"
-            },
-            { 
-                id: 15, 
-                name: "FREEBIES", 
-                icon: "fa-gift", 
-                content: "> Free codes and layouts coming soon.<br>> Resources to share with community.<br>> Check back for updates.",
-                type: "coming-soon",
-                specialClass: "coming-soon"
-            },
-            { 
-                id: 16, 
-                name: "TIPS", 
-                icon: "fa-coffee", 
-                content: "> Support my work on Ko-fi.<br>> Appreciate your contributions.<br>> Link to Ko-fi profile.",
-                type: "tips"
-            },
-            { 
-                id: 17, 
-                name: "NEIGHBORHOOD", 
-                icon: "fa-city", 
-                content: "> Virtual neighborhood of developers.<br>> Cool artists and websites I've found.<br>> Community links.",
-                type: "neighborhood"
-            },
-            { 
-                id: 18, 
-                name: "FUN SITES", 
-                icon: "fa-gamepad", 
-                content: "> Fun websites I've found online.<br>> Interesting discoveries and curiosities.<br>> Enjoy exploring.",
-                type: "fun"
-            }
+        // raindom lain quotes for background + japanese text 
+        const japaneseChars = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+        const lainQuotes = [
+            "Present day... present time...",
+            "No matter where you go, everyone is connected.",
+            "Let's all love Lain.",
+            "And you don't seem to understand...",
+            "I am the Wired.",
+            "God is here.",
+            "Close the world. Open the nExt.",
+            "The network is vast and infinite.",
+            "Reality is subjective.",
+            "We are all connected in the Wired.",
+            "Information wants to be free.",
+            "The boundary between man and machine is blurring.",
+            "Ego is an illusion of the flesh.",
+            "Let's all love Lain!",
+            "Do you remember? The sound of a connection?",
+            "Protocol 7: You can't erase what you've become.",
+            "The Wired is where we truly exist.",
+            "Memory is a fragile thing.",
+            "We are the collective unconscious.",
+            "There is no distinction between the real and the virtual.",
+            "Accessing... connecting... becoming..."
+        ];
+        
+       // menu items data
+const menuItems = [
+    { 
+        id: 1, 
+        name: "MEMORIES", 
+        icon: "fa-sd-card", 
+        content: "", // empty content
+        type: "password",
+        specialClass: "password-protected",
+        password: "lain"
+    },
+    { 
+        id: 2, 
+        name: "ABOUT ME", 
+        icon: "fa-user", 
+        content: "", // empty content
+        type: "about"  // "about"
+    },
+    { 
+        id: 3, 
+        name: "ABOUT PAGE", 
+        icon: "fa-code", 
+        content: "", // empty content
+        type: "aboutPage"  //  "aboutPage"
+    },
+    { 
+        id: 4, 
+        name: "PERS0NAS", 
+        icon: "fa-user-secret", 
+        content: "", // empty content
+        type: "characters"
+    }
+];
+        // music playlist
+        const playlist = [
+            { title: "bôa - duvet", src: "https://files.catbox.moe/9d3906.mp3" },
+            { title: "imogen heap - headlock", src: "https://files.catbox.moe/ku4es8.mp3" },
+            { title: "imogen heap - you know where to find me", src: "https://files.catbox.moe/70jvt6.mp3" },
+            { title: "mitski - nobody", src: "https://files.catbox.moe/xlibeq.mp3" }
         ];
 
-        // social media links
-        const socialLinks = [
-            { name: "TikTok", url: "https://www.tiktok.com/@brooklynnfancy", icon: "fa-tiktok" },
-            { name: "Instagram", url: "https://www.instagram.com/brooklynnfancy/", icon: "fa-instagram" },
-            { name: "Threads", url: "https://www.threads.com/@brooklynnfancy", icon: "fa-threads" },
-            { name: "X (Twitter)", url: "https://x.com/brooklynnfancy", icon: "fa-twitter" },
-            { name: "Bluesky", url: "https://bsky.app/profile/brooklynnfancy.bsky.social", icon: "fa-cloud" },
-            { name: "Mastodon", url: "https://mastodon.social/@brooklynnfancy", icon: "fa-mastodon" },
-            { name: "LinkedIn", url: "https://www.linkedin.com/in/brooklynn-p-a01a09a6/", icon: "fa-linkedin" },
-            { name: "SpaceHey", url: "https://spacehey.com/home", icon: "fa-user-astronaut" },
-            { name: "Pi.fyi", url: "https://www.pi.fyi/u/brooklynn", icon: "fa-pi" }
-        ];
-
-        // blog links
-        const blogLinks = [
-            { name: "Pillowfort", url: "https://www.pillowfort.social/brooklynnfancy", icon: "fa-bed" },
-            { name: "Tumblr", url: "https://www.tumblr.com/brooklynnblogs", icon: "fa-tumblr" },
-            { name: "LiveJournal", url: "https://brooklynnfancy.livejournal.com", icon: "fa-book" },
-            { name: "Substack", url: "https://substack.com/@brooklynnfancy/notes", icon: "fa-newspaper" },
-            { name: "Blogger", url: "https://www.blogger.com/profile/07037005622033288236", icon: "fa-blogger" }
-        ];
-
-        // photo blog links
-        const photoBlogLinks = [
-            { name: "Pinterest", url: "https://www.pinterest.com/brooklynnfancy/", icon: "fa-pinterest" },
-            { name: "VSCO", url: "https://vsco.co/brooklynnfancy/gallery", icon: "fa-camera" }
-        ];
-
-        // writing platforms
-        const writingLinks = [
-            { name: "Wattpad", url: "https://www.wattpad.com/user/brooklynnfancy", icon: "fa-book-open" }
-        ];
-
-        // reading platforms
-        const readingLinks = [
-            { name: "StoryGraph", url: "https://app.thestorygraph.com/profile/brooklynnfancy", icon: "fa-chart-line" },
-            { name: "Goodreads", url: "https://www.goodreads.com/review/list/196083199?ref=nav_mybooks", icon: "fa-book" },
-            { name: "BookBub", url: "https://www.bookbub.com/profile/1716244382", icon: "fa-bookmark" }
-        ];
-
-        // writing sample
-        const writingSample = `"On certain days when the light catches just right, your dark eyes light up in just the right way allowing a warm homely light to emanate from your eyes. On days like that for just a few moments their seems to be more than all of the problems in the world. As foolish as it seems, and as sad as the world is, it makes everything all the better to know that for just a moment the silence in your eyes is unmasked to reveal a collective of raucous forest animals racing through the underbrush of a nightmare casting light on all the shadows. To make all of the shadows come up into the dusk you'd stare at the sun. All day. For hours you would sit and stare watching the ball of light for just that one moment of clarity so that things fall into place despite the broken remnants of our sunken lives..."
-
-> Original post: https://www.wattpad.com/story/1618138-to-save-a-life [jul. 2012]
-<span class="glitch-text">DATE GLITCH: 07.2012 | ACCESSING... | ERROR: TIMESTAMP CORRUPTED</span>`;
-
-        // sphere configuration
+        // DOM elements
         const sphere = document.getElementById('sphere');
         const contentDisplay = document.getElementById('contentDisplay');
         const sphereContainer = document.getElementById('sphereContainer');
@@ -755,20 +882,201 @@
         const submitPassword = document.getElementById('submitPassword');
         const cancelPassword = document.getElementById('cancelPassword');
         const passwordError = document.getElementById('passwordError');
+        const japaneseTextOverlay = document.getElementById('japaneseTextOverlay');
+        const centerImage = document.getElementById('centerImage');
         
+        // music player elements
+        const musicToggle = document.getElementById('musicToggle');
+        const musicPlayer = document.getElementById('musicPlayer');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const currentSong = document.getElementById('currentSong');
+        const playlistItems = document.querySelectorAll('.playlist li');
+        
+        // sphere variables
         let currentRotation = 0;
         const totalItems = menuItems.length;
         const angleIncrement = 360 / totalItems;
-        const radius = 400; // Radius of the sphere
-        const depth = 400; // How far back the sphere goes
+        const radius = 400;
+        const depth = 400;
         let activeItem = 0;
         let currentPasswordItem = null;
         let menuItemElements = [];
         
-        // initialize the sphere with menu items - ALL FACING FORWARD
+        // music player variables
+        let currentSongIndex = 0;
+        let isPlaying = true;
+        let isMusicPlayerVisible = false;
+        
+        // initialize music player
+        function initMusicPlayer() {
+            // set initial volume
+            backgroundMusic.volume = volumeSlider.value / 100;
+            
+            // load first song
+            loadSong(currentSongIndex);
+            
+            // autoplay
+            backgroundMusic.play().catch(e => {
+                console.log("Autoplay prevented, user interaction required");
+            });
+            
+            // update playlist item
+            updatePlaylistActive();
+            
+            // event listeners for music controls
+            musicToggle.addEventListener('click', toggleMusicPlayer);
+            
+            playPauseBtn.addEventListener('click', togglePlayPause);
+            prevBtn.addEventListener('click', playPrevSong);
+            nextBtn.addEventListener('click', playNextSong);
+            volumeSlider.addEventListener('input', updateVolume);
+            
+            // click on playlist items
+            playlistItems.forEach((item, index) => {
+                item.addEventListener('click', () => playSong(index));
+            });
+            
+            // when song ends, play next
+            backgroundMusic.addEventListener('ended', playNextSong);
+            
+            // close music player when clicking outside
+            document.addEventListener('click', (e) => {
+                if (isMusicPlayerVisible && 
+                    !musicPlayer.contains(e.target) && 
+                    !musicToggle.contains(e.target)) {
+                    musicPlayer.classList.remove('active');
+                    isMusicPlayerVisible = false;
+                }
+            });
+        }
+        
+        function toggleMusicPlayer() {
+            isMusicPlayerVisible = !isMusicPlayerVisible;
+            musicPlayer.classList.toggle('active', isMusicPlayerVisible);
+        }
+        
+        function loadSong(index) {
+            currentSongIndex = index;
+            const song = playlist[index];
+            backgroundMusic.src = song.src;
+            currentSong.textContent = `Now playing: ${song.title}`;
+            updatePlaylistActive();
+        }
+        
+        function playSong(index) {
+            loadSong(index);
+            if (isPlaying) {
+                backgroundMusic.play();
+            }
+        }
+        
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                backgroundMusic.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                backgroundMusic.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+        
+        function playPrevSong() {
+            let newIndex = currentSongIndex - 1;
+            if (newIndex < 0) newIndex = playlist.length - 1;
+            playSong(newIndex);
+            if (isPlaying) {
+                backgroundMusic.play();
+            }
+        }
+        
+        function playNextSong() {
+            let newIndex = currentSongIndex + 1;
+            if (newIndex >= playlist.length) newIndex = 0;
+            playSong(newIndex);
+            if (isPlaying) {
+                backgroundMusic.play();
+            }
+        }
+        
+        function updateVolume() {
+            backgroundMusic.volume = volumeSlider.value / 100;
+        }
+        
+        function updatePlaylistActive() {
+            playlistItems.forEach((item, index) => {
+                if (index === currentSongIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        // initialize japanese overlay
+        function initJapaneseText() {
+            let text = "";
+            const lines = 30;
+            
+            for (let i = 0; i < lines; i++) {
+                if (Math.random() > 0.7) {
+                    const quote = lainQuotes[Math.floor(Math.random() * lainQuotes.length)];
+                    text += quote + "\n\n";
+                } else {
+                    let line = "";
+                    for (let j = 0; j < 50; j++) {
+                        line += japaneseChars.charAt(Math.floor(Math.random() * japaneseChars.length));
+                    }
+                    text += line + "\n";
+                }
+                
+                if (Math.random() > 0.9) {
+                    text += "> ACCESSING... [" + Math.floor(Math.random() * 100) + "%]\n";
+                    text += "> CONNECTION: " + Math.floor(Math.random() * 255) + "." + 
+                            Math.floor(Math.random() * 255) + "." + 
+                            Math.floor(Math.random() * 255) + "." + 
+                            Math.floor(Math.random() * 255) + "\n";
+                }
+            }
+            
+            japaneseTextOverlay.textContent = text;
+            
+            setInterval(() => {
+                if (Math.random() > 0.95) {
+                    const originalText = japaneseTextOverlay.textContent;
+                    const lines = originalText.split('\n');
+                    if (lines.length > 10) {
+                        const glitchLine = Math.floor(Math.random() * lines.length);
+                        const glitchChar = Math.floor(Math.random() * Math.max(1, lines[glitchLine].length));
+                        
+                        if (lines[glitchLine].length > 0) {
+                            const newLine = lines[glitchLine].split('');
+                            newLine[glitchChar] = japaneseChars.charAt(Math.floor(Math.random() * japaneseChars.length));
+                            lines[glitchLine] = newLine.join('');
+                            japaneseTextOverlay.textContent = lines.join('\n');
+                            
+                            setTimeout(() => {
+                                japaneseTextOverlay.textContent = originalText;
+                            }, 100);
+                        }
+                    }
+                }
+            }, 1000);
+        }
+        
+       
+        
+        // initialize the sphere with menu items
         function initSphere() {
             sphere.innerHTML = '';
             menuItemElements = [];
+            
+            // start with "ABOUT ME" at the front
+            currentRotation = -90; 
             
             menuItems.forEach((item, index) => {
                 const menuItem = document.createElement('div');
@@ -776,33 +1084,31 @@
                 menuItem.id = `item-${item.id}`;
                 menuItem.innerHTML = `<i class="fas ${item.icon}"></i> ${item.name}`;
                 
-                // calculate position on sphere (circular layout)
                 const angle = angleIncrement * index;
-                
-                // convert to radians
                 const radian = angle * Math.PI / 180;
-                
-                // calculate position in 3D space (circular path)
                 const x = Math.sin(radian) * radius;
-                const z = Math.cos(radian) * radius - depth; // Move back in 3D space
-                const y = -Math.cos(radian) * 100; // Slight vertical offset for sphere effect
+                const z = Math.cos(radian) * radius - depth;
+                const y = -Math.cos(radian) * 100;
                 
-                // store position data
                 menuItem.dataset.angle = angle;
                 menuItem.dataset.x = x;
                 menuItem.dataset.y = y;
                 menuItem.dataset.z = z;
                 menuItem.dataset.index = index;
                 
-                // apply initial position - ALL BOXES FACE FORWARD (no rotation applied)
-                // use translate3d for better performance
                 menuItem.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
                 
-                // set z-index based on position (front items should be on top)
-                const zIndex = Math.round(100 + (z + depth) * 0.1);
-                menuItem.style.zIndex = zIndex;
+                // set initial z-index based on Z position
+                // front items (positive Z) should be above image (z-index 2)
+                // back items (negative Z) should be below image
+                if (z > 0) {
+                    menuItem.style.zIndex = '10'; // front items above image
+                } else if (z < -200) {
+                    menuItem.style.zIndex = '1'; // far back items below image
+                } else {
+                    menuItem.style.zIndex = '3'; // side items above image
+                }
                 
-                // add click event
                 menuItem.addEventListener('click', (e) => {
                     e.stopPropagation();
                     handleMenuItemClick(index);
@@ -812,76 +1118,57 @@
                 menuItemElements.push(menuItem);
             });
             
-            // select first item by default
-            selectMenuItem(0);
-            
-            // initialize sphere rotation
+            selectMenuItem(1); // Start with "ABOUT ME"
             updateSphereRotation();
         }
         
-        // handle menu item click
-        function handleMenuItemClick(index) {
-            const item = menuItems[index];
-            
-            // handle password protected items
-            if (item.type === 'password' || item.type === 'password-blogs') {
-                currentPasswordItem = index;
-                passwordPrompt.style.display = 'flex';
-                passwordInput.value = '';
-                passwordError.style.display = 'none';
-                passwordInput.focus();
-                return;
-            }
-            
-            // handle other item types
-            selectMenuItem(index);
-            
-            switch(item.type) {
-                case 'updates':
-                    showUpdatesPopup();
-                    break;
-                case 'writing':
-                    showWritingPopup();
-                    break;
-                case 'social':
-                    showSocialPopup();
-                    break;
-                case 'characters':
-                    showCharactersPopup();
-                    break;
-                case 'business':
-                    showBusinessPopup();
-                    break;
-                case 'tips':
-                    showTipsPopup();
-                    break;
-                case 'neighborhood':
-                    showNeighborhoodPopup();
-                    break;
-                case 'fun':
-                    showFunSitesPopup();
-                    break;
-                case 'error':
-                    // error mode, just show content
-                    break;
-                case 'coming-soon':
-                    // coming soon items, redirect to not_found
-                    setTimeout(() => {
-                        window.open('not_found.html', '_blank');
-                    }, 1000);
-                    break;
-                default:
-                    // regular info items, just show content
-                    break;
-            }
-        }
-        
-        // rotate the sphere - update each item's position individually
+       // handle menu item click
+function handleMenuItemClick(index) {
+    const item = menuItems[index];
+    
+    if (item.type === 'password') {
+        currentPasswordItem = index;
+        passwordPrompt.style.display = 'flex';
+        passwordInput.value = '';
+        passwordError.style.display = 'none';
+        passwordInput.focus();
+        return;
+    }
+    
+    selectMenuItem(index);
+    
+    switch(item.type) {
+        case 'characters':
+            showCharactersPopup();
+            break;
+        case 'about':
+            showAboutMePopup();
+            break;
+        case 'aboutPage':
+            showAboutPagePopup();
+            break;
+        default:
+            break;
+    }
+}
+        // social links data
+const socialLinks = [
+    { name: "TikTok", url: "https://www.tiktok.com/@brooklynnfancy", icon: "fa-tiktok" },
+    { name: "Instagram", url: "https://www.instagram.com/brooklynnfancy/", icon: "fa-instagram" },
+    { name: "Threads", url: "https://www.threads.com/@brooklynnfancy", icon: "fa-threads" },
+    { name: "X (Twitter)", url: "https://x.com/brooklynnfancy", icon: "fa-twitter" },
+    { name: "Bluesky", url: "https://bsky.app/profile/brooklynnfancy.bsky.social", icon: "fa-cloud" },
+    { name: "Mastodon", url: "https://mastodon.social/@brooklynnfancy", icon: "fa-mastodon" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/brooklynn-p-a01a09a6/", icon: "fa-linkedin" },
+    { name: "SpaceHey", url: "https://spacehey.com/home", icon: "fa-user-astronaut" },
+    { name: "Pi.fyi", url: "https://www.pi.fyi/u/brooklynn", icon: "fa-pi" }
+];
+
+        // rotate the sphere
         function rotateSphere(direction) {
             currentRotation += direction * angleIncrement;
             updateSphereRotation();
             
-            // update active item based on rotation (item closest to front center)
             let newActive = Math.round((360 - currentRotation % 360) / angleIncrement) % totalItems;
             if (newActive < 0) newActive += totalItems;
             
@@ -890,39 +1177,46 @@
             }
         }
         
-        // update sphere rotation transform 
+        // update sphere rotation
         function updateSphereRotation() {
-            // not rotating the sphere container anymore
-            // instead, we update each item position individually to create the rotation effect
-            
             menuItemElements.forEach((item, index) => {
-                // get the original angle for this item
                 const originalAngle = parseFloat(item.dataset.angle);
-                
-                // calculate new angle with rotation
                 const newAngle = originalAngle + currentRotation;
                 const radian = newAngle * Math.PI / 180;
                 
-                // calculate new position in space (circular path)
                 const x = Math.sin(radian) * radius;
                 const z = Math.cos(radian) * radius - depth;
                 const y = -Math.cos(radian) * 100;
                 
-                // update the item's position - STILL FACING FORWARD
                 item.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
                 
-                // update z-index based on z-position (items closer to front have higher z-index)
-                const zIndex = Math.round(100 + (z + depth) * 0.1);
-                item.style.zIndex = zIndex;
+                // update z-index based on z position
+                // image has z-index: 2
+                // items in front (z > 0) should have z-index > 2
+                // items in back (z < 0) should have z-index < 2
+                if (z > 0) {
+                    // front items
+                    const zIndex = Math.round(10 + z * 0.1);
+                    item.style.zIndex = zIndex;
+                } else if (z < -200) {
+                    // far back items - behind image
+                    item.style.zIndex = '1';
+                } else {
+                    // side items - above image
+                    item.style.zIndex = '3';
+                }
                 
-                // adjust opacity based on position (items in back are slightly transparent)
                 const opacity = 0.7 + (z + depth) / (2 * depth) * 0.3;
                 item.style.opacity = opacity;
                 
-                // scale items based on depth (items farther away are smaller)
                 const scale = 0.8 + (z + depth) / (2 * depth) * 0.2;
                 item.style.transform += ` scale(${scale})`;
             });
+            
+            // ensure active item is always on top
+            if (menuItemElements[activeItem]) {
+                menuItemElements[activeItem].style.zIndex = '100';
+            }
         }
         
         // select a menu item
@@ -930,121 +1224,15 @@
             activeItem = index;
             const item = menuItems[index];
             
-            // update active class
             menuItemElements.forEach((el, i) => {
                 if (i === index) {
                     el.classList.add('active');
+                    el.style.zIndex = '100'; // active item always on top
                 } else {
                     el.classList.remove('active');
                 }
             });
             
-            // update content display
-            contentDisplay.innerHTML = `<h3>${item.name} MODULE</h3><p>${item.content}</p>`;
-            
-            // add glitch effect to content
-            contentDisplay.classList.add('glitch');
-            setTimeout(() => {
-                contentDisplay.classList.remove('glitch');
-            }, 300);
-        }
-        
-        // show updates popup
-        function showUpdatesPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>UPDATES / MICRO-BLOG</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
-                </div>
-                <p>> Site updates and development log.</p>
-                <div class="folder-grid">
-                    <div class="folder">
-                        <i class="fas fa-folder"></i>
-                        <div>2025</div>
-                    </div>
-                    <div class="folder coming-soon">
-                        <i class="fas fa-folder"></i>
-                        <div>2026</div>
-                    </div>
-                </div>
-                <div style="margin-top: 20px;">
-                    <h3>DECEMBER 2025</h3>
-                    <p>> Cybersphere interface launched.<br>
-                       > Navigation system activated.<br>
-                       > All modules initialized.</p>
-                </div>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
-        }
-        
-        // show writing popup
-        function showWritingPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>WRITING PORTFOLIO</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
-                </div>
-                <p>> Creative writing and personal works.</p>
-                <div class="social-links">
-                    ${writingLinks.map(link => 
-                        `<a href="${link.url}" target="_blank" class="social-link">
-                            <i class="fab ${link.icon}"></i> ${link.name}
-                        </a>`
-                    ).join('')}
-                </div>
-                <div style="margin-top: 20px;">
-                    <h3>SNEAK PEEK AVAILABLE</h3>
-                    <p>Would you like to see a writing sample?</p>
-                    <button id="showWritingSample" style="margin: 10px 0; padding: 10px 20px; background: rgba(30,60,120,0.8); border: 1px solid #88aaff; color: #aaccff; cursor: pointer; border-radius: 5px;">VIEW SAMPLE</button>
-                </div>
-                <div id="writingSampleContainer" style="display: none;"></div>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
-            
-            // add event listener for showing writing sample
-            document.getElementById('showWritingSample').addEventListener('click', function() {
-                document.getElementById('writingSampleContainer').style.display = 'block';
-                document.getElementById('writingSampleContainer').innerHTML = `
-                    <div class="writing-sample">
-                        <h4>TO SAVE A LIFE - PROLOGUE</h4>
-                        <p>${writingSample}</p>
-                    </div>
-                `;
-                this.style.display = 'none';
-            });
-        }
-        
-        // show social media popup
-        function showSocialPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>SOCIAL MEDIA PROFILES</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
-                </div>
-                <p>> Connect with me across platforms.</p>
-                <div class="social-links">
-                    ${socialLinks.map(link => 
-                        `<a href="${link.url}" target="_blank" class="social-link">
-                            <i class="fab ${link.icon}"></i> ${link.name}
-                        </a>`
-                    ).join('')}
-      </div>
-                
-                <div style="margin-top: 20px;">
-                    <h3>READING PROFILES</h3>
-                    <div class="social-links">
-                        ${readingLinks.map(link => 
-                            `<a href="${link.url}" target="_blank" class="social-link">
-                                <i class="fab ${link.icon}"></i> ${link.name}
-                            </a>`
-                        ).join('')}
-                    </div>
-                </div>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
         }
         
         // show characters popup
@@ -1054,7 +1242,7 @@
                     <h2>ALTERNATE PERSONAS</h2>
                     <button class="close-popup" id="closePopup">&times;</button>
                 </div>
-                <p>> Access alternate identities and websites.</p>
+                <p>> Accessing...</p>
                 <div class="folder-grid">
                     <div class="folder glitch-text">
                         <i class="fas fa-user-secret"></i>
@@ -1072,169 +1260,236 @@
                         <i class="fas fa-ghost"></i>
                         <div>PERSONA_04</div>
                     </div>
-                    <div class="folder coming-soon">
-                        <i class="fas fa-user-circle"></i>
-                        <div>PERSONA_05</div>
-                    </div>
-                    <div class="folder coming-soon">
-                        <i class="fas fa-user-circle"></i>
-                        <div>PERSONA_06</div>
-                    </div>
                 </div>
-                <p style="margin-top: 20px; color: #a88cff;" class="glitch-text">> SYSTEM MESSAGE: Alternate personas coming soon. Identity fragmentation in progress.</p>
+                <p style="margin-top: 20px; color: #45BCED;" class="glitch-text">> SYSTEM MESSAGE: Identity fragmentation in progress.</p>
             `;
             popupModal.style.display = 'flex';
             attachPopupClose();
         }
         
-        // show business popup
-        function showBusinessPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>PARTY ART</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
+        // show about me popup
+function showAboutMePopup() {
+    popupContent.innerHTML = `
+        <div class="popup-header">
+            <h2>ABOUT ME</h2>
+            <button class="close-popup" id="closePopup">&times;</button>
+        </div>
+        <div style="display: flex; gap: 30px; margin-top: 20px;">
+            <!-- Left side - Info -->
+            <div style="flex: 1;">
+                <div style="margin-bottom: 25px;">
+                    <h3 id="typingName" style="color: #45BCED; font-size: 1.5rem; height: 2rem;"></h3>
                 </div>
-                <p>> Face paint and party art services.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/brookiespartyart" target="_blank" class="social-link">
-                        <i class="fab fa-instagram"></i> @brookiespartyart
-                    </a>
-                    <a href="https://facebook.com/brookiespartyart" target="_blank" class="social-link">
-                        <i class="fab fa-facebook"></i> brookiespartyart
-                    </a>
+                
+                <div style="background: rgba(0, 40, 80, 0.5); padding: 15px; border-radius: 8px; border: 1px solid rgba(69, 188, 237, 0.3);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">AGE</p>
+                            <p style="color: #CCF5FF;">[28]</p>
+                        </div>
+                        <div>
+                            <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">LOCATION</p>
+                            <p style="color: #CCF5FF;">[NYC]</p>
+                        </div>
+                        <div>
+                            <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">PERSONALITY TYPE</p>
+                            <p style="color: #CCF5FF;">[INFP]</p>
+                        </div>
+                        <div>
+                            <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">ZODIAC</p>
+                            <p style="color: #CCF5FF;">[Taurus]</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 10px;">INTERESTS</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span style="background: rgba(69, 188, 237, 0.2); padding: 5px 10px; border-radius: 4px; color: #CCF5FF; font-size: 0.85rem;">[Art]</span>
+                            <span style="background: rgba(69, 188, 237, 0.2); padding: 5px 10px; border-radius: 4px; color: #CCF5FF; font-size: 0.85rem;">[Design]</span>
+                            <span style="background: rgba(69, 188, 237, 0.2); padding: 5px 10px; border-radius: 4px; color: #CCF5FF; font-size: 0.85rem;">[Writing]</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                        <div>
+                            <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 10px;">LIKES</p>
+                            <ul style="color: #CCF5FF; font-size: 0.85rem; padding-left: 15px;">
+                                <li>[Music: everything]</li>
+                                <li>[Film: almost everything]</li>
+                                <li>[Reading: Fantasy, Thriller, Sci-Fi]</li>
+                                <li>[Gaming: RPG, Strategy]</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 10px;">DISLIKES</p>
+                            <ul style="color: #CCF5FF; font-size: 0.85rem; padding-left: 15px;">
+                                <li>[Mean people]</li>
+                                <li>[Gore/Violence]</li>
+                                <li>[Greed]</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div style="margin-top: 20px;">
-                    <h3>SERVICES</h3>
-                    <p>> Face painting for events<br>
-                       > Balloon art/twisting<br>
-                       > Custom designs<br>
-                       > More coming soon</p>
+                
+                <!-- hidden bio section -->
+                <div style="margin-top: 25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <p style="color: #88CCFF; font-size: 0.9rem;">PERSONAL BIO</p>
+                        <button id="revealBioBtn" style="background: rgba(0, 60, 120, 0.7); border: 1px solid #45BCED; color: #88CCFF; padding: 5px 15px; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">
+                            CLICK TO REVEAL
+                        </button>
+                    </div>
+                    <div id="bioContent" style="display: none; background: rgba(0, 40, 80, 0.5); padding: 15px; border-radius: 8px; border: 1px solid rgba(69, 188, 237, 0.3); max-height: 150px; overflow-y: auto;">
+                        <p style="color: #CCF5FF; font-size: 0.9rem; line-height: 1.5;">
+                            [Hi, I'm Brooklynn, and this is my "secret" bio.]
+                        </p>
+                    </div>
                 </div>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
+                
+                <!-- social links -->
+                <div style="margin-top: 25px;">
+                    <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 15px;">QUICKLINKS</p>
+                    <div class="social-links">
+                        ${socialLinks.map(link => `
+                            <a href="${link.url}" target="_blank" class="social-link" style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fab ${link.icon}"></i>
+                                <span>${link.name}</span>
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- right side - pic -->
+            <div style="flex: 0 0 200px;">
+                <div style="background: rgba(0, 40, 80, 0.5); border: 2px solid #45BCED; border-radius: 8px; padding: 10px; box-shadow: 0 0 20px rgba(69, 188, 237, 0.4);">
+                    <img src="https://files.catbox.moe/o5yb8b.png" 
+                         alt="me?" 
+                         style="width: 100%; height: 250px; object-fit: cover; border-radius: 4px; filter: brightness(1.1) contrast(1.1);">
+                </div>
+                <div style="background: rgba(0, 40, 80, 0.5); border: 2px solid #45BCED; border-radius: 8px; padding: 10px; box-shadow: 0 0 20px rgba(69, 188, 237, 0.4);">
+                    <img src="https://files.catbox.moe/cz2ab3.png" 
+                         alt="me?" 
+                         style="width: 100%; height: 250px; object-fit: cover; border-radius: 4px; filter: brightness(1.1) contrast(1.1);">
+                </div>
+                <p style="text-align: center; color: #88CCFF; font-size: 0.8rem; margin-top: 10px;">[this is me.]</p>
+            </div>
+        </div>
+    `;
+    
+    popupModal.style.display = 'flex';
+    attachPopupClose();
+    
+    // typing animation for name
+    const nameElement = document.getElementById('typingName');
+    const fullName = "[Brooklynn Peterson]"; 
+    let i = 0;
+    
+    function typeWriter() {
+        if (i < fullName.length) {
+            nameElement.innerHTML += fullName.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
         }
-        
-        // show tips popup
-        function showTipsPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>SUPPORT MY WORK</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
-                </div>
-                <p>> If you enjoy my content, consider supporting me.</p>
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="https://ko-fi.com/brooklynnfancy" target="_blank" style="display: inline-block; padding: 15px 30px; background: rgba(30,60,120,0.9); border: 2px solid #a88cff; border-radius: 10px; color: #aaccff; text-decoration: none; font-size: 1.2rem;">
-                        <i class="fas fa-coffee"></i> BUY ME A COFFEE ON KO-FI
-                    </a>
-                </div>
-                <p>> Your support helps me buy more coffee.</p>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
+    }
+    
+    typeWriter();
+    
+    // bio reveal functionality
+    document.getElementById('revealBioBtn').addEventListener('click', function() {
+        const bioContent = document.getElementById('bioContent');
+        if (bioContent.style.display === 'none') {
+            bioContent.style.display = 'block';
+            this.textContent = 'HIDE BIO';
+            this.style.background = 'rgba(69, 188, 237, 0.3)';
+        } else {
+            bioContent.style.display = 'none';
+            this.textContent = 'CLICK TO REVEAL';
+            this.style.background = 'rgba(0, 60, 120, 0.7)';
         }
+    });
+}
+
+// show about page popup
+function showAboutPagePopup() {
+    popupContent.innerHTML = `
+        <div class="popup-header">
+            <h2>ABOUT THIS PAGE</h2>
+            <button class="close-popup" id="closePopup">&times;</button>
+        </div>
         
-        // show neighborhood popup
-        function showNeighborhoodPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>VIRTUAL NEIGHBORHOOD</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
+        <div style="margin-top: 20px;">
+            <div style="background: rgba(0, 40, 80, 0.5); padding: 20px; border-radius: 8px; border: 1px solid rgba(69, 188, 237, 0.3);">
+                <h3 style="color: #45BCED; margin-bottom: 15px;">INSPIRATIONS</h3>
+                <ul style="color: #CCF5FF; font-size: 0.9rem; padding-left: 20px; line-height: 1.6;">
+                    <li>Serial Experiments Lain (1998)</li>
+                    <li>Matrix (1999), slightly</li>
+                    <li>Cyberspace</li>
+                    <li>Retro-Futurism</li>
+                </ul>
+                <h3 style="color: #45BCED; margin-top: 25px; margin-bottom: 15px;">DEVELOPMENT SETUP</h3>
+               <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+    <div style="background: rgba(0, 60, 120, 0.3); padding: 12px; border-radius: 6px;">
+        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">Platform</p>
+        <p style="color: #CCF5FF; font-size: 0.85rem;">macOS</p>
+    </div>
+    <div style="background: rgba(0, 60, 120, 0.3); padding: 12px; border-radius: 6px;">
+        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">Primary Editor</p>
+        <p style="color: #CCF5FF; font-size: 0.85rem;">Visual Studio Code</p>
+    </div>
+    <div style="background: rgba(0, 60, 120, 0.3); padding: 12px; border-radius: 6px;">
+        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">Secondary Editor</p>
+        <p style="color: #CCF5FF; font-size: 0.85rem;">BBEdit</p>
+    </div>
+    <div style="background: rgba(0, 60, 120, 0.3); padding: 12px; border-radius: 6px;">
+        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">Testing</p>
+        <p style="color: #CCF5FF; font-size: 0.85rem;">HTML Runner</p>
+    </div>
+    <div style="background: rgba(0, 60, 120, 0.3); padding: 12px; border-radius: 6px;">
+        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">Color Picker</p>
+        <p style="color: #CCF5FF; font-size: 0.85rem;">HTML Color Codes</p>
+    </div>
+    <div style="background: rgba(0, 60, 120, 0.3); padding: 12px; border-radius: 6px;">
+        <p style="color: #88CCFF; font-size: 0.9rem; margin-bottom: 5px;">Color Palette</p>
+        <p style="color: #CCF5FF; font-size: 0.85rem;">Color Hunt</p>
+    </div>
+</div>
+                
+                <h3 style="color: #45BCED; margin-top: 25px; margin-bottom: 15px;">CREDITS & INSPIRATION</h3>
+                <div style="color: #CCF5FF; font-size: 0.9rem; line-height: 1.6;">
+                    <p><span style="color: #88CCFF;">Music Player:</span> Inspired by 
+                        <a href="https://codepen.io/jinsouls/pen/WNYRogj" target="_blank" style="color: #45BCED; text-decoration: none;">
+                            Adilene's CodePen Music Player
+                        </a>
+                    </p>
+                    <p><span style="color: #88CCFF;">Icons:</span> Font Awesome 6</p>
+                    <p><span style="color: #88CCFF;">Fonts:</span> Courier New, MS Gothic</p>
+                    <p><span style="color: #88CCFF;">Hosting:</span> Catbox.moe for audio/images</p>
                 </div>
-                <p>> Cool developers, artists, and websites I've found online.</p>
-                <div class="folder-grid">
-                    <div class="folder">
-                        <i class="fas fa-laptop-code"></i>
-                        <div>WEB_DEV</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-palette"></i>
-                        <div>ARTISTS</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-music"></i>
-                        <div>MUSICIANS</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-gamepad"></i>
-                        <div>GAME_DEV</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-book"></i>
-                        <div>WRITERS</div>
-                    </div>
-                   <div class="folder">
-                        <i class="fas fa-puzzle-piece"></i>
-                        <div>MISC</div>
-                    </div>
+                
+                <h3 style="color: #45BCED; margin-top: 25px; margin-bottom: 15px;">EXTRA DETAILS</h3>
+                <div style="color: #CCF5FF; font-size: 0.9rem; line-height: 1.6;">
+                    <p><span style="color: #88CCFF;">Built With:</span> Vanilla HTML5, CSS3, JavaScript</p>
+                    <p><span style="color: #88CCFF;">Features:</span> CSS 3D Sphere, Matrix Code Background, Minor Glitch Effects</p>
+                    <p><span style="color: #88CCFF;">Music:</span> Custom audio player with playlist support</p>
+                    <p><span style="color: #88CCFF;">Design:</span> PS1 Lain-inspired menu elements</p>
                 </div>
-                <p style="margin-top: 20px;">> Coming soon: List of interesting creators and websites.</p>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
-        }
-        
-        // show fun sites popup
-        function showFunSitesPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>FUN WEBSITES</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
+                
+                <div style="margin-top: 25px; padding: 15px; background: rgba(0, 20, 40, 0.5); border-radius: 6px; border: 1px solid rgba(69, 188, 237, 0.2);">
+                    <p style="color: #45BCED; font-size: 0.9rem; text-align: center;">
+                        > BUILT ON MACOS WITH BBEDIT / VS 
+                    </p>
+                    <p style="color: #88CCFF; font-size: 0.85rem; text-align: center; margin-top: 10px;">
+                        Last Updated: 12.17.2025
+                    </p>
                 </div>
-                <p>> Interesting and fun websites I've discovered.</p>
-                <div class="folder-grid">
-                    <div class="folder">
-                        <i class="fas fa-gamepad"></i>
-                        <div>GAMES</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-eye"></i>
-                        <div>VISUAL</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-paint-brush"></i>
-                        <div>CREATIVE</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-film"></i>
-                        <div>FILM/TV</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-music"></i>
-                        <div>MUSIC</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-puzzle-piece"></i>
-                        <div>MISC.</div>
-                    </div>
-                </div>
-                <p style="margin-top: 20px;">> Coming soon: everything not here already.</p>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
-        }
-        
-        // show blogs after password
-        function showBlogsPopup() {
-            popupContent.innerHTML = `
-                <div class="popup-header">
-                    <h2>BLOG COLLECTION</h2>
-                    <button class="close-popup" id="closePopup">&times;</button>
-                </div>
-                <p>> Personal blogs and writings across platforms.</p>
-                <div class="social-links">
-                    ${blogLinks.map(link => 
-                        `<a href="${link.url}" target="_blank" class="social-link">
-                            <i class="fab ${link.icon}"></i> ${link.name}
-                        </a>`
-                    ).join('')}
-                </div>
-                <p style="margin-top: 20px; color: #a88cff;">> ACCESS GRANTED: Personal thoughts and writings unlocked.</p>
-            `;
-            popupModal.style.display = 'flex';
-            attachPopupClose();
-        }
-        
+            </div>
+        </div>
+    `;
+    
+    popupModal.style.display = 'flex';
+    attachPopupClose();
+}
         // show memories after password
         function showMemoriesPopup() {
             popupContent.innerHTML = `
@@ -1260,16 +1515,8 @@
                         <i class="fas fa-memory"></i>
                         <div>PHOTOS</div>
                     </div>
-                    <div class="folder">
-                        <i class="fas fa-memory"></i>
-                        <div>AUDIO</div>
-                    </div>
-                    <div class="folder">
-                        <i class="fas fa-memory"></i>
-                        <div>VIDEO</div>
-                    </div>
                 </div>
-                <p style="margin-top: 20px; color: #aaccff;">> ACCESS GRANTED: Memory card unlocked. Handle with care. </p>
+                <p style="margin-top: 20px; color: #88CCFF;">> ACCESS GRANTED: Memory card unlocked. Handle with care.</p>
             `;
             popupModal.style.display = 'flex';
             attachPopupClose();
@@ -1281,7 +1528,6 @@
                 popupModal.style.display = 'none';
             });
             
-            // close when clicking outside the popup content
             popupModal.addEventListener('click', function(e) {
                 if (e.target === popupModal) {
                     popupModal.style.display = 'none';
@@ -1297,13 +1543,12 @@
             if (isScrolling) return;
             isScrolling = true;
             
-            // use deltaY for vertical scroll wheels, deltaX for horizontal
             const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
             
             if (delta > 0) {
-                rotateSphere(1); // Scroll right/down
+                rotateSphere(1);
             } else {
-                rotateSphere(-1); // Scroll left/up
+                rotateSphere(-1);
             }
             
             setTimeout(() => {
@@ -1317,12 +1562,10 @@
                 rotateSphere(1);
             } else if (e.key === 'ArrowLeft') {
                 rotateSphere(-1);
-            } else if (e.key >= '1' && e.key <= '8') {
+            } else if (e.key >= '1' && e.key <= '4') {
                 const index = parseInt(e.key) - 1;
                 if (index < totalItems) {
                     handleMenuItemClick(index);
-                    
-                    // rotate sphere to center the selected item
                     const targetRotation = -(index * angleIncrement);
                     currentRotation = targetRotation;
                     updateSphereRotation();
@@ -1330,12 +1573,14 @@
             } else if (e.key === 'Escape') {
                 popupModal.style.display = 'none';
                 passwordPrompt.style.display = 'none';
+                musicPlayer.classList.remove('active');
+                isMusicPlayerVisible = false;
             }
         });
         
         // handle mobile controls
-        document.getElementById('prevBtn').addEventListener('click', () => rotateSphere(-1));
-        document.getElementById('nextBtn').addEventListener('click', () => rotateSphere(1));
+        document.getElementById('prevBtnMobile').addEventListener('click', () => rotateSphere(-1));
+        document.getElementById('nextBtnMobile').addEventListener('click', () => rotateSphere(1));
         
         // handle touch for mobile drag
         let touchStartX = 0;
@@ -1359,18 +1604,10 @@
             const password = passwordInput.value;
             const item = menuItems[currentPasswordItem];
             
-            if ((item.type === 'password' && password === 'lain') || 
-                (item.type === 'password-blogs' && password === 'brooklynn')) {
-                
+            if (password === 'lain') {
                 passwordPrompt.style.display = 'none';
                 selectMenuItem(currentPasswordItem);
-                
-                if (item.type === 'password') {
-                    showMemoriesPopup();
-                } else if (item.type === 'password-blogs') {
-                    showBlogsPopup();
-                }
-                
+                showMemoriesPopup();
                 passwordError.style.display = 'none';
             } else {
                 passwordError.style.display = 'block';
@@ -1391,7 +1628,7 @@
             }
         });
         
-        // add background effect
+        // background effect
         function createMatrixBackground() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -1401,32 +1638,27 @@
             canvas.height = container.clientHeight;
             container.appendChild(canvas);
             
-            // japanese characters - looks cooler
-            const chars = "01あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん";
+            const chars = "01あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
             const charArray = chars.split("");
             const fontSize = 14;
             const columns = canvas.width / fontSize;
             const drops = [];
             
-            // initialize drops
             for (let i = 0; i < columns; i++) {
                 drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
             }
             
-            // draw function
             function draw() {
-                // Semi-transparent black rectangle for trail effect
                 ctx.fillStyle = "rgba(10, 10, 26, 0.05)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                ctx.fillStyle = "#6688cc";
+                ctx.fillStyle = "#45BCED";
                 ctx.font = `${fontSize}px monospace`;
                 
                 for (let i = 0; i < drops.length; i++) {
                     const text = charArray[Math.floor(Math.random() * charArray.length)];
                     ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                     
-                    // Reset drop when it reaches bottom
                     if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                         drops[i] = 0;
                     }
@@ -1435,10 +1667,8 @@
                 }
             }
             
-            // animation loop
             setInterval(draw, 50);
             
-            // handle resize
             window.addEventListener('resize', () => {
                 canvas.width = container.clientWidth;
                 canvas.height = container.clientHeight;
@@ -1449,12 +1679,11 @@
         window.addEventListener('load', () => {
             initSphere();
             createMatrixBackground();
+            initJapaneseText();
+            initMusicPlayer(); // Removed call
             
-            // add click handler to sphere container to prevent accidental clicks
             sphereContainer.addEventListener('click', (e) => {
-                // Only handle clicks if they're not on a menu item
                 if (e.target === sphereContainer || e.target === sphere) {
-                    // Find the closest front item and select it
                     let frontIndex = Math.round((360 - currentRotation % 360) / angleIncrement) % totalItems;
                     if (frontIndex < 0) frontIndex += totalItems;
                     handleMenuItemClick(frontIndex);
